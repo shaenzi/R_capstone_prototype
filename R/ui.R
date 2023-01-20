@@ -1,12 +1,12 @@
 #' Shiny UI
-#' 
+#'
 #' Core UI of package.
-#' 
+#'
 #' @param req The request object.
-#' 
+#'
 #' @import shiny
 #' @importFrom bslib bs_theme
-#' 
+#'
 #' @keywords internal
 ui <- function(req){
 	navbarPage(
@@ -16,7 +16,9 @@ ui <- function(req){
 		id = "main-menu",
 		tabPanel(
 			"First tab",
-			shiny::h1("First tab")
+			shiny::h1("First tab"),
+			verbatimTextOutput("wi"),
+			verbatimTextOutput("zh")
 		),
 		tabPanel(
 			"Second tab",
@@ -26,14 +28,14 @@ ui <- function(req){
 }
 
 #' Assets
-#' 
+#'
 #' Includes all assets.
 #' This is a convenience function that wraps
 #' [serveAssets] and allows easily adding additional
 #' remote dependencies (e.g.: CDN) should there be any.
-#' 
+#'
 #' @importFrom shiny tags
-#' 
+#'
 #' @keywords internal
 assets <- function(){
 	list(
@@ -41,6 +43,6 @@ assets <- function(){
 		tags$head(
 			# Place any additional depdendencies here
 			# e.g.: CDN
-		)	
+		)
 	)
 }

@@ -3,6 +3,7 @@ Title: Shiny app with energy consumption of the cities Zurich, Basel and Wintert
 Version: 0.0.0.9000
 Authors@R: 
     person("Sara", "Hänzi", , "first.last@example.com", role = c("aut", "cre"))
+Description: This app showcases the up-to-date power consumption for the three Swiss cities for which the data is openly available.
 License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
     license
 Encoding: UTF-8
@@ -10,7 +11,15 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.1
 Imports: 
     bslib,
+    data.table,
+    dplyr,
     htmltools,
+    janitor,
+    magrittr,
+    purrr,
     shiny
 Suggests: 
     pkgload
+Depends: 
+    R (>= 2.10)
+LazyData: true
