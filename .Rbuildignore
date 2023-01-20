@@ -2,3 +2,4 @@
 ^renv\.lock$
 ^capstonePrototype\.Rproj$
 ^\.Rproj\.user$
+^\.leprechaun$
