@@ -22,6 +22,7 @@ Imports:
     purrr,
     scales,
     shiny,
+    shinycustomloader,
     shinyWidgets,
     tidyr,
     tsibble

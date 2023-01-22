@@ -9,13 +9,18 @@ overviewUI <- function(id, title){
 	tagList(
 		h2(title),
 
+		htmlOutput(ns("latest_data")),
+
 		shinyWidgets::materialSwitch(
 		  inputId = ns("cumulative"),
 		  label = "Cumulative",
 		  right = TRUE
 		),
 
-		plotOutput(ns("week"))
+		plotOutput(ns("week")) %>%
+		  shinycustomloader::withLoader(
+		    type="text",
+		    loader=list(shinycustomloader::marquee("getting the latest data...")))
 	)
 }
 
@@ -41,13 +46,18 @@ overview_server <- function(id, data){
 				data_ref <- data_for_plots[["data_ref"]]
 				data_current <- data_for_plots[["data_current"]]
 
+				output$latest_data <- renderText({
+				  latest_date <- format(lubridate::as_date(max(data_current$timestamp)),
+				                        format = "%d %b %Y")
+				  glue::glue("Latest data from {latest_date}")
+				})
+
 				output$week <- renderPlot({
 				  if (input$cumulative) {
 				    plot_week_cumulative(data_ref, data_current)
 				  } else {
 				    plot_week_reference(data_ref, data_current)
 				  }
-
 				}) %>%
 				  bindEvent(input$cumulative)
 		}
