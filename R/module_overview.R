@@ -19,8 +19,8 @@ overviewUI <- function(id, title){
 
 		plotOutput(ns("week")) %>%
 		  shinycustomloader::withLoader(
-		    type="text",
-		    loader=list(shinycustomloader::marquee("getting the latest data...")))
+		    type="html",
+		    loader= "loader9") #list(shinycustomloader::marquee("getting the latest data...")))
 	)
 }
 
@@ -59,6 +59,7 @@ overview_server <- function(id, data){
 				    plot_week_reference(data_ref, data_current)
 				  }
 				}) %>%
+				  bindCache(input$cumulative, data_ref, data_current) %>%
 				  bindEvent(input$cumulative)
 		}
 	)

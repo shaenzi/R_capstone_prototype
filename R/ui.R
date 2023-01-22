@@ -12,17 +12,27 @@ ui <- function(req){
 	navbarPage(
 		theme = bs_theme(version = 5),
 		header = list(assets()),
-		title = "capstonePrototype",
+		title = "Power use in Swiss cities",
 		id = "main-menu",
 		tabPanel(
-			"First tab",
-			shiny::h1("First tab"),
+			"Latest use",
+			shiny::h1("Power use over the last week"),
 			overviewUI('zh', "Zurich"),
 			overviewUI('wi', "Winterthur"),
 		),
 		tabPanel(
-			"Second tab",
+			"Who uses how much",
 			shiny::h1("Second tab")
+		),
+		tabPanel(
+		  "Cool dataviz",
+		  shiny::h1("asdf")
+		),
+		tabPanel(
+		  "Power, electricity etc."
+		),
+		tabPanel(
+		  "About"
 		)
 	)
 }

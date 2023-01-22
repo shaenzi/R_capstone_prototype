@@ -62,8 +62,9 @@ plot_week_cumulative <- function(data_ref, data_current) {
                        labels = c("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun")) +
     ggplot2::labs(x = "",
          y = "Power consumption [GWh]",
-         title = glue::glue("Calendar week {lubridate::isoweek(data_current$timestamp[[1]])},
-         {lubridate::isoyear(data_current$timestamp[[1]])}"),
+         title = glue::glue(
+           "Week starting on ",
+           "{format(lubridate::as_date(min(data_current$timestamp)), format = '%d %b %Y')}"),
          caption = "Relative to the previous 4 years")
 
 }
