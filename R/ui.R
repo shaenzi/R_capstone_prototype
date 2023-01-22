@@ -17,8 +17,8 @@ ui <- function(req){
 		tabPanel(
 			"First tab",
 			shiny::h1("First tab"),
-			verbatimTextOutput("wi"),
-			verbatimTextOutput("zh")
+			overviewUI('zh', "Zurich"),
+			overviewUI('wi', "Winterthur"),
 		),
 		tabPanel(
 			"Second tab",

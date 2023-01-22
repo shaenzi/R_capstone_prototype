@@ -13,11 +13,17 @@ Imports:
     bslib,
     data.table,
     dplyr,
+    ggplot2,
+    glue,
     htmltools,
     janitor,
+    lubridate,
     magrittr,
     purrr,
-    shiny
+    scales,
+    shiny,
+    tidyr,
+    tsibble
 Suggests: 
     pkgload
 Depends: 

@@ -8,7 +8,7 @@ get_winti_data_up_to_date <- function() {
     dplyr::select(timestamp, gross_energy_kwh)
 
   # Combine latest with previous data
-  bind_rows(wi, wi_current)
+  dplyr::bind_rows(wi, wi_current)
 }
 
 get_zh_data_up_to_date <- function() {
@@ -21,6 +21,6 @@ get_zh_data_up_to_date <- function() {
     dplyr::select(timestamp, gross_energy_kwh, status)
 
   # combine with previous data
-  bind_rows(zh, zh_current)
+  dplyr::bind_rows(zh, zh_current)
 
 }

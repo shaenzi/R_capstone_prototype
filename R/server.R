@@ -11,12 +11,16 @@
 server <- function(input, output, session){
 	send_message <- make_send_message(session)
 
-	wi <- get_winti_data_up_to_date()
-	zh <- get_zh_data_up_to_date()
+	wi <- get_winti_data_up_to_date() %>%
+	  deal_with_ts_utc() %>%
+	  add_date_components()
+	zh <- get_zh_data_up_to_date() %>%
+	  deal_with_ts_zh() %>%
+	  add_date_components()
 
-	output$wi <- renderPrint({tail(wi)})
+	overview_server('zh', zh)
 
-	output$zh <- renderPrint({tail(zh)})
+	overview_server('wi', wi)
 
 
 }
