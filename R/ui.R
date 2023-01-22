@@ -22,14 +22,17 @@ ui <- function(req){
 		),
 		tabPanel(
 			"Who uses how much",
-			shiny::h1("Second tab")
+			shiny::h1("Industry vs. household use in Zurich")
+		),
+		tabPanel(
+		  "Power, electricity etc."
+		),
+		tabPanel(
+		  "Decomposition and forecast"
 		),
 		tabPanel(
 		  "Cool dataviz",
 		  shiny::h1("asdf")
-		),
-		tabPanel(
-		  "Power, electricity etc."
 		),
 		tabPanel(
 		  "About"
