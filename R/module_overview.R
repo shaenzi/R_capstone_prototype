@@ -8,6 +8,13 @@ overviewUI <- function(id, title){
 
 	tagList(
 		h2(title),
+
+		shinyWidgets::materialSwitch(
+		  inputId = ns("cumulative"),
+		  label = "Cumulative",
+		  right = TRUE
+		),
+
 		plotOutput(ns("week"))
 	)
 }
@@ -35,8 +42,14 @@ overview_server <- function(id, data){
 				data_current <- data_for_plots[["data_current"]]
 
 				output$week <- renderPlot({
-				  plot_week_reference(data_ref, data_current)
-				})
+				  if (input$cumulative) {
+				    plot_week_cumulative(data_ref, data_current)
+				  } else {
+				    plot_week_reference(data_ref, data_current)
+				  }
+
+				}) %>%
+				  bindEvent(input$cumulative)
 		}
 	)
 }

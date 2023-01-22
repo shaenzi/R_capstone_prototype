@@ -44,7 +44,10 @@ plot_week_reference <- function(data_ref, data_current) {
     ggplot2::scale_x_continuous(breaks = seq(49,625,96),
                        labels = c("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun")) +
     ggplot2::labs(x = "",
-         y = "Power consumption [MWh]")
+         y = "Power consumption [MWh]",
+         title = glue::glue("Calendar week {lubridate::isoweek(data_current$timestamp[[1]])},
+         {lubridate::isoyear(data_current$timestamp[[1]])}"),
+         caption = "Relative to the previous 4 years")
 }
 
 plot_week_cumulative <- function(data_ref, data_current) {
@@ -58,6 +61,9 @@ plot_week_cumulative <- function(data_ref, data_current) {
     ggplot2::scale_x_continuous(breaks = seq(49,625,96),
                        labels = c("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun")) +
     ggplot2::labs(x = "",
-         y = "Power consumption [GWh]")
+         y = "Power consumption [GWh]",
+         title = glue::glue("Calendar week {lubridate::isoweek(data_current$timestamp[[1]])},
+         {lubridate::isoyear(data_current$timestamp[[1]])}"),
+         caption = "Relative to the previous 4 years")
 
 }

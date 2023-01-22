@@ -22,6 +22,7 @@ Imports:
     purrr,
     scales,
     shiny,
+    shinyWidgets,
     tidyr,
     tsibble
 Suggests: 
