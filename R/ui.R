@@ -12,6 +12,8 @@ thematic::thematic_shiny()
 #' @keywords internal
 ui <- function(req){
   shinybusy::html_dependency_epic()
+  shinybusy::html_dependency_spinkit()
+  shinybusy::html_dependency_shinybusy()
   shinybusy::add_busy_spinner(spin = "hollow-dots",
                               color = "#ff5733",
                               position = "full-page")
