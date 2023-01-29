@@ -59,9 +59,9 @@ add_date_components <- function(df) {
 
 get_clean_data_zh <- function(zh) {
   # get rid of duplicates (as of 15/1/2023: just one)
-  zh <- zh[!are_duplicated(zh, index = timestamp)]
+  zh <- zh[!tsibble::are_duplicated(zh, index = timestamp)]
   print("got rid of zh duplicates")
-  print(zh[are_duplicated(zh, index = timestamp)])
+  print(zh[tsibble::are_duplicated(zh, index = timestamp)])
 
   # fill gaps (as of 15/1/2023: only three)
   zh_ts <- zh %>%

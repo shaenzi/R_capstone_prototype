@@ -43,7 +43,12 @@ get_zh_data_to_2022 <- function() {
 
 }
 
-wi <- get_winti_data_to_2021()
-zh <- get_zh_data_to_2022()
+wi <- get_winti_data_to_2021() %>%
+  deal_with_ts_utc() %>%
+  add_date_components()
+zh <- get_zh_data_to_2022() %>%
+  deal_with_ts_zh() %>%
+  get_clean_data_zh() %>%
+  add_date_components()
 
 usethis::use_data(wi, zh, overwrite = TRUE)

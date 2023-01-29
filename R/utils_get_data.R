@@ -5,10 +5,10 @@ get_winti_data_up_to_date <- function() {
     janitor::clean_names() %>%
     dplyr::mutate(timestamp = zeitpunkt,
                   gross_energy_kwh = bruttolastgang_kwh) %>%
-    dplyr::select(timestamp, gross_energy_kwh)
-
-  # Combine latest with previous data
-  dplyr::bind_rows(wi, wi_current)
+    dplyr::select(timestamp, gross_energy_kwh) %>%
+    # pre-process
+    deal_with_ts_utc() %>%
+    add_date_components()
 }
 
 get_zh_data_up_to_date <- function() {
@@ -18,9 +18,8 @@ get_zh_data_up_to_date <- function() {
     janitor::clean_names() %>%
     dplyr::mutate(timestamp = zeitpunkt,
                   gross_energy_kwh = bruttolastgang) %>%
-    dplyr::select(timestamp, gross_energy_kwh, status)
-
-  # combine with previous data
-  dplyr::bind_rows(zh, zh_current)
+    dplyr::select(timestamp, gross_energy_kwh, status) %>%
+    deal_with_ts_zh() %>%
+    add_date_components()
 
 }

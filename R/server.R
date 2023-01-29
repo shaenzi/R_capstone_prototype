@@ -12,11 +12,9 @@ server <- function(input, output, session){
 	send_message <- make_send_message(session)
 
 	wi <- get_winti_data_up_to_date() %>%
-	  deal_with_ts_utc() %>%
-	  add_date_components()
+	  dplyr::bind_rows(wi)
 	zh <- get_zh_data_up_to_date() %>%
-	  deal_with_ts_zh() %>%
-	  add_date_components()
+	  dplyr::bind_rows(zh)
 
 	overview_server('zh', zh)
 

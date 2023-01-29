@@ -10,7 +10,7 @@ overviewUI <- function(id, title){
 	ns <- NS(id)
 
 	bslib::card(
-	  height = 500, full_screen = TRUE,
+	  height = 550, full_screen = TRUE,
 	  bslib::card_header(title),
 	  bslib::card_body_fill(
 	    materialSwitch(
