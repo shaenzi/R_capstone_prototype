@@ -6,21 +6,24 @@
 overviewUI <- function(id, title){
 	ns <- NS(id)
 
-	tagList(
-		h2(title),
+	bslib::card(
+	  height = 500, full_screen = TRUE,
+	  bslib::card_header(title),
+	  bslib::card_body_fill(
+	    shinyWidgets::materialSwitch(
+	      inputId = ns("cumulative"),
+	      label = "Cumulative",
+	      right = TRUE
+	    ),
 
-		htmlOutput(ns("latest_data")),
-
-		shinyWidgets::materialSwitch(
-		  inputId = ns("cumulative"),
-		  label = "Cumulative",
-		  right = TRUE
-		),
-
-		plotOutput(ns("week")) %>%
-		  shinycustomloader::withLoader(
-		    type="html",
-		    loader= "loader9") #list(shinycustomloader::marquee("getting the latest data...")))
+	    plotOutput(ns("week")) %>%
+	      shinycustomloader::withLoader(
+	        type="html",
+	        loader= "loader9") #list(shinycustomloader::marquee("getting the latest data...")))
+	  ),
+	  bslib::card_footer(
+	    htmlOutput(ns("latest_data")),
+	  )
 	)
 }
 
