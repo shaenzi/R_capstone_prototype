@@ -66,6 +66,7 @@ overview_server <- function(id, data){
       })
 
       output$week <- renderPlot({
+
         if (input$cumulative) {
           plot_week_cumulative(data_ref, data_current)
         } else {
