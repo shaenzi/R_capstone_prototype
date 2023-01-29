@@ -2,6 +2,9 @@
 #'
 #' @param id Unique id for module instance.
 #'
+#' @importFrom shinyWidgets materialSwitch
+#' @importFrom shinycustomloader withLoader
+#'
 #' @keywords internal
 overviewUI <- function(id, title){
 	ns <- NS(id)
@@ -10,14 +13,14 @@ overviewUI <- function(id, title){
 	  height = 500, full_screen = TRUE,
 	  bslib::card_header(title),
 	  bslib::card_body_fill(
-	    shinyWidgets::materialSwitch(
+	    materialSwitch(
 	      inputId = ns("cumulative"),
 	      label = "Cumulative",
 	      right = TRUE
 	    ),
 
 	    plotOutput(ns("week")) %>%
-	      shinycustomloader::withLoader(
+	      withLoader(
 	        type="html",
 	        loader= "loader9") #list(shinycustomloader::marquee("getting the latest data...")))
 	  ),

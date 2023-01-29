@@ -1,3 +1,5 @@
+thematic::thematic_shiny()
+
 #' Shiny UI
 #'
 #' Core UI of package.
@@ -10,7 +12,7 @@
 #' @keywords internal
 ui <- function(req){
 	navbarPage(
-		theme = bs_theme(version = 5),
+		theme = bs_theme(bootswatch = "darkly"),
 		header = list(assets()),
 		title = "Power use in Swiss cities",
 		id = "main-menu",
