@@ -11,8 +11,11 @@ thematic::thematic_shiny()
 #'
 #' @keywords internal
 ui <- function(req){
+  shinybusy::add_busy_spinner(spin = "hollow-dots",
+                              color = "#ff5733",
+                              position = "full-page")
 	navbarPage(
-		theme = bs_theme(bootswatch = "darkly"),
+		theme = bs_theme(bootswatch = "darkly"), # darkly (round)/ superhero(corners) / morph / slate / cyborg
 		header = list(assets()),
 		title = "Power use in Swiss cities",
 		id = "main-menu",
