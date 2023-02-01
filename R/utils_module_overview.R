@@ -24,13 +24,15 @@ prepare_data_for_weekly_plot <- function(data, date_today, n_ref = 5) {
     dplyr::arrange(step_in_week) %>%
     dplyr::mutate(cum = cumsum(gross_energy_kwh))
 
+  results <- list("data_ref" = data_ref, "data_current" = data_current)
+
   # take last week's data if this week is not yet available
   if (nrow(data_current) == 0) {
     print("getting one back")
-    prepare_data_for_weekly_plot(data, date_today = date_today -7)
+    results <- prepare_data_for_weekly_plot(data, date_today = date_today -7)
   }
 
-  return(list("data_ref" = data_ref, "data_current" = data_current))
+  return(results)
 }
 
 plot_week_reference <- function(data_ref, data_current) {

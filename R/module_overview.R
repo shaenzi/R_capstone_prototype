@@ -73,7 +73,7 @@ overview_server <- function(id, data){
           plot_week_reference(data_ref, data_current)
         }
       }) %>%
-        bindCache(input$cumulative, data_ref, data_current) %>%
+        bindCache(input$cumulative, data_ref, data_current, Sys.Date()) %>%
         bindEvent(input$cumulative)
     }
   )
