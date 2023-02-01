@@ -11,8 +11,9 @@ thematic::thematic_shiny()
 #'
 #' @keywords internal
 ui <- function(req){
+
 	navbarPage(
-		theme = bs_theme(bootswatch = "darkly"),
+		theme = bs_theme(bootswatch = "darkly"), # darkly (round)/ superhero(corners) / morph / slate / cyborg
 		header = list(assets()),
 		title = "Power use in Swiss cities",
 		id = "main-menu",
