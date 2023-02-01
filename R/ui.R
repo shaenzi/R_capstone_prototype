@@ -20,8 +20,23 @@ ui <- function(req){
 		tabPanel(
 			"Latest use",
 			shiny::h1("Power use over the last week"),
-			overviewUI('zh', "Zurich"),
-			overviewUI('wi', "Winterthur"),
+			br(),
+			shinyWidgets::radioGroupButtons(
+			    inputId = "city_select",
+			    label = "Choose a city",
+			    choices = c("Zurich", "Winterthur", "Basel"),
+			    status = "primary",
+			    justified = TRUE
+			  ),
+			br(),
+			conditionalPanel(
+			  condition = "input.city_select == 'Zurich'",
+			  overviewUI('zh', "Zurich")
+			  ),
+			conditionalPanel(
+			  condition = "input.city_select == 'Winterthur'",
+			  overviewUI('wi', "Winterthur")
+			  )
 		),
 		tabPanel(
 			"Who uses how much",
