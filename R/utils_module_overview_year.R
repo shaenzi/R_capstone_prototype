@@ -22,11 +22,11 @@ prepare_data_for_yearly_plot <- function(data, date_today, n_ref = 5) {
     dplyr::group_by(month) %>%
     dplyr::summarise(monthly_use = sum(gross_energy_kwh),
                      date = lubridate::as_date(min(timestamp)),
-                     #n_entries_per_month = n()
+                     #n_entries_per_month = dplyr::n()
                      ) %>%
     dplyr::ungroup() %>%
-    # filter(n_entries_per_month > 95*15) %>% # should have 96 for a complete day
-    # select(-n_entries_per_month) %>%
+    # dplyr::filter(n_entries_per_month > 95*15) %>% # should have 96 for a complete day
+    # dplyr::select(-n_entries_per_month) %>%
     dplyr::arrange(month) %>%
     dplyr::mutate(cum = cumsum(monthly_use))
 

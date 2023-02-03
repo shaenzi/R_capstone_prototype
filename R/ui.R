@@ -40,20 +40,25 @@ ui <- function(req){
 		),
 		tabPanel(
 			"Who uses how much",
-			shiny::h1("Industry vs. household use in Zurich")
+			shiny::h1("Industry vs. household use in Zurich"),
+			p("work in progress")
 		),
 		tabPanel(
-		  "Power, electricity etc."
+		  "Power, electricity etc.",
+		  p("work in progress")
 		),
 		tabPanel(
-		  "Decomposition and forecast"
+		  "Decomposition and forecast",
+		  p("work in progress")
 		),
 		tabPanel(
 		  "Cool dataviz",
-		  shiny::h1("asdf")
+		  shiny::h1("asdf"),
+		  p("work in progress")
 		),
 		tabPanel(
-		  "About"
+		  "About",
+		  includeMarkdown(system.file("app/www/about.md", package = "capstonePrototype"))
 		)
 	)
 }

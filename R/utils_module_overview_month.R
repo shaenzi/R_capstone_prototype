@@ -24,10 +24,10 @@ prepare_data_for_monthly_plot <- function(data, date_today, n_ref = 5) {
     dplyr::group_by(day) %>%
     dplyr::summarise(daily_use = sum(gross_energy_kwh),
                      date = lubridate::as_date(min(timestamp)),
-                     n_entries_per_day = n()) %>%
+                     n_entries_per_day = dplyr::n()) %>%
     dplyr::ungroup() %>%
-    filter(n_entries_per_day > 94) %>% # should have 96 for a complete day
-    select(-n_entries_per_day) %>%
+    dplyr::filter(n_entries_per_day > 94) %>% # should have 96 for a complete day
+    dplyr::select(-n_entries_per_day) %>%
     dplyr::arrange(day) %>%
     dplyr::mutate(cum = cumsum(daily_use))
 
