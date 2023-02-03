@@ -12,7 +12,7 @@ overviewUI <- function(id, title){
 
   bslib::navs_tab_card(
     height = 550, full_screen = TRUE,
-    title = title,
+    #title = title,
     bslib::nav(
       "Week",
       bslib::card_body_fill(
