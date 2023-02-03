@@ -17,7 +17,7 @@ overviewUI <- function(id, title){
       "Week",
       bslib::card_body_fill(
         materialSwitch(
-          inputId = ns("cumulative"),
+          inputId = ns("cumulative_week"),
           label = "Cumulative",
           right = TRUE
         ),
@@ -32,7 +32,7 @@ overviewUI <- function(id, title){
       "Month",
       bslib::card_body_fill(
         materialSwitch(
-          inputId = ns("cumulative"),
+          inputId = ns("cumulative_month"),
           label = "Cumulative",
           right = TRUE
         ),
@@ -80,14 +80,14 @@ overview_server <- function(id, data){
 
       output$week <- renderPlot({
 
-        if (input$cumulative) {
+        if (input$cumulative_week) {
           plot_week_cumulative(data_ref_week, data_current_week)
         } else {
           plot_week_reference(data_ref_week, data_current_week)
         }
       }) %>%
-        bindCache(input$cumulative, data_ref_week, data_current_week, Sys.Date()) %>%
-        bindEvent(input$cumulative)
+        bindCache(input$cumulative_week, data_ref_week, data_current_week, Sys.Date()) %>%
+        bindEvent(input$cumulative_week)
 
       # monthly stuff
       data_for_plots_month <- prepare_data_for_monthly_plot(
@@ -103,14 +103,14 @@ overview_server <- function(id, data){
 
       output$month <- renderPlot({
 
-        if (input$cumulative) {
+        if (input$cumulative_month) {
           plot_month_cumulative(data_ref_month, data_current_month)
         } else {
           plot_month_reference(data_ref_month, data_current_month)
         }
       }) %>%
-        bindCache(input$cumulative, data_ref_month, data_current_month, Sys.Date()) %>%
-        bindEvent(input$cumulative)
+        bindCache(input$cumulative_month, data_ref_month, data_current_month, Sys.Date()) %>%
+        bindEvent(input$cumulative_month)
     }
   )
 }

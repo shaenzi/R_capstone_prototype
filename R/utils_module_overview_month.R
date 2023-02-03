@@ -23,8 +23,11 @@ prepare_data_for_monthly_plot <- function(data, date_today, n_ref = 5) {
            year == lubridate::year(date_today)) %>%
     dplyr::group_by(day) %>%
     dplyr::summarise(daily_use = sum(gross_energy_kwh),
-                     date = lubridate::as_date(min(timestamp))) %>%
+                     date = lubridate::as_date(min(timestamp)),
+                     n_entries_per_day = n()) %>%
     dplyr::ungroup() %>%
+    filter(n_entries_per_day > 94) %>% # should have 96 for a complete day
+    select(-n_entries_per_day) %>%
     dplyr::arrange(day) %>%
     dplyr::mutate(cum = cumsum(daily_use))
 
@@ -40,7 +43,6 @@ prepare_data_for_monthly_plot <- function(data, date_today, n_ref = 5) {
       data,
       date_today = date_today - (current_mday +1)
       )
-    # Todo: deal with days that are not complete
   }
 
   return(results)
@@ -53,11 +55,10 @@ plot_month_reference <- function(data_ref, data_current) {
                          fill = "lightblue") +
     ggplot2::geom_line(ggplot2::aes(y = mean_ref), color = "#B8B8B8") +
     ggplot2::geom_line(data = data_current, ggplot2::aes(y = daily_use)) +
-    ggplot2::scale_y_continuous(labels = scales::label_number(scale = 0.001)) +
-    # ggplot2::scale_x_continuous(breaks = seq(49,625,96),
-    #                    labels = c("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun")) +
+    ggplot2::scale_y_continuous(labels = scales::label_number(scale = 0.000001)) +
     ggplot2::labs(x = "",
-         y = "Power consumption [MWh]",
+         y = "Power consumption [GWh]",
+         x = "Day of the month",
          title = glue::glue("{format(min(data_current$date), format = '%B %Y')}"),
          caption = "Relative to the previous 4 years")
 }
@@ -70,10 +71,9 @@ plot_month_cumulative <- function(data_ref, data_current) {
     ggplot2::geom_line(ggplot2::aes(y = cum_mean), color = "#B8B8B8") +
     ggplot2::geom_line(data = data_current, ggplot2::aes(y = cum)) +
     ggplot2::scale_y_continuous(labels = scales::label_number(scale = 0.000001)) +
-    # ggplot2::scale_x_continuous(breaks = seq(49,625,96),
-    #                    labels = c("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun")) +
     ggplot2::labs(x = "",
          y = "Power consumption [GWh]",
+         x = "Day of the month",
          title = glue::glue("{format(min(data_current$date), format = '%B %Y')}"),
          caption = "Relative to the previous 4 years")
 
