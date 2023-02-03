@@ -2,8 +2,8 @@ options("lubridate.week.start" = 1)
 prepare_data_for_weekly_plot <- function(data, date_today, n_ref = 5) {
   data_ref <- data %>%
     dplyr::filter(week == lubridate::isoweek(date_today),
-           year < lubridate::isoyear(date_today),
-           year > (lubridate::isoyear(date_today) - n_ref)) %>%
+           isoyear < lubridate::isoyear(date_today),
+           isoyear > (lubridate::isoyear(date_today) - n_ref)) %>%
     dplyr::group_by(wday, hour, minute) %>%
     dplyr::summarise(step_in_week = dplyr::cur_group_id(),
               min_ref = min(gross_energy_kwh),
@@ -17,7 +17,7 @@ prepare_data_for_weekly_plot <- function(data, date_today, n_ref = 5) {
 
   data_current <- data %>%
     dplyr::filter(week == lubridate::isoweek(date_today),
-           year == lubridate::isoyear(date_today)) %>%
+           isoyear == lubridate::isoyear(date_today)) %>%
     dplyr::group_by(wday, hour, minute) %>%
     dplyr::mutate(step_in_week = dplyr::cur_group_id()) %>%
     dplyr::ungroup() %>%

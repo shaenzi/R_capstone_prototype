@@ -33,7 +33,8 @@ deal_with_ts_utc <- function(df) {
 add_date_components <- function(df) {
   df <- df %>%
     dplyr::mutate(date = lubridate::as_date(timestamp),
-           year = lubridate::isoyear(timestamp),
+                  year = lubridate::year(timestamp),
+           isoyear = lubridate::isoyear(timestamp),
            month = lubridate::month(timestamp, label = TRUE, abbr = TRUE),
            week = lubridate::isoweek(timestamp),
            day = lubridate::day(timestamp),

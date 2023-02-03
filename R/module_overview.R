@@ -25,14 +25,27 @@ overviewUI <- function(id, title){
         plotOutput(ns("week"))
       ),
       bslib::card_footer(
-        htmlOutput(ns("latest_data")),
+        htmlOutput(ns("latest_data_week")),
       )
     ),
     bslib::nav(
-      "Month"
+      "Month",
+      bslib::card_body_fill(
+        materialSwitch(
+          inputId = ns("cumulative"),
+          label = "Cumulative",
+          right = TRUE
+        ),
+
+        plotOutput(ns("month"))
+      ),
+      bslib::card_footer(
+        htmlOutput(ns("latest_data_month")),
+      )
     ),
     bslib::nav(
-      "Year"
+      "Year",
+
     )
   )
 }
@@ -54,13 +67,13 @@ overview_server <- function(id, data){
       ns <- session$ns
       send_message <- make_send_message(session)
 
-      # your code here
-      data_for_plots <- prepare_data_for_weekly_plot(data, lubridate::today())
-      data_ref <- data_for_plots[["data_ref"]]
-      data_current <- data_for_plots[["data_current"]]
+      # weekly stuff
+      data_for_plots_week <- prepare_data_for_weekly_plot(data, lubridate::today())
+      data_ref_week <- data_for_plots_week[["data_ref"]]
+      data_current_week <- data_for_plots_week[["data_current"]]
 
-      output$latest_data <- renderText({
-        latest_date <- format(lubridate::as_date(max(data_current$timestamp)),
+      output$latest_data_week <- renderText({
+        latest_date <- format(lubridate::as_date(max(data_current_week$timestamp)),
                               format = "%d %b %Y")
         glue::glue("Latest data from {latest_date}")
       })
@@ -68,12 +81,35 @@ overview_server <- function(id, data){
       output$week <- renderPlot({
 
         if (input$cumulative) {
-          plot_week_cumulative(data_ref, data_current)
+          plot_week_cumulative(data_ref_week, data_current_week)
         } else {
-          plot_week_reference(data_ref, data_current)
+          plot_week_reference(data_ref_week, data_current_week)
         }
       }) %>%
-        bindCache(input$cumulative, data_ref, data_current, Sys.Date()) %>%
+        bindCache(input$cumulative, data_ref_week, data_current_week, Sys.Date()) %>%
+        bindEvent(input$cumulative)
+
+      # monthly stuff
+      data_for_plots_month <- prepare_data_for_monthly_plot(
+        data, lubridate::today())
+      data_ref_month <- data_for_plots_month[["data_ref"]]
+      data_current_month <- data_for_plots_month[["data_current"]]
+
+      output$latest_data_month <- renderText({
+        latest_date <- format(lubridate::as_date(max(data_current_month$timestamp)),
+                              format = "%d %b %Y")
+        glue::glue("Latest data from {latest_date}")
+      })
+
+      output$month <- renderPlot({
+
+        if (input$cumulative) {
+          plot_month_cumulative(data_ref_month, data_current_month)
+        } else {
+          plot_month_reference(data_ref_month, data_current_month)
+        }
+      }) %>%
+        bindCache(input$cumulative, data_ref_month, data_current_month, Sys.Date()) %>%
         bindEvent(input$cumulative)
     }
   )
