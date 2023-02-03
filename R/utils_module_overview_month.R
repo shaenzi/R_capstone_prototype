@@ -57,7 +57,7 @@ plot_month_reference <- function(data_ref, data_current) {
     ggplot2::geom_line(data = data_current, ggplot2::aes(y = daily_use)) +
     ggplot2::scale_y_continuous(labels = scales::label_number(scale = 0.000001)) +
     ggplot2::labs(x = "",
-         y = "Power consumption [GWh]",
+         y = "Power consumption per day [GWh]",
          x = "Day of the month",
          title = glue::glue("{format(min(data_current$date), format = '%B %Y')}"),
          caption = "Relative to the previous 4 years")
@@ -72,7 +72,7 @@ plot_month_cumulative <- function(data_ref, data_current) {
     ggplot2::geom_line(data = data_current, ggplot2::aes(y = cum)) +
     ggplot2::scale_y_continuous(labels = scales::label_number(scale = 0.000001)) +
     ggplot2::labs(x = "",
-         y = "Power consumption [GWh]",
+         y = "Power consumption per day [GWh]",
          x = "Day of the month",
          title = glue::glue("{format(min(data_current$date), format = '%B %Y')}"),
          caption = "Relative to the previous 4 years")

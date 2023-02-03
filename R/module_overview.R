@@ -45,7 +45,18 @@ overviewUI <- function(id, title){
     ),
     bslib::nav(
       "Year",
+      bslib::card_body_fill(
+        materialSwitch(
+          inputId = ns("cumulative_year"),
+          label = "Cumulative",
+          right = TRUE
+        ),
 
+        plotOutput(ns("year"))
+      ),
+      bslib::card_footer(
+        htmlOutput(ns("latest_data_year")),
+      )
     )
   )
 }
@@ -67,7 +78,7 @@ overview_server <- function(id, data){
       ns <- session$ns
       send_message <- make_send_message(session)
 
-      # weekly stuff
+      # weekly stuff ------------------------------------------
       data_for_plots_week <- prepare_data_for_weekly_plot(data, lubridate::today())
       data_ref_week <- data_for_plots_week[["data_ref"]]
       data_current_week <- data_for_plots_week[["data_current"]]
@@ -89,7 +100,7 @@ overview_server <- function(id, data){
         bindCache(input$cumulative_week, data_ref_week, data_current_week, Sys.Date()) %>%
         bindEvent(input$cumulative_week)
 
-      # monthly stuff
+      # monthly stuff -------------------------------------------
       data_for_plots_month <- prepare_data_for_monthly_plot(
         data, lubridate::today())
       data_ref_month <- data_for_plots_month[["data_ref"]]
@@ -111,6 +122,29 @@ overview_server <- function(id, data){
       }) %>%
         bindCache(input$cumulative_month, data_ref_month, data_current_month, Sys.Date()) %>%
         bindEvent(input$cumulative_month)
+
+      # yearly stuff -------------------------------------------------------
+      data_for_plots_year <- prepare_data_for_yearly_plot(
+        data, lubridate::today())
+      data_ref_year <- data_for_plots_year[["data_ref"]]
+      data_current_year <- data_for_plots_year[["data_current"]]
+
+      output$latest_data_year <- renderText({
+        latest_date <- format(max(data_current_year$date),
+                              format = "%d %b %Y")
+        glue::glue("Latest data from {latest_date}")
+      })
+
+      output$year <- renderPlot({
+
+        if (input$cumulative_year) {
+          plot_year_cumulative(data_ref_year, data_current_year)
+        } else {
+          plot_year_reference(data_ref_year, data_current_year)
+        }
+      }) %>%
+        bindCache(input$cumulative_year, data_ref_year, data_current_year, Sys.Date()) %>%
+        bindEvent(input$cumulative_year)
     }
   )
 }
