@@ -28,7 +28,7 @@ prepare_data_for_weekly_plot <- function(data, date_today, n_ref = 5) {
 
   # take last week's data if this week is not yet available
   if (nrow(data_current) == 0) {
-    print("getting one back")
+    print("going one week back")
     results <- prepare_data_for_weekly_plot(data, date_today = date_today -7)
   }
 

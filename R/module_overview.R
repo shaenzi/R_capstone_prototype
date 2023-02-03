@@ -96,7 +96,7 @@ overview_server <- function(id, data){
       data_current_month <- data_for_plots_month[["data_current"]]
 
       output$latest_data_month <- renderText({
-        latest_date <- format(lubridate::as_date(max(data_current_month$timestamp)),
+        latest_date <- format(max(data_current_month$date),
                               format = "%d %b %Y")
         glue::glue("Latest data from {latest_date}")
       })

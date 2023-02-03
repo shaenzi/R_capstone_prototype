@@ -32,9 +32,15 @@ prepare_data_for_monthly_plot <- function(data, date_today, n_ref = 5) {
 
   # take last month's data if this month is not yet available
   if (nrow(data_current) == 0) {
-    print("getting one week back")
-    results <- prepare_data_for_monthly_plot(data, date_today = date_today -7)
-    # go one week back at a time
+    print("going one month back")
+    # recursively call the same function with a date from the previous month
+    # i.e. go one day further back than the day of the month
+    current_mday <- lubridate::mday(date_today)
+    results <- prepare_data_for_monthly_plot(
+      data,
+      date_today = date_today - (current_mday +1)
+      )
+    # Todo: deal with days that are not complete
   }
 
   return(results)
@@ -52,8 +58,7 @@ plot_month_reference <- function(data_ref, data_current) {
     #                    labels = c("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun")) +
     ggplot2::labs(x = "",
          y = "Power consumption [MWh]",
-         title = glue::glue("Month starting on ",
-         "{format(lubridate::as_date(min(data_current$timestamp)), format = '%d %b %Y')}"),
+         title = glue::glue("{format(min(data_current$date), format = '%B %Y')}"),
          caption = "Relative to the previous 4 years")
 }
 
@@ -69,9 +74,7 @@ plot_month_cumulative <- function(data_ref, data_current) {
     #                    labels = c("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun")) +
     ggplot2::labs(x = "",
          y = "Power consumption [GWh]",
-         title = glue::glue(
-           "Month starting on ",
-           "{format(lubridate::as_date(min(data_current$timestamp)), format = '%d %b %Y')}"),
+         title = glue::glue("{format(min(data_current$date), format = '%B %Y')}"),
          caption = "Relative to the previous 4 years")
 
 }
