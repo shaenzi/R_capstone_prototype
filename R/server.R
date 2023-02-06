@@ -20,9 +20,18 @@ server <- function(input, output, session){
 
 	overview_server('wi', wi)
 
+	#overview_server('bs', bs)
+
 	predictions_server("zh", zh)
 
 	predictions_server("wi", wi)
 
+	#predictions_server("bs", bs)
+
+	dataviz_server('zh', zh)
+
+	dataviz_server('wi', wi)
+
+	#dataviz_server('bs', bs)
 
 }

@@ -79,8 +79,26 @@ ui <- function(req){
 		),
 		tabPanel(
 		  "Data exploration",
-		  shiny::h1("asdf"),
-		  p("work in progress")
+		  shiny::h1("What does the power use over the last years look like?"),
+		  shinyWidgets::radioGroupButtons(
+		    inputId = "city_select_tab3",
+		    choices = c("Zurich", "Winterthur", "Basel"),
+		    status = "primary",
+		    justified = TRUE
+		  ),
+		  conditionalPanel(
+		    condition = "input.city_select_tab3 == 'Zurich'",
+		    datavizUI('zh')
+		  ),
+		  conditionalPanel(
+		    condition = "input.city_select_tab3 == 'Winterthur'",
+		    datavizUI('wi')
+		  ),
+		  conditionalPanel(
+		    condition = "input.city_select_tab3 == 'Basel'",
+		    p("work in progress")
+		    #datavizUI('bs')
+		  )
 		),
 		tabPanel(
 		  "About",
