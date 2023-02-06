@@ -48,3 +48,32 @@ plot_monthly_per_year <- function(data) {
                   y = "Monthly energy consumption [GWh]",
                   color = "year")
 }
+
+#' heatmap_tod_date
+#'
+#' @description heatmeap with time of day on x and date on y axis, energy as colour
+#'
+#' @param df tibble with timestamp_hours_only, date, gross_energy_kwh columns
+#' @param title string to be used as title
+#'
+#' @return
+#' @export
+#'
+#' @examples
+heatmap_tod_date <- function(data) {
+  data %>%
+    ggplot2::ggplot(ggplot2::aes(x = timestamp_hours_only, y = as.numeric(yday), fill = gross_energy_kwh)) +
+    ggplot2::geom_tile() +
+    ggplot2::scale_fill_continuous(labels = scales::label_number(scale = 0.001)) +
+    # rcartocolor::scale_fill_carto_c(palette = "Emrld",
+    #                                 ) +
+    ggplot2::scale_y_continuous(n.breaks = 6,
+                                breaks = ggplot2::waiver(),
+                                labels = ~ format(lubridate::as_date(.x, origin = "2022-01-01"),
+                                                  format = "%b"),
+                                trans = "reverse") +
+    ggplot2::scale_x_datetime(labels = ~ format(.x, format = "%H:%M")) +
+    ggplot2::labs(x = "",
+                  y = "",
+                  fill = "gross energy \nused [Mwh]")
+}

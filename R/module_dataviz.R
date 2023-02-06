@@ -64,6 +64,9 @@ dataviz_server <- function(id, data){
       })
 
       output$heatmap <- renderPlot({
+        data %>%
+          dplyr::filter(year == 2022) %>% # TODO make this responsive
+          heatmap_tod_date()
 
       })
     }
