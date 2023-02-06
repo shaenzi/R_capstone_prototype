@@ -6,8 +6,24 @@
 predictionsUI <- function(id){
 	ns <- NS(id)
 
-	tagList(
-		h2("predictions")
+	bslib::navs_tab_card(
+	  height = 550, full_screen = TRUE,
+	  #title = title,
+	  bslib::nav(
+	    "Next two weeks",
+	    bslib::card_body_fill(
+	      plotOutput(ns("week"))
+	    ),
+	    # bslib::card_footer(
+	    #   htmlOutput(ns("latest_data_week")),
+	    # )
+	  ),
+	  bslib::nav(
+	    "Previous two weeks",
+	    bslib::card_body_fill(
+	      plotOutput(ns("month"))
+	    ),
+	  ),
 	)
 }
 
