@@ -12,7 +12,7 @@ predictionsUI <- function(id){
 	  bslib::nav(
 	    "Next two weeks",
 	    bslib::card_body_fill(
-	      plotOutput(ns("week"))
+	      plotOutput(ns("prediction"))
 	    ),
 	    # bslib::card_footer(
 	    #   htmlOutput(ns("latest_data_week")),
@@ -21,7 +21,7 @@ predictionsUI <- function(id){
 	  bslib::nav(
 	    "Previous two weeks",
 	    bslib::card_body_fill(
-	      plotOutput(ns("month"))
+	      plotOutput(ns("predicted_vs_actual"))
 	    ),
 	  ),
 	)
@@ -45,6 +45,27 @@ predictions_server <- function(id, data){
 				send_message <- make_send_message(session)
 
 				# your code here
+
+				data_ts <- tsibble::as_tsibble(data, index = "timestamp")
+
+				output$prediction <- renderPlot({
+				  data_forecast <- predict_2_weeks(data_ts)
+				  plot_prediction(data_forecast)
+				}) %>%
+				  bindCache(data_ts, Sys.Date())
+
+				output$predicted_vs_actual <- renderPlot({
+				  data_predicted <- data_ts %>%
+				    dplyr::filter(timestamp < (lubridate::as_date(max(data_ts$timestamp)) - 13)) %>%
+				    predict_2_weeks()
+
+				  plot_prediction_and_actual(
+				    data_predicted,
+				    data_ts %>%
+				      dplyr::filter(timestamp > (lubridate::as_date(max(data_ts$timestamp)) - 13))
+				    )
+				}) %>%
+				  bindCache(data_ts, Sys.Date())
 		}
 	)
 }
