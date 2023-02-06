@@ -28,12 +28,17 @@ ui <- function(req){
 			  ),
 			conditionalPanel(
 			  condition = "input.city_select_tab1 == 'Zurich'",
-			  overviewUI('zh', "Zurich")
+			  overviewUI('zh')
 			  ),
 			conditionalPanel(
 			  condition = "input.city_select_tab1 == 'Winterthur'",
-			  overviewUI('wi', "Winterthur")
-			  )
+			  overviewUI('wi')
+			  ),
+			conditionalPanel(
+			  condition = "input.city_select_tab1 == 'Basel'",
+			  p("Work in progress")
+			  #overviewUI('bs')
+			)
 		),
 		tabPanel(
 			"Who uses how much",
@@ -65,10 +70,15 @@ ui <- function(req){
 		  conditionalPanel(
 		    condition = "input.city_select_tab2 == 'Winterthur'",
 		    predictionsUI('wi')
+		  ),
+		  conditionalPanel(
+		    condition = "input.city_select_tab2 == 'Basel'",
+		    p("work in progress")
+		    #predictionsUI('bs')
 		  )
 		),
 		tabPanel(
-		  "Cool dataviz",
+		  "Data exploration",
 		  shiny::h1("asdf"),
 		  p("work in progress")
 		),

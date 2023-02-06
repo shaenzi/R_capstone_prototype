@@ -6,13 +6,12 @@
 #' @importFrom shinycustomloader withLoader
 #'
 #' @keywords internal
-overviewUI <- function(id, title){
+overviewUI <- function(id){
   ns <- NS(id)
 
 
   bslib::navs_tab_card(
     height = 550, full_screen = TRUE,
-    #title = title,
     bslib::nav(
       "Week",
       bslib::card_body_fill(
