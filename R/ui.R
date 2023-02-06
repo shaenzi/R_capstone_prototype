@@ -19,22 +19,19 @@ ui <- function(req){
 		id = "main-menu",
 		tabPanel(
 			"Latest use",
-			shiny::h1("Power use over the last week"),
-			#br(),
+			shiny::h1("Recent power use compared to the lats 4 years"),
 			shinyWidgets::radioGroupButtons(
-			    inputId = "city_select",
-			    #label = "Choose a city",
+			    inputId = "city_select_tab1",
 			    choices = c("Zurich", "Winterthur", "Basel"),
 			    status = "primary",
 			    justified = TRUE
 			  ),
-			#br(),
 			conditionalPanel(
-			  condition = "input.city_select == 'Zurich'",
+			  condition = "input.city_select_tab1 == 'Zurich'",
 			  overviewUI('zh', "Zurich")
 			  ),
 			conditionalPanel(
-			  condition = "input.city_select == 'Winterthur'",
+			  condition = "input.city_select_tab1 == 'Winterthur'",
 			  overviewUI('wi', "Winterthur")
 			  )
 		),
@@ -48,8 +45,27 @@ ui <- function(req){
 		  p("work in progress")
 		),
 		tabPanel(
-		  "Decomposition and forecast",
-		  p("work in progress")
+		  "Forecast",
+		  shiny::h1("Seasonal decomposition and forecast"),
+		  p("The data on electricity usage can be decomposed into different temporal components:
+		    a trend, seasonal components for variations within each year, week, day and hour, and
+		    a remainder. This can then be used to forecast the electricity usage in the future.
+		    However, note that this is a very simple model which does not take into account
+		    major factors known to affect electricity usage such as the weather."),
+		  shinyWidgets::radioGroupButtons(
+		    inputId = "city_select_tab2",
+		    choices = c("Zurich", "Winterthur", "Basel"),
+		    status = "primary",
+		    justified = TRUE
+		  ),
+		  conditionalPanel(
+		    condition = "input.city_select_tab2 == 'Zurich'",
+		    predictionsUI('zh')
+		  ),
+		  conditionalPanel(
+		    condition = "input.city_select_tab2 == 'Winterthur'",
+		    predictionsUI('wi')
+		  )
 		),
 		tabPanel(
 		  "Cool dataviz",

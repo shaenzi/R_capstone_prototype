@@ -20,5 +20,9 @@ server <- function(input, output, session){
 
 	overview_server('wi', wi)
 
+	predictions_server("zh", zh)
+
+	predictions_server("wi", wi)
+
 
 }
