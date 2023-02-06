@@ -55,11 +55,6 @@ plot_monthly_per_year <- function(data) {
 #'
 #' @param df tibble with timestamp_hours_only, date, gross_energy_kwh columns
 #' @param title string to be used as title
-#'
-#' @return
-#' @export
-#'
-#' @examples
 heatmap_tod_date <- function(data) {
   data %>%
     ggplot2::ggplot(ggplot2::aes(x = timestamp_hours_only, y = as.numeric(yday), fill = gross_energy_kwh)) +

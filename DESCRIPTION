@@ -28,6 +28,7 @@ Imports:
     shiny,
     shinycustomloader,
     shinyWidgets,
+    thematic,
     tidyr,
     tsibble
 Suggests: 

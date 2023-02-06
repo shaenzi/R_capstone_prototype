@@ -5,3 +5,5 @@
 ^\.leprechaun$
 ^data-raw$
 ^app\.R$
+^rsconnect$
+^.github$

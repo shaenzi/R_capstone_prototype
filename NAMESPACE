@@ -2,11 +2,7 @@
 
 export(run)
 import(shiny)
-importFrom(bslib,"card,")
-importFrom(bslib,"card_body_fill,")
-importFrom(bslib,"card_header,")
 importFrom(bslib,bs_theme)
-importFrom(bslib,card_footer)
 importFrom(htmltools,div)
 importFrom(htmltools,htmlDependency)
 importFrom(htmltools,tag)
