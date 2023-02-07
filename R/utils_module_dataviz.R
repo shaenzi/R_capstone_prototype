@@ -4,8 +4,16 @@ plot_daily_per_year <- function(data) {
     dplyr::summarise(daily_sum = sum(gross_energy_kwh),
                      n_entries_per_day = dplyr::n()) %>%
     dplyr::ungroup() %>%
-    dplyr::filter(n_entries_per_day > 94) %>% # should have 96 for a complete day
-    ggplot2::ggplot(mapping = ggplot2::aes(x = yday, y = daily_sum, color = factor(year))) +
+    # calculate 7 day average
+    dplyr::mutate(daily_rolling_mean = data.table::frollmean(x = daily_sum,
+                                                             n = 7,
+                                                             align = "center")) %>%
+    # leave the 3 NAs at the beginning and end, as filling with daily sum values gives large jumps
+    #filter out incomplete days
+    dplyr::filter(n_entries_per_day > 95) %>%
+    ggplot2::ggplot(mapping = ggplot2::aes(x = yday,
+                                           y = daily_rolling_mean,
+                                           color = factor(year))) +
     ggplot2::geom_line() +
     ggplot2::scale_y_continuous(labels = scales::label_number(scale = 0.000001)) +
     ggplot2::labs(x = "Day of the year",
