@@ -59,9 +59,8 @@ heatmap_tod_date <- function(data) {
   data %>%
     ggplot2::ggplot(ggplot2::aes(x = timestamp_hours_only, y = as.numeric(yday), fill = gross_energy_kwh)) +
     ggplot2::geom_tile() +
-    ggplot2::scale_fill_continuous(labels = scales::label_number(scale = 0.001)) +
-    # rcartocolor::scale_fill_carto_c(palette = "Emrld",
-    #                                 ) +
+    ggplot2::scale_fill_distiller(labels = scales::label_number(scale = 0.001),
+                                  direction = 1) +
     ggplot2::scale_y_continuous(n.breaks = 6,
                                 breaks = ggplot2::waiver(),
                                 labels = ~ format(lubridate::as_date(.x, origin = "2022-01-01"),

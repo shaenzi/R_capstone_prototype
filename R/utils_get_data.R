@@ -1,7 +1,7 @@
 get_winti_data_up_to_date <- function() {
 
   # read latest csv for Winterthur
-  wi_current <- data.table::fread(file.path("data", "KTZH_00001863_00003562.csv")) %>% #https://www.web.statistik.zh.ch/ogd/daten/ressourcen/KTZH_00001863_00003562.csv") %>%
+  wi_current <- data.table::fread("https://www.web.statistik.zh.ch/ogd/daten/ressourcen/KTZH_00001863_00003562.csv") %>%
     janitor::clean_names() %>%
     dplyr::mutate(timestamp = zeitpunkt,
                   gross_energy_kwh = bruttolastgang_kwh) %>%
@@ -14,8 +14,7 @@ get_winti_data_up_to_date <- function() {
 get_zh_data_up_to_date <- function() {
 
   # read latest csv for Zurich
-  zh_current <- data.table::fread(file.path("data", "2023_ewz_bruttolastgang.csv")) %>%
-    #"https://data.stadt-zuerich.ch/dataset/ewz_bruttolastgang_stadt_zuerich/download/2023_ewz_bruttolastgang.csv") %>%
+  zh_current <- data.table::fread("https://data.stadt-zuerich.ch/dataset/ewz_bruttolastgang_stadt_zuerich/download/2023_ewz_bruttolastgang.csv") %>%
     janitor::clean_names() %>%
     dplyr::mutate(timestamp = zeitpunkt,
                   gross_energy_kwh = bruttolastgang) %>%
