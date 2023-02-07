@@ -61,14 +61,17 @@ dataviz_server <- function(id, data){
 
       }
 
-      })
+      }) %>%
+        bindCache(data, input$time_select, Sys.Date()) %>%
+        bindEvent(input$time_select)
+
 
       output$heatmap <- renderPlot({
         data %>%
           dplyr::filter(year == 2022) %>% # TODO make this responsive
           heatmap_tod_date()
-
-      })
+      }) %>%
+        bindCache(data, Sys.Date())
     }
   )
 }
