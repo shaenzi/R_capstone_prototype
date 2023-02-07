@@ -19,7 +19,7 @@ ui <- function(req){
 		id = "main-menu",
 		tabPanel(
 			"Latest use",
-			shiny::h1("Recent power use compared to the lats 4 years"),
+			shiny::h1("Recent power use compared to the last 4 years"),
 			shinyWidgets::radioGroupButtons(
 			    inputId = "city_select_tab1",
 			    choices = c("Zurich", "Winterthur", "Basel"),

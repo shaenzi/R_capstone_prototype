@@ -55,14 +55,15 @@ predictions_server <- function(id, data){
 				  bindCache(data_ts, Sys.Date())
 
 				output$predicted_vs_actual <- renderPlot({
+				  max_date <- lubridate::as_date(max(data_ts$timestamp)) - 13
 				  data_predicted <- data_ts %>%
-				    dplyr::filter(timestamp < (lubridate::as_date(max(data_ts$timestamp)) - 13)) %>%
+				    dplyr::filter(timestamp < max_date) %>%
 				    predict_2_weeks()
 
 				  plot_prediction_and_actual(
 				    data_predicted,
 				    data_ts %>%
-				      dplyr::filter(timestamp > (lubridate::as_date(max(data_ts$timestamp)) - 13))
+				      dplyr::filter(timestamp > max_date)
 				    )
 				}) %>%
 				  bindCache(data_ts, Sys.Date())
