@@ -18,7 +18,8 @@ plot_daily_per_year <- function(data) {
     ggplot2::scale_y_continuous(labels = scales::label_number(scale = 0.000001)) +
     ggplot2::labs(x = "Day of the year",
                   y = "Daily energy consumption [GWh]",
-                  color = "year")
+                  color = "year",
+                  subtitle = "Seven day rolling average")
 }
 
 plot_weekly_per_year <- function(data) {
