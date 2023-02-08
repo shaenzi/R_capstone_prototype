@@ -128,6 +128,11 @@ overview_server <- function(id, data){
       data_ref_year <- data_for_plots_year[["data_ref"]]
       data_current_year <- data_for_plots_year[["data_current"]]
 
+      data_for_plots_year_cumulative <- prepare_data_for_yearly_cumulative_plot(
+        data, lubridate::today())
+      data_ref_year_cumulative <- data_for_plots_year_cumulative[["data_ref"]]
+      data_current_year_cumulative <- data_for_plots_year_cumulative[["data_current"]]
+
       output$latest_data_year <- renderText({
         latest_date <- format(max(data_current_year$date),
                               format = "%d %b %Y")
@@ -137,12 +142,13 @@ overview_server <- function(id, data){
       output$year <- renderPlot({
 
         if (input$cumulative_year) {
-          plot_year_cumulative(data_ref_year, data_current_year)
+          plot_year_cumulative(data_ref_year_cumulative, data_current_year_cumulative)
         } else {
           plot_year_reference(data_ref_year, data_current_year)
         }
       }) %>%
-        bindCache(input$cumulative_year, data_ref_year, data_current_year, Sys.Date()) %>%
+        bindCache(input$cumulative_year, data_ref_year, data_current_year,
+                  Sys.Date(), data_ref_year_cumulative, data_current_year_cumulative) %>%
         bindEvent(input$cumulative_year)
     }
   )
