@@ -26,7 +26,11 @@ datavizUI <- function(id){
     bslib::nav(
       "Detailed yearly heatmap",
       bslib::card_body_fill(
-        plotOutput(ns("heatmap"))
+        plotOutput(ns("heatmap")),
+        p("How to read this chart: One line represents a day, with the darkness of the
+          colour indicating how much power was used at that time of day. The days are
+          then stacked on top of each other so that one plot represents an entire year,
+          from top to bottom.")
       ),
     ),
   )

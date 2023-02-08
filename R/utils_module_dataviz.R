@@ -65,6 +65,7 @@ plot_monthly_per_year <- function(data) {
 #' @param df tibble with timestamp_hours_only, date, gross_energy_kwh columns
 #' @param title string to be used as title
 heatmap_tod_date <- function(data) {
+  year <- unique(data$year)
   data %>%
     ggplot2::ggplot(ggplot2::aes(x = timestamp_hours_only, y = as.numeric(yday), fill = gross_energy_kwh)) +
     ggplot2::geom_tile() +
@@ -76,7 +77,8 @@ heatmap_tod_date <- function(data) {
                                                   format = "%b"),
                                 trans = "reverse") +
     ggplot2::scale_x_datetime(labels = ~ format(.x, format = "%H:%M")) +
-    ggplot2::labs(x = "",
+    ggplot2::labs(x = "Time of day",
                   y = "",
-                  fill = "gross energy \nused [Mwh]")
+                  fill = "gross energy \nused [Mwh]",
+                  title = year)
 }
