@@ -75,7 +75,8 @@ heatmap_tod_date <- function(data) {
                                 breaks = ggplot2::waiver(),
                                 labels = ~ format(lubridate::as_date(.x, origin = "2022-01-01"),
                                                   format = "%b"),
-                                trans = "reverse") +
+                                trans = "reverse"
+                                ) +
     ggplot2::scale_x_datetime(labels = ~ format(.x, format = "%H:%M")) +
     ggplot2::labs(x = "Time of day",
                   y = "",
