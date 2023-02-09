@@ -11,11 +11,6 @@
 server <- function(input, output, session){
 	send_message <- make_send_message(session)
 
-	wi <- get_winti_data_up_to_date() %>%
-	  dplyr::bind_rows(wi)
-	zh <- get_zh_data_up_to_date() %>%
-	  dplyr::bind_rows(zh)
-
 	overview_server('zh', zh)
 
 	overview_server('wi', wi)
