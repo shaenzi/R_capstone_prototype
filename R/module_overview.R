@@ -65,7 +65,11 @@ overviewUI <- function(id){
 #' @param id Unique id for module instance.
 #'
 #' @keywords internal
-overview_server <- function(id, data){
+overview_server <- function(id,
+                            data_for_plots_week,
+                            data_for_plots_month,
+                            data_for_plots_year,
+                            data_for_plots_year_cumulative){
   moduleServer(
     id,
     function(
@@ -78,7 +82,7 @@ overview_server <- function(id, data){
       send_message <- make_send_message(session)
 
       # weekly stuff ------------------------------------------
-      data_for_plots_week <- prepare_data_for_weekly_plot(data, lubridate::today())
+      #data_for_plots_week <- prepare_data_for_weekly_plot(data, lubridate::today())
       data_ref_week <- data_for_plots_week[["data_ref"]]
       data_current_week <- data_for_plots_week[["data_current"]]
 
@@ -100,8 +104,8 @@ overview_server <- function(id, data){
         bindEvent(input$cumulative_week)
 
       # monthly stuff -------------------------------------------
-      data_for_plots_month <- prepare_data_for_monthly_plot(
-        data, lubridate::today())
+      # data_for_plots_month <- prepare_data_for_monthly_plot(
+      #   data, lubridate::today())
       data_ref_month <- data_for_plots_month[["data_ref"]]
       data_current_month <- data_for_plots_month[["data_current"]]
 
@@ -123,13 +127,13 @@ overview_server <- function(id, data){
         bindEvent(input$cumulative_month)
 
       # yearly stuff -------------------------------------------------------
-      data_for_plots_year <- prepare_data_for_yearly_plot(
-        data, lubridate::today())
+      # data_for_plots_year <- prepare_data_for_yearly_plot(
+      #   data, lubridate::today())
       data_ref_year <- data_for_plots_year[["data_ref"]]
       data_current_year <- data_for_plots_year[["data_current"]]
 
-      data_for_plots_year_cumulative <- prepare_data_for_yearly_cumulative_plot(
-        data, lubridate::today())
+      # data_for_plots_year_cumulative <- prepare_data_for_yearly_cumulative_plot(
+      #   data, lubridate::today())
       data_ref_year_cumulative <- data_for_plots_year_cumulative[["data_ref"]]
       data_current_year_cumulative <- data_for_plots_year_cumulative[["data_current"]]
 

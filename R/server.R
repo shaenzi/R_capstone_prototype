@@ -11,9 +11,9 @@
 server <- function(input, output, session){
 	send_message <- make_send_message(session)
 
-	overview_server('zh', zh)
+	overview_server('zh', zh_weekly, zh_monthly, zh_yearly, zh_yearly_cum)
 
-	overview_server('wi', wi)
+	overview_server('wi', wi_weekly, wi_monthly, wi_yearly, wi_yearly_cum)
 
 	#overview_server('bs', bs)
 
