@@ -11,20 +11,15 @@
 server <- function(input, output, session){
 	send_message <- make_send_message(session)
 
-	wi <- get_winti_data_up_to_date() %>%
-	  dplyr::bind_rows(wi)
-	zh <- get_zh_data_up_to_date() %>%
-	  dplyr::bind_rows(zh)
+	overview_server('zh', zh_weekly, zh_monthly, zh_yearly, zh_yearly_cum)
 
-	overview_server('zh', zh)
-
-	overview_server('wi', wi)
+	overview_server('wi', wi_weekly, wi_monthly, wi_yearly, wi_yearly_cum)
 
 	#overview_server('bs', bs)
 
-	predictions_server("zh", zh)
+	predictions_server("zh", zh_next_2, zh_prev_2, zh)
 
-	predictions_server("wi", wi)
+	predictions_server("wi", wi_next_2, wi_prev_2, wi)
 
 	#predictions_server("bs", bs)
 

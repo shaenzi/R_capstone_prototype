@@ -58,24 +58,24 @@ add_date_components <- function(df) {
   return(df)
 }
 
-get_clean_data_zh <- function(zh) {
-  # get rid of duplicates (as of 15/1/2023: just one)
-  zh <- zh[!tsibble::are_duplicated(zh, index = timestamp)]
-  print("got rid of zh duplicates")
-  print(zh[tsibble::are_duplicated(zh, index = timestamp)])
+get_clean_data <- function(df) {
+  # get rid of duplicates (as of 15/1/2023: 0)
+  df <- df[!tsibble::are_duplicated(df, index = timestamp),]
+  print("got rid of df duplicates")
+  print(df[tsibble::are_duplicated(df, index = timestamp),])
 
-  # fill gaps (as of 15/1/2023: only three)
-  zh_ts <- zh %>%
+  # fill gaps (as of 9/2/2023: 16)
+  df_ts <- df %>%
     tsibble::tsibble(index = timestamp)
-  n_gaps <- zh_ts %>%
+  n_gaps <- df_ts %>%
     tsibble::count_gaps() %>%
     dplyr::summarise(sum = sum(.n))
-  print(glue::glue("filled {n_gaps$sum} gaps in zh data"))
+  print(glue::glue("filled {n_gaps$sum} gaps in df data"))
 
-  zh <- zh_ts %>%
+  df <- df_ts %>%
     tsibble::fill_gaps() %>%
     tidyr::fill(gross_energy_kwh, .direction = "down") %>%
     dplyr::tibble()
 
-  return(zh)
+  return(df)
 }

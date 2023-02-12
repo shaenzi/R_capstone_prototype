@@ -32,7 +32,7 @@ predictionsUI <- function(id){
 #' @param id Unique id for module instance.
 #'
 #' @keywords internal
-predictions_server <- function(id, data){
+predictions_server <- function(id, data_next_2, data_prev_2, data){
 	moduleServer(
 		id,
 		function(
@@ -49,19 +49,19 @@ predictions_server <- function(id, data){
 				data_ts <- tsibble::as_tsibble(data, index = "timestamp")
 
 				output$prediction <- renderPlot({
-				  data_forecast <- predict_2_weeks(data_ts)
-				  plot_prediction(data_forecast)
+				  #data_forecast <- predict_2_weeks(data_ts)
+				  plot_prediction(data_next_2)
 				}) %>%
 				  bindCache(data_ts, Sys.Date())
 
 				output$predicted_vs_actual <- renderPlot({
 				  max_date <- lubridate::as_date(max(data_ts$timestamp)) - 13
-				  data_predicted <- data_ts %>%
-				    dplyr::filter(timestamp < max_date) %>%
-				    predict_2_weeks()
+				  # data_predicted <- data_ts %>%
+				  #   dplyr::filter(timestamp < max_date) %>%
+				  #   predict_2_weeks()
 
 				  plot_prediction_and_actual(
-				    data_predicted,
+				    data_prev_2,
 				    data_ts %>%
 				      dplyr::filter(timestamp > max_date)
 				    )

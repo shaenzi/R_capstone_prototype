@@ -26,7 +26,18 @@ datavizUI <- function(id){
     bslib::nav(
       "Detailed yearly heatmap",
       bslib::card_body_fill(
-        plotOutput(ns("heatmap"))
+        shinyWidgets::radioGroupButtons(
+          inputId = ns("year_select"),
+          choices = c(2019, 2020, 2021, 2022, 2023),
+          selected = 2022,
+          status = "primary",
+          #justified = TRUE
+        ),
+        plotOutput(ns("heatmap")),
+        p("How to read this chart: One line represents a day, with the darkness of the
+          colour indicating how much power was used at that time of day. The days are
+          then stacked on top of each other so that one plot represents an entire year,
+          from top to bottom.")
       ),
     ),
   )
@@ -68,10 +79,11 @@ dataviz_server <- function(id, data){
 
       output$heatmap <- renderPlot({
         data %>%
-          dplyr::filter(year == 2022) %>% # TODO make this responsive
+          dplyr::filter(year == input$year_select) %>%
           heatmap_tod_date()
       }) %>%
-        bindCache(data, Sys.Date())
+        bindCache(data, input$year_select, Sys.Date()) %>%
+        bindEvent(input$year_select)
     }
   )
 }

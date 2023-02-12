@@ -11,7 +11,7 @@ plot_prediction <- function(data) {
   print("plotting prediction")
   data %>%
     ggplot2::ggplot(mapping = ggplot2::aes(x = timestamp)) +
-    stat_lineribbon(aes(ydist = gross_energy_kwh),
+    ggdist::stat_lineribbon(ggplot2::aes(ydist = gross_energy_kwh),
                     .width = c(.8, .95),
                     linewidth = 0.5) +
     ggplot2::scale_fill_brewer() +
@@ -25,7 +25,7 @@ plot_prediction_and_actual <- function(data_predicted, data_actual) {
   print("plotting prediction and actual")
   data_predicted %>%
     ggplot2::ggplot(mapping = ggplot2::aes(x = timestamp)) +
-    stat_lineribbon(aes(ydist = gross_energy_kwh),
+    ggdist::stat_lineribbon(ggplot2::aes(ydist = gross_energy_kwh),
                     .width = c(.8, .95),
                     linewidth = 0.5) +
     ggplot2::geom_line(data = data_actual,

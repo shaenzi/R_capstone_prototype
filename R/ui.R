@@ -81,6 +81,10 @@ ui <- function(req){
 		tabPanel(
 		  "Data exploration",
 		  shiny::h1("What does the power use over the last years look like?"),
+		  p("The power consumption time series is a rich data source. Can you spot
+		  the seasonal changes with lower power usage in summer? The lower power use on the weekends
+		    and bank holidays? And even the hour for which no data exists due to the switch from
+		    winter to summer time?"),
 		  shinyWidgets::radioGroupButtons(
 		    inputId = "city_select_tab3",
 		    choices = c("Zurich", "Winterthur", "Basel"),
