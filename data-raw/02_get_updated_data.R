@@ -30,6 +30,7 @@ get_bs_data <- function() {
 
 bs <- get_bs_data() %>%
   deal_with_ts_utc() %>%
+  get_clean_data() %>%
   add_date_components()
 
 wi_new <- get_latest_winti_data() %>%

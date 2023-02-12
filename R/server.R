@@ -17,9 +17,9 @@ server <- function(input, output, session){
 
 	#overview_server('bs', bs)
 
-	predictions_server("zh", zh)
+	predictions_server("zh", zh_next_2, zh_prev_2, zh)
 
-	predictions_server("wi", wi)
+	predictions_server("wi", wi_next_2, wi_prev_2, wi)
 
 	#predictions_server("bs", bs)
 
