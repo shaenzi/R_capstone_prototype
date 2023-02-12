@@ -16,6 +16,7 @@ Imports:
     fable,
     fabletools,
     feasts,
+    ggdist,
     ggplot2,
     glue,
     htmltools,
