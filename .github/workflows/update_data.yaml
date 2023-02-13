@@ -28,14 +28,7 @@ jobs:
 
       - name: Update data
         run: |
-          library(magrittr)
-          source("R/utils_data_wrangle.R")
-          source("R/utils_get_data.R")
-          source("R/utils_module_dataviz.R")
-          source("R/utils_module_overview_month.R")
-          source("R/utils_module_overview_week.R")
-          source("R/utils_module_overview_year.R")
-          source("R/utils_module_predictions.R")
+          devtools::load_all()
           source("data-raw/02_get_updated_data.R")
           source("data-raw/03_prepare_data_for_modules.R")
         shell: Rscript {0}
