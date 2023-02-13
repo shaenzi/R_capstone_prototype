@@ -1,17 +1,3 @@
-#' get_csv_from_link
-#'
-#' @description function to read a csv function from a file/link
-#'
-#' @param my_url Parameter specifying the csv file's url.
-#'
-#' @return returns the data from the csv as a tibble
-#'
-#' @noRd
-get_csv_from_link <- function(my_url){
-  data <- data.table::fread(my_url) %>%
-    janitor::clean_names()
-}
-
 
 get_winti_data_to_2021 <- function() {
   winti_files <- c(
