@@ -25,7 +25,7 @@ jobs:
         run: |
           install.packages(c("curl", "data.table", "dplyr", "fable",
           "fabletools", "feasts", "glue", "htmltools", "janitor", "lubridate",
-          "magrittr", "purrr", "tidyr", "tsibble"))
+          "magrittr", "purrr", "tidyr", "tsibble", "usethis"))
         shell: Rscript {0}
 
       - name: Update data
