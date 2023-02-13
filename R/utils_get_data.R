@@ -5,10 +5,7 @@ get_winti_data_up_to_date <- function() {
     janitor::clean_names() %>%
     dplyr::mutate(timestamp = zeitpunkt,
                   gross_energy_kwh = bruttolastgang_kwh) %>%
-    dplyr::select(timestamp, gross_energy_kwh) %>%
-    # pre-process
-    deal_with_ts_utc() %>%
-    add_date_components()
+    dplyr::select(timestamp, gross_energy_kwh)
 }
 
 get_zh_data_up_to_date <- function() {
@@ -18,10 +15,18 @@ get_zh_data_up_to_date <- function() {
     janitor::clean_names() %>%
     dplyr::mutate(timestamp = zeitpunkt,
                   gross_energy_kwh = bruttolastgang) %>%
-    dplyr::select(timestamp, gross_energy_kwh, status) %>%
-    deal_with_ts_zh() %>%
-    add_date_components()
+    dplyr::select(timestamp, gross_energy_kwh, status)
 
+}
+
+get_bs_data <- function() {
+  bs_file <- "https://data.bs.ch/api/v2/catalog/datasets/100233/exports/csv"
+
+  data.table::fread(bs_file) %>%
+    janitor::clean_names() %>%
+    dplyr::mutate(timestamp = timestamp_interval_start,
+                  gross_energy_kwh = stromverbrauch_kwh) %>%
+    dplyr::select(timestamp, gross_energy_kwh, grundversorgte_kunden_kwh, freie_kunden_kwh)
 }
 
 #' get_csv_from_link
