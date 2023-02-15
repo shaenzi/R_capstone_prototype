@@ -36,6 +36,7 @@ jobs:
           source("R/utils_module_overview_week.R")
           source("R/utils_module_overview_year.R")
           source("R/utils_module_predictions.R")
+          source("R/utils_module_zh_details.R")
           load("data/zh_old.rda")
           load("data/wi_old.rda")
           source("data-raw/02_get_updated_data.R")
