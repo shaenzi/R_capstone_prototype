@@ -47,3 +47,9 @@ bs_prev_2 <- bs_ts %>%
   dplyr::filter(timestamp < max_date) %>%
   predict_2_weeks()
 usethis::use_data(bs_next_2, bs_prev_2, overwrite = TRUE)
+
+# zh details module
+zh_details_yearly <- prepare_zh_details_years(zh_details)
+zh_details_week <- prepare_zh_details_last_week(zh_details)
+zh_details_last_year <- prepare_zh_details_months(zh_details)
+usethis::use_data(zh_details_yearly, zh_details_week, zh_details_last_year, overwrite = TRUE)

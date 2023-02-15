@@ -29,4 +29,6 @@ server <- function(input, output, session){
 
 	dataviz_server('bs', bs)
 
+	zh_details_server('zh_details')
+
 }

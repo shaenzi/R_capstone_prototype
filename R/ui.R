@@ -43,7 +43,12 @@ ui <- function(req){
 		tabPanel(
 			"Who uses how much",
 			shiny::h1("Industry vs. household use in Zurich"),
-			p("work in progress")
+			p("In Zurich, the power use data is also available split according to the supply voltage.
+			  The lower voltage but larger group are the households and small businesses; larger industrial
+			  users, of which there are fewer, are supplied with a higher voltage. To keep the plots simple,
+			  the first group is referred to as the households (though bear in mind that it includes more
+			  than just households), and the second group as industry."),
+			zh_detailsUI('zh_details')
 		),
 		tabPanel(
 		  "Power, electricity etc.",
