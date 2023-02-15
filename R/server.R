@@ -15,18 +15,18 @@ server <- function(input, output, session){
 
 	overview_server('wi', wi_weekly, wi_monthly, wi_yearly, wi_yearly_cum)
 
-	#overview_server('bs', bs)
+	overview_server('bs', bs_weekly, bs_monthly, bs_yearly, bs_yearly_cum)
 
 	predictions_server("zh", zh_next_2, zh_prev_2, zh)
 
 	predictions_server("wi", wi_next_2, wi_prev_2, wi)
 
-	#predictions_server("bs", bs)
+	predictions_server("bs", bs_next_2, bs_prev_2, bs)
 
 	dataviz_server('zh', zh)
 
 	dataviz_server('wi', wi)
 
-	#dataviz_server('bs', bs)
+	dataviz_server('bs', bs)
 
 }

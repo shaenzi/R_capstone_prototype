@@ -37,8 +37,7 @@ ui <- function(req){
 			  ),
 			conditionalPanel(
 			  condition = "input.city_select_tab1 == 'Basel'",
-			  p("Work in progress")
-			  #overviewUI('bs')
+			  overviewUI('bs')
 			)
 		),
 		tabPanel(
@@ -74,8 +73,7 @@ ui <- function(req){
 		  ),
 		  conditionalPanel(
 		    condition = "input.city_select_tab2 == 'Basel'",
-		    p("work in progress")
-		    #predictionsUI('bs')
+		    predictionsUI('bs')
 		  )
 		),
 		tabPanel(
@@ -101,8 +99,7 @@ ui <- function(req){
 		  ),
 		  conditionalPanel(
 		    condition = "input.city_select_tab3 == 'Basel'",
-		    p("work in progress")
-		    #datavizUI('bs')
+		    datavizUI('bs')
 		  )
 		),
 		tabPanel(
