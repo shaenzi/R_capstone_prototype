@@ -52,7 +52,7 @@ ui <- function(req){
 		),
 		tabPanel(
 		  "Energy, power etc.",
-		  p("work in progress")
+		  includeMarkdown(system.file("app/www/energy_etc.md", package = "capstonePrototype"))
 		),
 		tabPanel(
 		  "Forecast",
