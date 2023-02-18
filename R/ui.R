@@ -16,11 +16,11 @@ ui <- function(req){
 	navbarPage(
 		theme = bs_theme(bootswatch = "darkly"), # darkly (round)/ superhero(corners) / morph / slate / cyborg
 		header = list(assets()),
-		title = "Power use in Swiss cities",
+		title = "Energy use in Swiss cities",
 		id = "main-menu",
 		tabPanel(
 			"Latest use",
-			shiny::h1("Recent power use compared to the last 4 years"),
+			shiny::h1("Recent energy use compared to the last 4 years"),
 			shinyWidgets::radioGroupButtons(
 			    inputId = "city_select_tab1",
 			    choices = c("Zurich", "Winterthur", "Basel"),
@@ -43,25 +43,25 @@ ui <- function(req){
 		tabPanel(
 			"Who uses how much",
 			shiny::h1("Industry vs. household use in Zurich"),
-			p("In Zurich, the power use data is also available split according to the supply voltage.
-			  The lower voltage but larger group are the households and small businesses; larger industrial
+			p("In Zurich, the energy use data is also available split according to the supply voltage.
+			  The lower voltage group are the households and small businesses; larger industrial
 			  users, of which there are fewer, are supplied with a higher voltage. To keep the plots simple,
 			  the first group is referred to as the households (though bear in mind that it includes more
 			  than just households), and the second group as industry."),
 			zh_detailsUI('zh_details')
 		),
 		tabPanel(
-		  "Power, electricity etc.",
+		  "Energy, power etc.",
 		  p("work in progress")
 		),
 		tabPanel(
 		  "Forecast",
 		  shiny::h1("Seasonal decomposition and forecast"),
-		  p("The data on electricity usage can be decomposed into different temporal components:
+		  p("The data on energy usage can be decomposed into different temporal components:
 		    a trend, seasonal components for variations within each year, week, day and hour, and
-		    a remainder. This can then be used to forecast the electricity usage in the future.
+		    a remainder. This can then be used to forecast the energy usage in the future.
 		    However, note that this is a very simple model which does not take into account
-		    major factors known to affect electricity usage such as the weather."),
+		    major factors known to affect energy usage such as the weather."),
 		  shinyWidgets::radioGroupButtons(
 		    inputId = "city_select_tab2",
 		    choices = c("Zurich", "Winterthur", "Basel"),
@@ -83,9 +83,9 @@ ui <- function(req){
 		),
 		tabPanel(
 		  "Data exploration",
-		  shiny::h1("What does the power use over the last years look like?"),
-		  p("The power consumption time series is a rich data source. Can you spot
-		  the seasonal changes with lower power usage in summer? The lower power use on the weekends
+		  shiny::h1("What does the energy use over the last years look like?"),
+		  p("The energy consumption time series is a rich data source. Can you spot
+		  the seasonal changes with lower energy usage in summer? The lower energy use on the weekends
 		    and bank holidays? And even the hour for which no data exists due to the switch from
 		    winter to summer time?"),
 		  shinyWidgets::radioGroupButtons(

@@ -99,7 +99,7 @@ plot_year_reference <- function(data_ref, data_current) {
     ggplot2::geom_line(data = data_current, ggplot2::aes(y = daily_mean_per_month, group = 1)) +
     ggplot2::scale_y_continuous(labels = scales::label_number(scale = 0.000001)) +
     ggplot2::labs(x = "",
-         y = "Daily power consumption averaged per month [GWh]",
+         y = "Daily energy consumption averaged per month [GWh]",
          title = glue::glue("{format(lubridate::year(min(data_current$date)), format = '%Y')}"),
          caption = "Relative to the previous 4 years")
 }
@@ -113,7 +113,7 @@ plot_year_cumulative <- function(data_ref, data_current) {
     ggplot2::geom_line(data = data_current, ggplot2::aes(y = cum, group = 1)) +
     ggplot2::scale_y_continuous(labels = scales::label_number(scale = 0.000001)) +
     ggplot2::labs(x = "",
-         y = "Cumulative power consumption [GWh]",
+         y = "Cumulative energy consumption [GWh]",
          title = glue::glue("{format(lubridate::year(min(data_current$date)), format = '%Y')}"),
          caption = "Relative to the previous 4 years")
 

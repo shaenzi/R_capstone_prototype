@@ -46,7 +46,7 @@ plot_week_reference <- function(data_ref, data_current) {
     ggplot2::scale_x_continuous(breaks = seq(49,625,96),
                        labels = c("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun")) +
     ggplot2::labs(x = "",
-         y = "Power consumption [MWh]",
+         y = "Energy consumption [MWh]",
          title = glue::glue("Week starting on ",
          "{format(lubridate::as_date(min(data_current$timestamp)), format = '%d %b %Y')}"),
          caption = "Relative to the previous 4 years")
@@ -63,7 +63,7 @@ plot_week_cumulative <- function(data_ref, data_current) {
     ggplot2::scale_x_continuous(breaks = seq(49,625,96),
                        labels = c("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun")) +
     ggplot2::labs(x = "",
-         y = "Power consumption [GWh]",
+         y = "Energy consumption [GWh]",
          title = glue::glue(
            "Week starting on ",
            "{format(lubridate::as_date(min(data_current$timestamp)), format = '%d %b %Y')}"),

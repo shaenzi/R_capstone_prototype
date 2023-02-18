@@ -18,7 +18,7 @@ plot_prediction <- function(data) {
     ggplot2::scale_y_continuous(labels = scales::label_number(scale = 0.001)) +
     ggplot2::labs(x = "",
                   title = "Next two weeks - prediction",
-                  y = "power use per 15min (MWh)")
+                  y = "energy use per 15min (MWh)")
 }
 
 plot_prediction_and_actual <- function(data_predicted, data_actual) {
@@ -35,5 +35,5 @@ plot_prediction_and_actual <- function(data_predicted, data_actual) {
     ggplot2::scale_y_continuous(labels = scales::label_number(scale = 0.001)) +
     ggplot2::labs(x = "",
                   title = "last two weeks predicted and actual",
-                  y = "power use per 15min (MWh)")
+                  y = "energy use per 15min (MWh)")
 }
