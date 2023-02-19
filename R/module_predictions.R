@@ -32,7 +32,7 @@ predictionsUI <- function(id){
 #' @param id Unique id for module instance.
 #'
 #' @keywords internal
-predictions_server <- function(id, data_next_2, data_prev_2, data){
+predictions_server <- function(id, data_next_2, data_prev_2, data, bs_colors){
 	moduleServer(
 		id,
 		function(
@@ -50,7 +50,7 @@ predictions_server <- function(id, data_next_2, data_prev_2, data){
 
 				output$prediction <- renderPlot({
 				  #data_forecast <- predict_2_weeks(data_ts)
-				  plot_prediction(data_next_2)
+				  plot_prediction(data_next_2, bs_colors)
 				}) %>%
 				  bindCache(data_ts, Sys.Date())
 
@@ -63,7 +63,8 @@ predictions_server <- function(id, data_next_2, data_prev_2, data){
 				  plot_prediction_and_actual(
 				    data_prev_2,
 				    data_ts %>%
-				      dplyr::filter(timestamp > max_date)
+				      dplyr::filter(timestamp > max_date),
+				    bs_colors
 				    )
 				}) %>%
 				  bindCache(data_ts, Sys.Date())
