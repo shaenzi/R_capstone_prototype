@@ -10,8 +10,8 @@ on:
 jobs:
   update:
     runs-on: ubuntu-latest
-    env:
-      GITHUB_PAT: ${{ secrets.PAT}}
+    #env:
+      #GITHUB_PAT: ${{ secrets.PAT}}
     steps:
       - uses: actions/checkout@v2
 
