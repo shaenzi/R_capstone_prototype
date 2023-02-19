@@ -21,7 +21,8 @@ overviewUI <- function(id){
           right = TRUE
         ),
 
-        plotOutput(ns("week"))
+        plotOutput(ns("week")) %>%
+          shinycssloaders::withSpinner()
       ),
       bslib::card_footer(
         htmlOutput(ns("latest_data_week")),
@@ -36,7 +37,8 @@ overviewUI <- function(id){
           right = TRUE
         ),
 
-        plotOutput(ns("month"))
+        plotOutput(ns("month")) %>%
+          shinycssloaders::withSpinner()
       ),
       bslib::card_footer(
         htmlOutput(ns("latest_data_month")),
@@ -51,7 +53,8 @@ overviewUI <- function(id){
           right = TRUE
         ),
 
-        plotOutput(ns("year"))
+        plotOutput(ns("year")) %>%
+          shinycssloaders::withSpinner()
       ),
       bslib::card_footer(
         htmlOutput(ns("latest_data_year")),
