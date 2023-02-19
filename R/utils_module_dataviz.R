@@ -16,10 +16,12 @@ plot_daily_per_year <- function(data) {
                                            color = factor(year))) +
     ggplot2::geom_line() +
     ggplot2::scale_y_continuous(labels = scales::label_number(scale = 0.000001)) +
-    ggplot2::labs(x = "Day of the year",
-                  y = "Daily energy consumption [GWh]",
+    ggplot2::labs(title = "Daily energy consumption",
+                  x = "Day of the year",
+                  y = "GWh",
                   color = "year",
-                  subtitle = "Seven day rolling average")
+                  subtitle = "Seven day rolling average") +
+    ggplot2::theme(axis.title.y = ggplot2::element_text(angle = 0))
 }
 
 plot_weekly_per_year <- function(data) {
@@ -35,9 +37,11 @@ plot_weekly_per_year <- function(data) {
                                            group = isoyear)) +
     ggplot2::geom_line() +
     ggplot2::scale_y_continuous(labels = scales::label_number(scale = 0.000001)) +
-    ggplot2::labs(x = "Week of the year",
-                  y = "Weekly energy consumption [GWh]",
-                  color = "year")
+    ggplot2::labs(title = "Weekly energy consumption",
+                  x = "Week of the year",
+                  y = "GWh",
+                  color = "year") +
+    ggplot2::theme(axis.title.y = ggplot2::element_text(angle = 0))
 }
 
 plot_monthly_per_year <- function(data) {
@@ -53,9 +57,11 @@ plot_monthly_per_year <- function(data) {
                                            group = year)) +
     ggplot2::geom_line() +
     ggplot2::scale_y_continuous(labels = scales::label_number(scale = 0.000001)) +
-    ggplot2::labs(x = "Month of the year",
-                  y = "Monthly energy consumption [GWh]",
-                  color = "year")
+    ggplot2::labs(title = "Monthly energy consumption",
+                  x = "Month of the year",
+                  y = "GWh",
+                  color = "year") +
+    ggplot2::theme(axis.title.y = ggplot2::element_text(angle = 0))
 }
 
 #' heatmap_tod_date
@@ -76,10 +82,10 @@ heatmap_tod_date <- function(data) {
                                 labels = ~ format(lubridate::as_date(.x, origin = "2022-01-01"),
                                                   format = "%b"),
                                 trans = "reverse"
-                                ) +
+    ) +
     ggplot2::scale_x_datetime(labels = ~ format(.x, format = "%H:%M")) +
     ggplot2::labs(x = "Time of day",
                   y = "",
-                  fill = "gross energy \nused [Mwh]",
+                  fill = "energy \nused [Mwh]",
                   title = year)
 }

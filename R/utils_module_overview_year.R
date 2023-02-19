@@ -3,7 +3,7 @@ prepare_data_for_yearly_cumulative_plot <- function(data, date_today, n_ref = 5)
   month_today <- lubridate::month(date_today)
   data_ref <- data %>%
     dplyr::filter(year < lubridate::year(date_today),
-           year > (lubridate::year(date_today) - n_ref)) %>%
+                  year > (lubridate::year(date_today) - n_ref)) %>%
     dplyr::group_by(year, month) %>%
     dplyr::summarise(monthly_use = sum(gross_energy_kwh)) %>%
     dplyr::ungroup() %>%
@@ -14,15 +14,15 @@ prepare_data_for_yearly_cumulative_plot <- function(data, date_today, n_ref = 5)
     dplyr::ungroup() %>%
     dplyr::arrange(month) %>%
     dplyr::mutate(cum_min = cumsum(min_ref),
-           cum_max = cumsum(max_ref),
-           cum_mean = cumsum(mean_ref))
+                  cum_max = cumsum(max_ref),
+                  cum_mean = cumsum(mean_ref))
 
   data_current <- data %>%
     dplyr::filter(year == lubridate::year(date_today)) %>%
     dplyr::group_by(month) %>%
     dplyr::summarise(monthly_use = sum(gross_energy_kwh),
                      date = lubridate::as_date(min(timestamp)),
-                     ) %>%
+    ) %>%
     dplyr::ungroup() %>%
     dplyr::arrange(month) %>%
     dplyr::mutate(cum = cumsum(monthly_use))
@@ -38,7 +38,7 @@ prepare_data_for_yearly_cumulative_plot <- function(data, date_today, n_ref = 5)
     results <- prepare_data_for_yearly_cumulative_plot(
       data,
       date_today = date_today - (current_yday +1)
-      )
+    )
   }
 
   return(results)
@@ -98,10 +98,13 @@ plot_year_reference <- function(data_ref, data_current) {
     ggplot2::geom_line(ggplot2::aes(y = mean_ref, group = 1), color = "#B8B8B8") +
     ggplot2::geom_line(data = data_current, ggplot2::aes(y = daily_mean_per_month, group = 1)) +
     ggplot2::scale_y_continuous(labels = scales::label_number(scale = 0.000001)) +
-    ggplot2::labs(x = "",
-         y = "Daily energy consumption averaged per month [GWh]",
-         title = glue::glue("{format(lubridate::year(min(data_current$date)), format = '%Y')}"),
-         caption = "Relative to the previous 4 years")
+    ggplot2::labs(title = glue::glue(
+      "Daily energy consumption averaged per month in ",
+      "{format(lubridate::year(min(data_current$date)), format = '%Y')}"),
+                  x = "",
+                  y = "GWh",
+                  caption = "Relative to the previous 4 years") +
+    ggplot2::theme(axis.title.y = ggplot2::element_text(angle = 0))
 }
 
 plot_year_cumulative <- function(data_ref, data_current) {
@@ -112,9 +115,11 @@ plot_year_cumulative <- function(data_ref, data_current) {
     ggplot2::geom_line(ggplot2::aes(y = cum_mean, group = 1), color = "#B8B8B8") +
     ggplot2::geom_line(data = data_current, ggplot2::aes(y = cum, group = 1)) +
     ggplot2::scale_y_continuous(labels = scales::label_number(scale = 0.000001)) +
-    ggplot2::labs(x = "",
-         y = "Cumulative energy consumption [GWh]",
-         title = glue::glue("{format(lubridate::year(min(data_current$date)), format = '%Y')}"),
-         caption = "Relative to the previous 4 years")
-
+    ggplot2::labs(title = glue::glue(
+      "Cumulative energy consumption in ",
+      "{format(lubridate::year(min(data_current$date)), format = '%Y')}"),
+                  x = "",
+                  y = "GWh",
+                  caption = "Relative to the previous 4 years") +
+    ggplot2::theme(axis.title.y = ggplot2::element_text(angle = 0))
 }

@@ -18,7 +18,9 @@ plot_prediction <- function(data) {
     ggplot2::scale_y_continuous(labels = scales::label_number(scale = 0.001)) +
     ggplot2::labs(x = "",
                   title = "Next two weeks - prediction",
-                  y = "energy use per 15min (MWh)")
+                  subtitle = "Energy used per 15min",
+                  y = "MWh") +
+    ggplot2::theme(axis.title.y = ggplot2::element_text(angle = 0))
 }
 
 plot_prediction_and_actual <- function(data_predicted, data_actual) {
@@ -34,6 +36,8 @@ plot_prediction_and_actual <- function(data_predicted, data_actual) {
     ggplot2::scale_fill_brewer() +
     ggplot2::scale_y_continuous(labels = scales::label_number(scale = 0.001)) +
     ggplot2::labs(x = "",
-                  title = "last two weeks predicted and actual",
-                  y = "energy use per 15min (MWh)")
+                  title = "Last two weeks predicted and actual",
+                  subtitle = "Energy used per 15min",
+                  y = "MWh") +
+    ggplot2::theme(axis.title.y = ggplot2::element_text(angle = 0))
 }

@@ -17,7 +17,8 @@ plot_zh_details_years <- function(zh_details_yearly) {
     ggplot2::scale_y_continuous(labels = scales::label_number(scale = 0.000001)) +
     ggplot2::scale_x_continuous(breaks = seq(2010, 2022, 3)) +
     ggplot2::scale_fill_discrete(labels = c("ne5" = "industry", "ne7" = "households")) +
-    ggplot2::labs(y = "Total energy consumption per year [GWh]", x = "")
+    ggplot2::labs(title = "Total energy consumption per year", y = "GWh", x = "") +
+    ggplot2::theme(axis.title.y = ggplot2::element_text(angle = 0))
 }
 
 prepare_zh_details_last_week <- function(zh_details){
@@ -49,11 +50,12 @@ plot_zh_details_last_week <- function(zh_details_week){
                        labels = c("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun")) +
     ggplot2::scale_fill_discrete(labels = c("value_ne5" = "industry", "value_ne7" = "households etc.")) +
     ggplot2::labs(x = "",
-         y = "Energy consumption [MWh]",
+         y = "MWh",
          title = paste0(
-           "Week starting on ",
+           "Energy consumption in the week starting on ",
            format(lubridate::as_date(min(zh_details_week$timestamp)),
-                  format = '%d %b %Y')))
+                  format = '%d %b %Y'))) +
+    ggplot2::theme(axis.title.y = ggplot2::element_text(angle = 0))
 }
 
 prepare_zh_details_months <- function(zh_details){
@@ -86,6 +88,8 @@ plot_zh_details_last_year <- function(zh_details_last_year) {
     ggplot2::scale_fill_discrete(labels = c("monthly_avg_ne5" = "industry",
                                             "monthly_avg_ne7" = "households")) +
     ggplot2::labs(x = "month",
-         y = "average daily energy consumption (GWh)",
-         title = paste0("Zurich ", year))
+         y = "GWh",
+         title = paste0("Daily energy consumption in Zurich in ", year),
+         subtitle = "Averaged per month") +
+    ggplot2::theme(axis.title.y = ggplot2::element_text(angle = 0))
 }
