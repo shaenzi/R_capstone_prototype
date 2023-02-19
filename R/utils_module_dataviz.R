@@ -22,7 +22,8 @@ plot_daily_per_year <- function(data) {
                   x = "Day of the year",
                   y = "GWh",
                   color = "year",
-                  subtitle = "Seven day rolling average") +
+                  subtitle = "Seven day rolling average",
+                  caption = "Note that the rolling average can be low if the last few days were a weekend.") +
     ggplot2::theme(axis.title.y = ggplot2::element_text(angle = 0))
 }
 
@@ -64,7 +65,8 @@ plot_monthly_per_year <- function(data) {
     ggplot2::labs(title = "Monthly energy consumption",
                   x = "Month of the year",
                   y = "GWh",
-                  color = "year") +
+                  color = "year",
+                  caption = "Note that shorter months such as February have a lower cumulative energy use.") +
     ggplot2::theme(axis.title.y = ggplot2::element_text(angle = 0))
 }
 

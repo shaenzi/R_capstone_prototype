@@ -52,8 +52,9 @@ plot_week_reference <- function(data_ref, data_current, bs_colors) {
       "{format(lubridate::as_date(min(data_current$timestamp)), format = '%d %b %Y')}"),
                   x = "",
                   y = "MWh",
-                  caption = "Relative to the previous 4 years") +
-    ggplot2::theme(axis.title.y = ggplot2::element_text(angle = 0))
+                  subtitle = "<span style = 'color:#00bc8c;'>Current energy use</span> compared to the range of energy use in the same week in the previous 4 years") +
+    ggplot2::theme(axis.title.y = ggplot2::element_text(angle = 0),
+                   plot.subtitle = ggtext::element_markdown())
 }
 
 plot_week_cumulative <- function(data_ref, data_current, bs_colors) {
@@ -73,7 +74,8 @@ plot_week_cumulative <- function(data_ref, data_current, bs_colors) {
       "{format(lubridate::as_date(min(data_current$timestamp)), format = '%d %b %Y')}"),
                   x = "",
                   y = "GWh",
-                  caption = "Relative to the previous 4 years") +
-    ggplot2::theme(axis.title.y = ggplot2::element_text(angle = 0))
+                  subtitle = "<span style = 'color:#00bc8c;'>Current energy use</span> compared to the range of energy use in the same week in the previous 4 years") +
+    ggplot2::theme(axis.title.y = ggplot2::element_text(angle = 0),
+                   plot.subtitle = ggtext::element_markdown())
 
 }

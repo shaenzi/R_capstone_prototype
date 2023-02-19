@@ -80,11 +80,12 @@ plot_month_reference <- function(data_ref, data_current, bs_colors) {
                        linewidth = 1) +
     ggplot2::scale_y_continuous(labels = scales::label_number(scale = 0.000001)) +
     ggplot2::labs(title = glue::glue("Energy consumption per day in {format(min(data_current$date), format = '%B %Y')}"),
-                  subtitle = "Seven day rolling average",
+                  caption = "Seven day rolling average",
                   y = "GWh",
                   x = "Day of the month",
-                  caption = "Relative to the previous 4 years") +
-    ggplot2::theme(axis.title.y = ggplot2::element_text(angle = 0))
+                  subtitle = "<span style = 'color:#00bc8c;'>Current energy use</span> compared to the range of energy use in the same month in the previous 4 years") +
+    ggplot2::theme(axis.title.y = ggplot2::element_text(angle = 0),
+                   plot.subtitle = ggtext::element_markdown())
 }
 
 plot_month_cumulative <- function(data_ref, data_current, bs_colors) {
@@ -98,10 +99,11 @@ plot_month_cumulative <- function(data_ref, data_current, bs_colors) {
                        linewidth = 1) +
     ggplot2::scale_y_continuous(labels = scales::label_number(scale = 0.000001)) +
     ggplot2::labs(title = glue::glue("Cumulative energy consumption per day in {format(min(data_current$date), format = '%B %Y')}"),
-                  subtitle = "Seven day rolling average",
+                  caption = "Seven day rolling average",
                   x = "Day of the month",
                   y = "GWh",
-                  caption = "Relative to the previous 4 years") +
-    ggplot2::theme(axis.title.y = ggplot2::element_text(angle = 0))
+                  subtitle = "<span style = 'color:#00bc8c;'>Current energy use</span> compared to the range of energy use in the same month in the previous 4 years") +
+    ggplot2::theme(axis.title.y = ggplot2::element_text(angle = 0),
+                   plot.subtitle = ggtext::element_markdown())
 
 }

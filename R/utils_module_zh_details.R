@@ -18,7 +18,10 @@ plot_zh_details_years <- function(zh_details_yearly, bs_colors) {
     ggplot2::scale_x_continuous(breaks = seq(2010, 2022, 3)) +
     ggplot2::scale_fill_manual(values = c(bs_colors[["success"]], bs_colors[["primary"]]),
                                labels = c("ne5" = "industry", "ne7" = "households")) +
-    ggplot2::labs(title = "Total energy consumption per year", y = "GWh", x = "") +
+    ggplot2::labs(title = "Total energy consumption per year",
+                  y = "GWh",
+                  x = "",
+                  fill = "") +
     ggplot2::theme(axis.title.y = ggplot2::element_text(angle = 0))
 }
 
@@ -56,7 +59,8 @@ plot_zh_details_last_week <- function(zh_details_week, bs_colors){
          title = paste0(
            "Energy consumption in the week starting on ",
            format(lubridate::as_date(min(zh_details_week$timestamp)),
-                  format = '%d %b %Y'))) +
+                  format = '%d %b %Y')),
+         fill = "") +
     ggplot2::theme(axis.title.y = ggplot2::element_text(angle = 0))
 }
 
@@ -93,6 +97,7 @@ plot_zh_details_last_year <- function(zh_details_last_year, bs_colors) {
     ggplot2::labs(x = "month",
          y = "GWh",
          title = paste0("Daily energy consumption in Zurich in ", year),
-         subtitle = "Averaged per month") +
+         subtitle = "Averaged per month",
+         fill = "") +
     ggplot2::theme(axis.title.y = ggplot2::element_text(angle = 0))
 }

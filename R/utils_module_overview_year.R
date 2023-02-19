@@ -105,8 +105,9 @@ plot_year_reference <- function(data_ref, data_current, bs_colors) {
       "{format(lubridate::year(min(data_current$date)), format = '%Y')}"),
                   x = "",
                   y = "GWh",
-                  caption = "Relative to the previous 4 years") +
-    ggplot2::theme(axis.title.y = ggplot2::element_text(angle = 0))
+                  subtitle = "<span style = 'color:#00bc8c;'>This year's energy use</span> compared to the range of energy use in the same month in the previous 4 years") +
+    ggplot2::theme(axis.title.y = ggplot2::element_text(angle = 0),
+                   plot.subtitle = ggtext::element_markdown())
 }
 
 plot_year_cumulative <- function(data_ref, data_current, bs_colors) {
@@ -124,6 +125,7 @@ plot_year_cumulative <- function(data_ref, data_current, bs_colors) {
       "{format(lubridate::year(min(data_current$date)), format = '%Y')}"),
                   x = "",
                   y = "GWh",
-                  caption = "Relative to the previous 4 years") +
-    ggplot2::theme(axis.title.y = ggplot2::element_text(angle = 0))
+                  subtitle = "<span style = 'color:#00bc8c;'>This year's energy use</span> compared to the range of energy use in the same month in the previous 4 years") +
+    ggplot2::theme(axis.title.y = ggplot2::element_text(angle = 0),
+                   plot.subtitle = ggtext::element_markdown())
 }
