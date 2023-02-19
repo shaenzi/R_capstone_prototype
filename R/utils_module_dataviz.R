@@ -13,9 +13,11 @@ plot_daily_per_year <- function(data) {
     dplyr::filter(n_entries_per_day > 95) %>%
     ggplot2::ggplot(mapping = ggplot2::aes(x = yday,
                                            y = daily_rolling_mean,
-                                           color = factor(year))) +
-    ggplot2::geom_line() +
+                                           color = factor(year),
+                                           group = year)) +
+    ggplot2::geom_line(linewidth = 1) +
     ggplot2::scale_y_continuous(labels = scales::label_number(scale = 0.000001)) +
+    ggplot2::scale_color_viridis_d(option = "E") +
     ggplot2::labs(title = "Daily energy consumption",
                   x = "Day of the year",
                   y = "GWh",
@@ -35,8 +37,9 @@ plot_weekly_per_year <- function(data) {
                                            y = weekly_sum,
                                            color = factor(isoyear),
                                            group = isoyear)) +
-    ggplot2::geom_line() +
+    ggplot2::geom_line(linewidth = 1) +
     ggplot2::scale_y_continuous(labels = scales::label_number(scale = 0.000001)) +
+    ggplot2::scale_color_viridis_d(option = "E") +
     ggplot2::labs(title = "Weekly energy consumption",
                   x = "Week of the year",
                   y = "GWh",
@@ -55,8 +58,9 @@ plot_monthly_per_year <- function(data) {
                                            y = monthly_sum,
                                            color = factor(year),
                                            group = year)) +
-    ggplot2::geom_line() +
+    ggplot2::geom_line(linewidth = 1) +
     ggplot2::scale_y_continuous(labels = scales::label_number(scale = 0.000001)) +
+    ggplot2::scale_color_viridis_d(option = "E") +
     ggplot2::labs(title = "Monthly energy consumption",
                   x = "Month of the year",
                   y = "GWh",

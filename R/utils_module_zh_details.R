@@ -10,13 +10,14 @@ prepare_zh_details_years <- function(zh_details){
                         values_to = "value")
 }
 
-plot_zh_details_years <- function(zh_details_yearly) {
+plot_zh_details_years <- function(zh_details_yearly, bs_colors) {
   zh_details_yearly %>%
     ggplot2::ggplot(ggplot2::aes(x = year, y = value, fill = category))+
     ggplot2::geom_area()+
     ggplot2::scale_y_continuous(labels = scales::label_number(scale = 0.000001)) +
     ggplot2::scale_x_continuous(breaks = seq(2010, 2022, 3)) +
-    ggplot2::scale_fill_discrete(labels = c("ne5" = "industry", "ne7" = "households")) +
+    ggplot2::scale_fill_manual(values = c(bs_colors[["success"]], bs_colors[["primary"]]),
+                               labels = c("ne5" = "industry", "ne7" = "households")) +
     ggplot2::labs(title = "Total energy consumption per year", y = "GWh", x = "") +
     ggplot2::theme(axis.title.y = ggplot2::element_text(angle = 0))
 }
@@ -40,7 +41,7 @@ prepare_zh_details_last_week <- function(zh_details){
                         names_to = "category")
 }
 
-plot_zh_details_last_week <- function(zh_details_week){
+plot_zh_details_last_week <- function(zh_details_week, bs_colors){
   zh_details_week %>%
     dplyr::mutate(category = forcats::fct_rev(category)) %>%
     ggplot2::ggplot(ggplot2::aes(x = step_in_week, y = value, fill = category)) +
@@ -48,7 +49,8 @@ plot_zh_details_last_week <- function(zh_details_week){
     ggplot2::scale_y_continuous(labels = scales::label_number(scale = 0.001)) +
     ggplot2::scale_x_continuous(breaks = seq(49,625,96),
                        labels = c("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun")) +
-    ggplot2::scale_fill_discrete(labels = c("value_ne5" = "industry", "value_ne7" = "households etc.")) +
+    ggplot2::scale_fill_manual(values = c(bs_colors[["success"]], bs_colors[["primary"]]),
+                               labels = c("value_ne5" = "industry", "value_ne7" = "households etc.")) +
     ggplot2::labs(x = "",
          y = "MWh",
          title = paste0(
@@ -78,14 +80,15 @@ prepare_zh_details_months <- function(zh_details){
                         names_to = "category")
 }
 
-plot_zh_details_last_year <- function(zh_details_last_year) {
+plot_zh_details_last_year <- function(zh_details_last_year, bs_colors) {
   year <- zh_details_last_year$year[[1]]
   zh_details_last_year  %>%
     ggplot2::ggplot(ggplot2::aes(x = month, y = value, fill = category)) +
     ggplot2::geom_area()+
     ggplot2::scale_y_continuous(labels = scales::label_number(scale = 0.000001)) +
     ggplot2::scale_x_continuous(breaks = seq(12)) +
-    ggplot2::scale_fill_discrete(labels = c("monthly_avg_ne5" = "industry",
+    ggplot2::scale_fill_manual(values = c(bs_colors[["success"]], bs_colors[["primary"]]),
+                               labels = c("monthly_avg_ne5" = "industry",
                                             "monthly_avg_ne7" = "households")) +
     ggplot2::labs(x = "month",
          y = "GWh",

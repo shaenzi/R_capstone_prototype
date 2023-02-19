@@ -34,7 +34,7 @@ zh_detailsUI <- function(id){
 #' @param id Unique id for module instance.
 #'
 #' @keywords internal
-zh_details_server <- function(id){
+zh_details_server <- function(id, bs_colors){
   moduleServer(
     id,
     function(
@@ -49,15 +49,15 @@ zh_details_server <- function(id){
       # your code here
 
       output$week <- renderPlot({
-        plot_zh_details_last_week(zh_details_week)
+        plot_zh_details_last_week(zh_details_week, bs_colors)
       })
 
       output$last_year <- renderPlot({
-        plot_zh_details_last_year(zh_details_last_year)
+        plot_zh_details_last_year(zh_details_last_year, bs_colors)
       })
 
       output$years <- renderPlot({
-        plot_zh_details_years(zh_details_yearly)
+        plot_zh_details_years(zh_details_yearly, bs_colors)
       })
     }
   )

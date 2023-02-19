@@ -90,13 +90,15 @@ prepare_data_for_yearly_plot <- function(data, date_today, n_ref = 5) {
   return(results)
 }
 
-plot_year_reference <- function(data_ref, data_current) {
+plot_year_reference <- function(data_ref, data_current, bs_colors) {
   data_ref %>%
     ggplot2::ggplot(ggplot2::aes(x = month)) +
     ggplot2::geom_ribbon(ggplot2::aes(ymin = min_ref, ymax = max_ref, group = 1),
-                         fill = "lightblue") +
-    ggplot2::geom_line(ggplot2::aes(y = mean_ref, group = 1), color = "#B8B8B8") +
-    ggplot2::geom_line(data = data_current, ggplot2::aes(y = daily_mean_per_month, group = 1)) +
+                         fill = bs_colors[["light"]], alpha = 0.8) +
+    ggplot2::geom_line(ggplot2::aes(y = mean_ref, group = 1), color = bs_colors[["secondary"]]) +
+    ggplot2::geom_line(data = data_current, ggplot2::aes(y = daily_mean_per_month, group = 1),
+                       color = bs_colors[["success"]],
+                       linewidth = 1) +
     ggplot2::scale_y_continuous(labels = scales::label_number(scale = 0.000001)) +
     ggplot2::labs(title = glue::glue(
       "Daily energy consumption averaged per month in ",
@@ -107,13 +109,15 @@ plot_year_reference <- function(data_ref, data_current) {
     ggplot2::theme(axis.title.y = ggplot2::element_text(angle = 0))
 }
 
-plot_year_cumulative <- function(data_ref, data_current) {
+plot_year_cumulative <- function(data_ref, data_current, bs_colors) {
   data_ref %>%
     ggplot2::ggplot(ggplot2::aes(x = month)) +
     ggplot2::geom_ribbon(ggplot2::aes(ymin = cum_min, ymax = cum_max, group = 1),
-                         fill = "lightblue") +
-    ggplot2::geom_line(ggplot2::aes(y = cum_mean, group = 1), color = "#B8B8B8") +
-    ggplot2::geom_line(data = data_current, ggplot2::aes(y = cum, group = 1)) +
+                         fill = bs_colors[["light"]], alpha = 0.8) +
+    ggplot2::geom_line(ggplot2::aes(y = cum_mean, group = 1), color = bs_colors[["secondary"]]) +
+    ggplot2::geom_line(data = data_current, ggplot2::aes(y = cum, group = 1),
+                       color = bs_colors[["success"]],
+                       linewidth = 1) +
     ggplot2::scale_y_continuous(labels = scales::label_number(scale = 0.000001)) +
     ggplot2::labs(title = glue::glue(
       "Cumulative energy consumption in ",

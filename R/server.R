@@ -11,11 +11,11 @@
 server <- function(input, output, session){
 	send_message <- make_send_message(session)
 
-	overview_server('zh', zh_weekly, zh_monthly, zh_yearly, zh_yearly_cum)
+	overview_server('zh', zh_weekly, zh_monthly, zh_yearly, zh_yearly_cum, bs_colors)
 
-	overview_server('wi', wi_weekly, wi_monthly, wi_yearly, wi_yearly_cum)
+	overview_server('wi', wi_weekly, wi_monthly, wi_yearly, wi_yearly_cum, bs_colors)
 
-	overview_server('bs', bs_weekly, bs_monthly, bs_yearly, bs_yearly_cum)
+	overview_server('bs', bs_weekly, bs_monthly, bs_yearly, bs_yearly_cum, bs_colors)
 
 	predictions_server("zh", zh_next_2, zh_prev_2, zh)
 
@@ -29,6 +29,6 @@ server <- function(input, output, session){
 
 	dataviz_server('bs', bs)
 
-	zh_details_server('zh_details')
+	zh_details_server('zh_details', bs_colors)
 
 }

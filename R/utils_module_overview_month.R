@@ -69,13 +69,15 @@ prepare_data_for_monthly_plot <- function(data, date_today, n_ref = 5) {
   return(results)
 }
 
-plot_month_reference <- function(data_ref, data_current) {
+plot_month_reference <- function(data_ref, data_current, bs_colors) {
   data_ref %>%
     ggplot2::ggplot(ggplot2::aes(x = day)) +
     ggplot2::geom_ribbon(ggplot2::aes(ymin = min_ref, ymax = max_ref, group = 1),
-                         fill = "lightblue") +
-    ggplot2::geom_line(ggplot2::aes(y = mean_ref), color = "#B8B8B8") +
-    ggplot2::geom_line(data = data_current, ggplot2::aes(y = daily_use)) +
+                         fill = bs_colors[["light"]], alpha = 0.8) +
+    ggplot2::geom_line(ggplot2::aes(y = mean_ref), color = bs_colors[["secondary"]]) +
+    ggplot2::geom_line(data = data_current, ggplot2::aes(y = daily_use),
+                       color = bs_colors[["success"]],
+                       linewidth = 1) +
     ggplot2::scale_y_continuous(labels = scales::label_number(scale = 0.000001)) +
     ggplot2::labs(title = glue::glue("Energy consumption per day in {format(min(data_current$date), format = '%B %Y')}"),
                   subtitle = "Seven day rolling average",
@@ -85,13 +87,15 @@ plot_month_reference <- function(data_ref, data_current) {
     ggplot2::theme(axis.title.y = ggplot2::element_text(angle = 0))
 }
 
-plot_month_cumulative <- function(data_ref, data_current) {
+plot_month_cumulative <- function(data_ref, data_current, bs_colors) {
   data_ref %>%
     ggplot2::ggplot(ggplot2::aes(x = day)) +
     ggplot2::geom_ribbon(ggplot2::aes(ymin = cum_min, ymax = cum_max, group = 1),
-                         fill = "lightblue") +
-    ggplot2::geom_line(ggplot2::aes(y = cum_mean), color = "#B8B8B8") +
-    ggplot2::geom_line(data = data_current, ggplot2::aes(y = cum)) +
+                         fill = bs_colors[["light"]], alpha = 0.8) +
+    ggplot2::geom_line(ggplot2::aes(y = cum_mean), color = bs_colors[["secondary"]]) +
+    ggplot2::geom_line(data = data_current, ggplot2::aes(y = cum),
+                       color = bs_colors[["success"]],
+                       linewidth = 1) +
     ggplot2::scale_y_continuous(labels = scales::label_number(scale = 0.000001)) +
     ggplot2::labs(title = glue::glue("Cumulative energy consumption per day in {format(min(data_current$date), format = '%B %Y')}"),
                   subtitle = "Seven day rolling average",

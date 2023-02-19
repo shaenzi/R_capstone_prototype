@@ -1,5 +1,11 @@
 ggplot2::theme_set(ggplot2::theme_gray(base_size = 16))
 thematic::thematic_shiny()
+bs_theme_name <- "darkly"
+bs_theme_used <- bslib::bs_theme(bootswatch = bs_theme_name)
+bs_vars <- c("primary", "secondary", "success", "info", "warning", "danger",
+             "light", "dark")
+bs_colors <- bslib::bs_get_variables(bs_theme_used, bs_vars)
+print(bs_colors)
 
 #' Shiny UI
 #'
@@ -14,7 +20,7 @@ thematic::thematic_shiny()
 ui <- function(req){
 
   navbarPage(
-    theme = bs_theme(bootswatch = "darkly"), # darkly (round)/ superhero(corners) / morph / slate / cyborg
+    theme = bs_theme_used, # darkly (round)/ superhero(corners) / morph / slate / cyborg
     header = list(assets()),
     title = "Energy use in Swiss cities",
     id = "main-menu",

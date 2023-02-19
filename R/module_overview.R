@@ -69,7 +69,8 @@ overview_server <- function(id,
                             data_for_plots_week,
                             data_for_plots_month,
                             data_for_plots_year,
-                            data_for_plots_year_cumulative){
+                            data_for_plots_year_cumulative,
+                            bs_colors){
   moduleServer(
     id,
     function(
@@ -95,9 +96,9 @@ overview_server <- function(id,
       output$week <- renderPlot({
 
         if (input$cumulative_week) {
-          plot_week_cumulative(data_ref_week, data_current_week)
+          plot_week_cumulative(data_ref_week, data_current_week, bs_colors)
         } else {
-          plot_week_reference(data_ref_week, data_current_week)
+          plot_week_reference(data_ref_week, data_current_week, bs_colors)
         }
       }) %>%
         bindCache(input$cumulative_week, data_ref_week, data_current_week, Sys.Date()) %>%
@@ -118,9 +119,9 @@ overview_server <- function(id,
       output$month <- renderPlot({
 
         if (input$cumulative_month) {
-          plot_month_cumulative(data_ref_month, data_current_month)
+          plot_month_cumulative(data_ref_month, data_current_month, bs_colors)
         } else {
-          plot_month_reference(data_ref_month, data_current_month)
+          plot_month_reference(data_ref_month, data_current_month, bs_colors)
         }
       }) %>%
         bindCache(input$cumulative_month, data_ref_month, data_current_month, Sys.Date()) %>%
@@ -146,9 +147,11 @@ overview_server <- function(id,
       output$year <- renderPlot({
 
         if (input$cumulative_year) {
-          plot_year_cumulative(data_ref_year_cumulative, data_current_year_cumulative)
+          plot_year_cumulative(data_ref_year_cumulative,
+                               data_current_year_cumulative,
+                               bs_colors)
         } else {
-          plot_year_reference(data_ref_year, data_current_year)
+          plot_year_reference(data_ref_year, data_current_year, bs_colors)
         }
       }) %>%
         bindCache(input$cumulative_year, data_ref_year, data_current_year,
