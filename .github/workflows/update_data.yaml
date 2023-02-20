@@ -44,23 +44,11 @@ jobs:
         shell: Rscript {0}
 
       - name: Git Commit/Push Changes
-        uses: actions-x/commit@v6
+        uses: github-actions-x/commit@v2.9
         with:
-          # The committer's email address
+          github-token: ${{ secrets.PAT }}
+          push-branch: main
+          name: GitHub Action Bot
           email: ${{ github.actor }}@localhost
-          # The committer's name
-          name: ${{ github.actor }}
-          # The commit message
-          message: Automatic data update using GitHub Actions
-          # The branch to push the changes back to, defaults to the current branch
-          branch: ${{ github.ref }}
-          # The files to add separated by space, defaults to every file
-          files: .
-          # The repository to push the code to, defaults to origin (e.g. this repository)
-          repository: origin
-          # The token used to push the code, not needed if you push to the same repository
-          token:  ${{ secrets.PAT}}
-          # Whether to perform force push
-          force: 0
-          # The working directory that will be used for git commands
-          directory: .
+          commit-message: Update with latest data
+          rebase: 'true'
