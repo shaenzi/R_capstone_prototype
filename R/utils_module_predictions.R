@@ -1,3 +1,12 @@
+#' predict_2_weeks
+#'
+#' @description function to predict the next two weeks' energy used based on
+#' the past use, simple seasonal model with SNAIVE
+#'
+#' @param data tsibble with gross_energy_kwh and timestamp as index
+#'
+#' @return a fabletools forecast for the next two weeks
+#' @keywords internal
 predict_2_weeks <- function(data) {
   print("forecasting")
   data %>%
@@ -7,6 +16,13 @@ predict_2_weeks <- function(data) {
     fabletools::forecast(h = "2 weeks")
 }
 
+#' plot_prediction
+#'
+#' @param data fabletools forecast from predict_2_weeks
+#' @param bs_colors named color vector with "secondary" color
+#'
+#' @return ggplot
+#' @keywords internal
 plot_prediction <- function(data, bs_colors) {
   print("plotting prediction")
   data %>%
@@ -27,6 +43,14 @@ plot_prediction <- function(data, bs_colors) {
                    plot.subtitle = ggtext::element_markdown())
 }
 
+#' plot_prediction_and_actual
+#'
+#' @param data_predicted fabletools forecast from predict_2_weeks
+#' @param data_actual tsibble on which the forecast is based
+#' @param bs_colors named color vector with "secondary" color
+#'
+#' @return ggplot
+#' @keywords internal
 plot_prediction_and_actual <- function(data_predicted, data_actual, bs_colors) {
   print("plotting prediction and actual")
   data_predicted %>%

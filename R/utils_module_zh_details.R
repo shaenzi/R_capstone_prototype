@@ -1,3 +1,11 @@
+#' prepare_zh_details_years
+#'
+#' @description wrangle zh_details data into values per year in long format
+#'
+#' @param zh_details tibble with timestamp, value_n5, valuene7 columns
+#'
+#' @return tibble yearly values by ne (Netzebene)
+#' @keywords internal
 prepare_zh_details_years <- function(zh_details){
   zh_details %>%
     dplyr::mutate(year = lubridate::year(timestamp)) %>%
@@ -10,6 +18,16 @@ prepare_zh_details_years <- function(zh_details){
                         values_to = "value")
 }
 
+#' plot_zh_details_years
+#'
+#' @description function to plot one value per year for the household/industry
+#' as an area plot. a utility for the zh_details module
+#'
+#' @param zh_details_yearly tibble prepared by prepare_zh_details_years
+#' @param bs_colors named color vector with success and primary colors
+#'
+#' @return ggplot
+#' @keywords internal
 plot_zh_details_years <- function(zh_details_yearly, bs_colors) {
   zh_details_yearly %>%
     ggplot2::ggplot(ggplot2::aes(x = year, y = value, fill = category))+
@@ -25,6 +43,14 @@ plot_zh_details_years <- function(zh_details_yearly, bs_colors) {
     ggplot2::theme(axis.title.y = ggplot2::element_text(angle = 0))
 }
 
+#' prepare_zh_details_last_week
+#'
+#' @description wrangle zh_details data into values for last week in long format
+#'
+#' @param zh_details tibble with timestamp, value_n5, valuene7 columns
+#'
+#' @return tibble with values over one week values by ne (Netzebene)
+#' @keywords internal
 prepare_zh_details_last_week <- function(zh_details){
   latest_date <- max(lubridate::as_date(zh_details$timestamp))
   isoweek  <- lubridate::isoweek(latest_date - 7)
@@ -44,6 +70,16 @@ prepare_zh_details_last_week <- function(zh_details){
                         names_to = "category")
 }
 
+#' plot_zh_details_last_week
+#'
+#' @description function to plot the last week for the household/industry
+#' as an area plot. a utility for the zh_details module
+#'
+#' @param zh_details_week tibble prepared by prepare_zh_details_last_week
+#' @param bs_colors named color vector with success and primary colors
+#'
+#' @return ggplot
+#' @keywords internal
 plot_zh_details_last_week <- function(zh_details_week, bs_colors){
   zh_details_week %>%
     dplyr::mutate(category = forcats::fct_rev(category)) %>%
@@ -64,7 +100,15 @@ plot_zh_details_last_week <- function(zh_details_week, bs_colors){
     ggplot2::theme(axis.title.y = ggplot2::element_text(angle = 0))
 }
 
-prepare_zh_details_months <- function(zh_details){
+#' prepare_zh_details_last_year
+#'
+#' @description wrangle zh_details data into values for last year in long format
+#'
+#' @param zh_details tibble with timestamp, value_n5, valuene7 columns
+#'
+#' @return tibble with monthly values for last year by ne (Netzebene)
+#' @keywords internal
+prepare_zh_details_last_year <- function(zh_details){
   latest_date <- max(lubridate::as_date(zh_details$timestamp))
   last_year  <- lubridate::year(latest_date - 365)
   zh_details %>%
@@ -84,6 +128,16 @@ prepare_zh_details_months <- function(zh_details){
                         names_to = "category")
 }
 
+#' plot_zh_details_last_year
+#'
+#' @description function to plot last year's monthly values for the household/industry
+#' as an area plot. a utility for the zh_details module
+#'
+#' @param zh_details_last_year tibble prepared by prepare_zh_details_last_year
+#' @param bs_colors named color vector with success and primary colors
+#'
+#' @return ggplot
+#' @keywords internal
 plot_zh_details_last_year <- function(zh_details_last_year, bs_colors) {
   year <- zh_details_last_year$year[[1]]
   zh_details_last_year  %>%

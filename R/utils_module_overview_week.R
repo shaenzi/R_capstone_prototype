@@ -1,4 +1,21 @@
 options("lubridate.week.start" = 1)
+
+#' prepare_data_for_weekly_plot
+#'
+#' @description function to prepare reference data and current data for
+#' weekly plot. prepares cumulative and non-cumulative data in one go.
+#' a utility function in the overview module.
+#'
+#' @details goes back in time one week at a time from date_today until data is
+#' present in the data tibble. Uses recursion for this.
+#'
+#' @param data tibble wi/bs/zh with year, month, sum_gross_energy columns
+#' @param date_today today's date, e.g. with lubridate::today()
+#' @param n_ref default 5, number of years to go back as reference (if 5,
+#' previous 4 will be the reference)
+#'
+#' @return list of data_ref and data_current
+#' @keywords internal
 prepare_data_for_weekly_plot <- function(data, date_today, n_ref = 5) {
   data_ref <- data %>%
     dplyr::filter(week == lubridate::isoweek(date_today),
@@ -35,6 +52,17 @@ prepare_data_for_weekly_plot <- function(data, date_today, n_ref = 5) {
   return(results)
 }
 
+#' plot_week_reference
+#'
+#' @description function to plot the current data vs. a reference range for a week.
+#' A utility function for the overview module.
+#'
+#' @param data_ref data_ref output from prepare_data_for_weekly_plot function
+#' @param data_current data_current output from prepare_data_for_weekly_plot function
+#' @param bs_colors named hex color vector with "light", "secondary" and "success" colors
+#'
+#' @return ggplot
+#' @keywords internal
 plot_week_reference <- function(data_ref, data_current, bs_colors) {
   data_ref %>%
     ggplot2::ggplot(ggplot2::aes(x = step_in_week)) +
@@ -57,6 +85,17 @@ plot_week_reference <- function(data_ref, data_current, bs_colors) {
                    plot.subtitle = ggtext::element_markdown())
 }
 
+#' plot_week_cumulative
+#'
+#' @description function to plot the current data vs. a reference range for a week
+#' in a cumulative way. A utility function for the overview module.
+#'
+#' @param data_ref data_ref output from prepare_data_for_weekly_plot function
+#' @param data_current data_current output from prepare_data_for_weekly_plot function
+#' @param bs_colors named hex color vector with "light", "secondary" and "success" colors
+#'
+#' @return ggplot
+#' @keywords internal
 plot_week_cumulative <- function(data_ref, data_current, bs_colors) {
   data_ref %>%
     ggplot2::ggplot(ggplot2::aes(x = step_in_week)) +

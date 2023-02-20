@@ -8,6 +8,7 @@ options("lubridate.week.start" = 1)
 #' @param zh tibble with zurich data, expect timestamp column (as character)
 #'
 #' @return zh tibble with timestamp converted to CET
+#' @keywords internal
 deal_with_ts_zh <- function(zh) {
   zh %>%
     dplyr::mutate(timestamp = lubridate::ymd_hm(timestamp, tz = "Europe/Zurich"))
@@ -18,6 +19,7 @@ deal_with_ts_zh <- function(zh) {
 #' @param df tibble with a timestamp column in utc
 #'
 #' @return tibble with timestamp column in local time, timestamp_utc has utc time
+#' @keywords internal
 deal_with_ts_utc <- function(df) {
   df %>%
     dplyr::mutate(timestamp_utc = timestamp,
@@ -29,7 +31,7 @@ deal_with_ts_utc <- function(df) {
 #' @param df tibble with a timestamp column
 #'
 #' @return tibble with year, month, week, day, hour, Minute added
-#'
+#' @keywords internal
 add_date_components <- function(df) {
   df <- df %>%
     dplyr::mutate(date = lubridate::as_date(timestamp),
@@ -58,6 +60,15 @@ add_date_components <- function(df) {
   return(df)
 }
 
+#' get_clean_data
+#'
+#' @description function to check integrity of time series: checks for and removes
+#' duplicates, fills gaps
+#'
+#' @param df tibble with timestamp
+#'
+#' @return clean time series (can be converted to tsibble without error)
+#' @keywords internal
 get_clean_data <- function(df) {
   # get rid of duplicates (as of 15/1/2023: 0)
   df <- df[!tsibble::are_duplicated(df, index = timestamp),]

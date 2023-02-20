@@ -1,3 +1,14 @@
+#' plot_daily_per_year
+#'
+#' @description Function to plot daily energy use values over days of the year
+#' with one color per year, a utility for the dataviz module
+#'
+#' @details drops days with fewer than 95 entries, calculates rolling average
+#'
+#' @param data a tibble with timestamp, year, yday and gross_energy_kwh columns
+#'
+#' @return ggplot
+#' @keywords internal
 plot_daily_per_year <- function(data) {
   data %>%
     dplyr::group_by(year, yday) %>%
@@ -27,6 +38,17 @@ plot_daily_per_year <- function(data) {
     ggplot2::theme(axis.title.y = ggplot2::element_text(angle = 0))
 }
 
+#' plot_weekly_per_year
+#'
+#' @description Function to plot weekly energy use values over weeks of the year
+#' with one color per year, a utility for the dataviz module
+#'
+#' @details drops weeks with fewer than 7*94 entries
+#'
+#' @param data a tibble with timestamp, isoyear, week and gross_energy_kwh columns
+#'
+#' @return ggplot
+#' @keywords internal
 plot_weekly_per_year <- function(data) {
   data %>%
     dplyr::group_by(isoyear, week) %>%
@@ -48,6 +70,17 @@ plot_weekly_per_year <- function(data) {
     ggplot2::theme(axis.title.y = ggplot2::element_text(angle = 0))
 }
 
+#' plot_monthly_per_year
+#'
+#' @description Function to plot monthly energy use values over months of the year
+#' with one color per year, a utility for the dataviz module
+#'
+#' @details drops months with fewer than 28*96 entries
+#'
+#' @param data a tibble with timestamp, year, month and gross_energy_kwh columns
+#'
+#' @return ggplot
+#' @keywords internal
 plot_monthly_per_year <- function(data) {
   data %>%
     dplyr::group_by(year, month) %>%
@@ -73,9 +106,12 @@ plot_monthly_per_year <- function(data) {
 #' heatmap_tod_date
 #'
 #' @description heatmeap with time of day on x and date on y axis, energy as colour
+#' A utility for the dataviiz module
 #'
 #' @param df tibble with timestamp_hours_only, date, gross_energy_kwh columns
-#' @param title string to be used as title
+#'
+#' @return ggplot
+#' @keywords internal
 heatmap_tod_date <- function(data) {
   year <- unique(data$year)
   data %>%

@@ -1,3 +1,10 @@
+#' get_winti_data_up_to_date
+#'
+#' @description function to download and pre-process the latest csv file for
+#' Winterthur
+#'
+#' @return wi_current tibble
+#' @keywords internal
 get_winti_data_up_to_date <- function() {
 
   # read latest csv for Winterthur
@@ -8,6 +15,13 @@ get_winti_data_up_to_date <- function() {
     dplyr::select(timestamp, gross_energy_kwh)
 }
 
+#' get_zh_data_up_to_date
+#'
+#' @description function to download and pre-process the latest csv file for
+#' Zurich
+#'
+#' @return zh_current tibble
+#' @keywords internal
 get_zh_data_up_to_date <- function() {
 
   # read latest csv for Zurich
@@ -19,6 +33,12 @@ get_zh_data_up_to_date <- function() {
 
 }
 
+#' get_bs_data
+#'
+#' @description function to download the entire bs data as one csv (takes a while)
+#'
+#' @return bs tibble
+#' @keywords internal
 get_bs_data <- function() {
   bs_file <- "https://data.bs.ch/api/v2/catalog/datasets/100233/exports/csv"
 
@@ -37,7 +57,7 @@ get_bs_data <- function() {
 #'
 #' @return returns the data from the csv as a tibble
 #'
-#' @noRd
+#' @keywords internal
 get_csv_from_link <- function(my_url){
   data <- data.table::fread(my_url) %>%
     janitor::clean_names()
