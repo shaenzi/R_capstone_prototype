@@ -28,7 +28,7 @@ Imports:
     purrr,
     scales,
     shiny,
-    shinycustomloader,
+    shinycssloaders,
     shinyWidgets,
     thematic,
     tidyr,
