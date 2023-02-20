@@ -1,7 +1,7 @@
 FROM rocker/tidyverse:4.2.2
 RUN install2.r rsconnect bslib data.table fable fabletools feasts ggdist glue
 RUN install2.r htmltools janitor lubridate magrittr markdown scales shiny
-RUN install2.r shinycustomloader shinyWidgets thematic tsibble
+RUN install2.r shinycssloaders shinyWidgets thematic tsibble
 WORKDIR /home/capstonePrototype
 COPY app.R app.R
 COPY R R
