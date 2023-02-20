@@ -19,6 +19,7 @@ Imports:
     forcats,
     ggdist,
     ggplot2,
+    ggtext,
     glue,
     htmltools,
     janitor,
