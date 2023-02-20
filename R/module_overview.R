@@ -3,7 +3,6 @@
 #' @param id Unique id for module instance.
 #'
 #' @importFrom shinyWidgets materialSwitch
-#' @importFrom shinycustomloader withLoader
 #'
 #' @keywords internal
 overviewUI <- function(id){

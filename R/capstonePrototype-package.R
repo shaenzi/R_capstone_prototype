@@ -2,6 +2,14 @@
 "_PACKAGE"
 
 ## usethis namespace: start
-#' @importFrom magrittr %>%
+#' importFrom(bslib,bs_theme)
+#' importFrom(htmltools,div)
+#' importFrom(htmltools,htmlDependency)
+#' importFrom(htmltools,tag)
+#' importFrom(magrittr,"%>%")
+#' importFrom(shiny,column)
+#' importFrom(shiny,shinyApp)
+#' importFrom(shiny,tags)
+#' importFrom(shinyWidgets,materialSwitch)
 ## usethis namespace: end
 NULL
