@@ -8,8 +8,10 @@ dataviz_server(id, data)
 }
 \arguments{
 \item{id}{Unique id for module instance.}
+
+\item{data}{wi/bs/zh tibble}
 }
 \description{
-dataviz Server
+server of the dataviz module
 }
 \keyword{internal}

@@ -10,6 +10,7 @@ overviewUI(id)
 \item{id}{Unique id for module instance.}
 }
 \description{
-overview UI
+UI of the overview module, which is shown on the first tab,
+once for each city
 }
 \keyword{internal}

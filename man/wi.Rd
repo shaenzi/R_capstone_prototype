@@ -5,19 +5,25 @@
 \alias{wi}
 \title{Winterthur power usage data}
 \format{
-An object of class \code{data.table} (inherits from \code{data.frame}) with 355200 rows and 14 columns.
+\subsection{\code{wi}}{
+
+A data frame, growing every day, the main two columns (all the others are derived):
+\describe{
+\item{timestamp}{local time}
+\item{gross_energy_kwh}{gross energy ("Bruttolastgang") value in kWh for every 15min}
+}
+}
 }
 \source{
-\url{https://www.web.statistik.zh.ch/ogd/daten/ressourcen/KTZH_00001863_00003561.csv}
-
-\url{https://www.web.statistik.zh.ch/ogd/daten/ressourcen/KTZH_00001863_00003563.csv}
-
-\url{https://www.web.statistik.zh.ch/ogd/daten/ressourcen/KTZH_00001863_00003564.csv}
+\url{https://www.zh.ch/de/politik-staat/opendata.zhweb-noredirect.zhweb-cache.html?keywords=ogd#/datasets/1863@statistisches-amt-kanton-zuerich}
 }
 \usage{
 wi
 }
 \description{
 Open government data with a power consumption data point every 15min for the city of Winterthur
+}
+\details{
+Downloaded and pre-processed with the scripts data-raw/01_get_data.R and data-raw/02_get_updated_data
 }
 \keyword{datasets}

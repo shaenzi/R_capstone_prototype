@@ -15,8 +15,19 @@ overview_server(
 }
 \arguments{
 \item{id}{Unique id for module instance.}
+
+\item{data_for_plots_week}{output from prepare_data_for_weekly_plot, list of two tibbles named data_ref and data_current}
+
+\item{data_for_plots_month}{output from  repare_data_for_monthly_plot, list of two tibbles named data_ref and data_current}
+
+\item{data_for_plots_year}{output from prepare_data_for_yearly_plot, list of two tibbles named data_ref and data_current}
+
+\item{data_for_plots_year_cumulative}{output from  prepare_data_for_yearly_cumulative_plot, list of two tibbles named data_ref and data_current}
+
+\item{bs_colors}{named hex color vector with "light", "secondary" and "success" colors}
 }
 \description{
-overview Server
+server of the overview module, which is shown on the first tab,
+once for each city
 }
 \keyword{internal}

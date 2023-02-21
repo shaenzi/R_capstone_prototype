@@ -10,6 +10,7 @@ datavizUI(id)
 \item{id}{Unique id for module instance.}
 }
 \description{
-dataviz UI
+UI of the dataviz module,
+once for each city
 }
 \keyword{internal}

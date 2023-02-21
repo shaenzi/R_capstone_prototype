@@ -8,6 +8,14 @@ predictions_server(id, data_next_2, data_prev_2, data, bs_colors)
 }
 \arguments{
 \item{id}{Unique id for module instance.}
+
+\item{data_next_2}{fabletools forecast from predict_2_weeks for next 2 weeks}
+
+\item{data_prev_2}{fabletools forecast from predict_2_weeks for previous two weeks}
+
+\item{data}{wi/bs/zh tibble}
+
+\item{bs_colors}{named hex color vector with "secondary" color}
 }
 \description{
 predictions Server

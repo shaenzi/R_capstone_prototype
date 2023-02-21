@@ -8,6 +8,8 @@ zh_details_server(id, bs_colors)
 }
 \arguments{
 \item{id}{Unique id for module instance.}
+
+\item{bs_colors}{named hex color vector with "success" and "primary" color}
 }
 \description{
 zh_details Server
