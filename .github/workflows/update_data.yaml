@@ -10,8 +10,8 @@ on:
 jobs:
   update:
     runs-on: ubuntu-latest
-    #env:
-      #GITHUB_PAT: ${{ secrets.PAT}}
+    env:
+      GITHUB_PAT: ${{ secrets.PAT}}
     steps:
       - uses: actions/checkout@v2
 
@@ -43,12 +43,10 @@ jobs:
           source("data-raw/03_prepare_data_for_modules.R")
         shell: Rscript {0}
 
-      - name: Git Commit/Push Changes
-        uses: github-actions-x/commit@v2.9
-        with:
-          github-token: ${{ secrets.PAT  }}
-          push-branch: main
-          name: GitHub Action Bot
-          email: ${{ github.actor }}@localhost
-          commit-message: Update with latest data
-          rebase: 'true'
+      - name: Git Commit and Push Changes
+        run: |
+          git config --local user.email "actions@github.com"
+          git config --local user.name "GitHub Actions"
+          git add --all
+          git commit -am "add latest data"
+          git push
