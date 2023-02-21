@@ -1,5 +1,8 @@
 #' dataviz UI
 #'
+#' @description UI of the dataviz module,
+#' once for each city
+#'
 #' @param id Unique id for module instance.
 #'
 #' @keywords internal
@@ -47,7 +50,10 @@ datavizUI <- function(id){
 
 #' dataviz Server
 #'
+#' @description server of the dataviz module
+#'
 #' @param id Unique id for module instance.
+#' @param data wi/bs/zh tibble
 #'
 #' @keywords internal
 dataviz_server <- function(id, data){

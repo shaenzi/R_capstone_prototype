@@ -1,5 +1,8 @@
 #' overview UI
 #'
+#' @description UI of the overview module, which is shown on the first tab,
+#' once for each city
+#'
 #' @param id Unique id for module instance.
 #'
 #' @importFrom shinyWidgets materialSwitch
@@ -64,7 +67,15 @@ overviewUI <- function(id){
 
 #' overview Server
 #'
+#' @description server of the overview module, which is shown on the first tab,
+#' once for each city
+#'
 #' @param id Unique id for module instance.
+#' @param data_for_plots_week output from prepare_data_for_weekly_plot, list of two tibbles named data_ref and data_current
+#' @param data_for_plots_month output from  repare_data_for_monthly_plot, list of two tibbles named data_ref and data_current
+#' @param data_for_plots_year output from prepare_data_for_yearly_plot, list of two tibbles named data_ref and data_current
+#' @param data_for_plots_year_cumulative output from  prepare_data_for_yearly_cumulative_plot, list of two tibbles named data_ref and data_current
+#' @param bs_colors named hex color vector with "light", "secondary" and "success" colors
 #'
 #' @keywords internal
 overview_server <- function(id,

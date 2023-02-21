@@ -32,6 +32,10 @@ predictionsUI <- function(id){
 #' predictions Server
 #'
 #' @param id Unique id for module instance.
+#' @param data_next_2 fabletools forecast from predict_2_weeks for next 2 weeks
+#' @param data_prev_2 fabletools forecast from predict_2_weeks for previous two weeks
+#' @param data wi/bs/zh tibble
+#' @param bs_colors named hex color vector with "secondary" color
 #'
 #' @keywords internal
 predictions_server <- function(id, data_next_2, data_prev_2, data, bs_colors){

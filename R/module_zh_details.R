@@ -35,6 +35,7 @@ zh_detailsUI <- function(id){
 #' zh_details Server
 #'
 #' @param id Unique id for module instance.
+#' @param bs_colors named hex color vector with "success" and "primary" color
 #'
 #' @keywords internal
 zh_details_server <- function(id, bs_colors){
