@@ -2,6 +2,10 @@ name: Run on push
 
 # Controls when the action will run.
 on:
+  # deploy every morning after data was updated with other action
+  schedule:
+    - cron: "0 5 * * *"
+    
   # Triggers the workflow on push or pull request events
   push:
     branches: [ main ]
