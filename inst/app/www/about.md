@@ -1,7 +1,5 @@
 # About this app
 
-**This is work in progress!**
-
 I programmed this app as part of the <a href="https://www.extensionschool.ch/" target="_blank">EPFL extension school's</a> course on <a href="https://www.extensionschool.ch/learn/applied-data-science-communication-visualization" target="_blank">data visualisation and communication</a>.
 
 ## Data sources
@@ -14,6 +12,6 @@ Of these four datasets, the Basel one is updated weekly and the other three are 
 
 ## Code and technologies used
 
-The code will be made available on <a href="https://github.com/shaenzi/capstonePrototype" target="_blank">github</a>. The app is programmed in <a href="https://www.r-project.org/about.html" target="_blank">R</a> / <a href="https://shiny.rstudio.com/" target="_blank">shiny</a>, and uses the <a href="https://leprechaun.opifex.org/" target="_blank">leprechaun</a> framework.
+The code is available on <a href="https://github.com/shaenzi/capstonePrototype" target="_blank">github</a>. The app is programmed in <a href="https://www.r-project.org/about.html" target="_blank">R</a> / <a href="https://shiny.rstudio.com/" target="_blank">shiny</a>, and uses the <a href="https://leprechaun.opifex.org/" target="_blank">leprechaun</a> framework.
 
 
