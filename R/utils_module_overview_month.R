@@ -107,7 +107,8 @@ plot_month_reference <- function(data_ref, data_current, bs_colors) {
     ggplot2::geom_line(data = data_current, ggplot2::aes(y = daily_use),
                        color = bs_colors[["success"]],
                        linewidth = 1) +
-    ggplot2::scale_y_continuous(labels = scales::label_number(scale = 0.000001)) +
+    ggplot2::scale_y_continuous(labels = scales::label_number(scale = 0.000001),
+                                limits = c(0, NA)) +
     ggplot2::labs(title = glue::glue("Energy consumption per day in {format(min(data_current$date), format = '%B %Y')}"),
                   caption = "Seven day rolling average",
                   y = "GWh",
@@ -146,7 +147,8 @@ plot_month_cumulative <- function(data_ref, data_current, bs_colors) {
     ggplot2::geom_line(data = data_current, ggplot2::aes(y = cum),
                        color = bs_colors[["success"]],
                        linewidth = 1) +
-    ggplot2::scale_y_continuous(labels = scales::label_number(scale = 0.000001)) +
+    ggplot2::scale_y_continuous(labels = scales::label_number(scale = 0.000001),
+                                limits = c(0, NA)) +
     ggplot2::labs(title = glue::glue("Cumulative energy consumption per day in {format(min(data_current$date), format = '%B %Y')}"),
                   caption = "Seven day rolling average",
                   x = "Day of the month",

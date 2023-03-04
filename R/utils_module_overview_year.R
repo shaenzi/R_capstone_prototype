@@ -141,7 +141,8 @@ plot_year_reference <- function(data_ref, data_current, bs_colors) {
     ggplot2::geom_line(data = data_current, ggplot2::aes(y = daily_mean_per_month, group = 1),
                        color = bs_colors[["success"]],
                        linewidth = 1) +
-    ggplot2::scale_y_continuous(labels = scales::label_number(scale = 0.000001)) +
+    ggplot2::scale_y_continuous(labels = scales::label_number(scale = 0.000001),
+                                limits = c(0, NA)) +
     ggplot2::labs(title = glue::glue(
       "Daily energy consumption averaged per month in ",
       "{format(lubridate::year(min(data_current$date)), format = '%Y')}"),
@@ -172,7 +173,8 @@ plot_year_cumulative <- function(data_ref, data_current, bs_colors) {
     ggplot2::geom_line(data = data_current, ggplot2::aes(y = cum, group = 1),
                        color = bs_colors[["success"]],
                        linewidth = 1) +
-    ggplot2::scale_y_continuous(labels = scales::label_number(scale = 0.000001)) +
+    ggplot2::scale_y_continuous(labels = scales::label_number(scale = 0.000001),
+                                limits = c(0, NA)) +
     ggplot2::labs(title = glue::glue(
       "Cumulative energy consumption in ",
       "{format(lubridate::year(min(data_current$date)), format = '%Y')}"),
