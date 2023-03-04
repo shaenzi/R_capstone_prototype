@@ -5,7 +5,7 @@
 #'
 #' @param data tsibble with gross_energy_kwh and timestamp as index
 #'
-#' @return a fabletools forecast for the next two weeks
+#' @return a fabletools forecast for the next two weeks with 80 and 95% extracted separately
 #' @keywords internal
 predict_2_weeks <- function(data) {
   print("forecasting")
