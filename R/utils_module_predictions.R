@@ -13,7 +13,13 @@ predict_2_weeks <- function(data) {
     fabletools::model(stl = fabletools::decomposition_model(
     feasts::STL(gross_energy_kwh ~ season(window = NULL)),
     fable::SNAIVE(season_adjust))) %>%
-    fabletools::forecast(h = "2 weeks")
+    fabletools::forecast(h = "2 weeks") %>%
+    dplyr::mutate(level80 = fabletools::hilo(gross_energy_kwh, 80),
+                  level95 = fabletools::hilo(gross_energy_kwh, 95)) %>%
+    dplyr::mutate(lower80 = level80$lower,
+                  upper80 = level80$upper,
+                  lower95 = level95$lower,
+                  upper95 = level95$upper)
 }
 
 #' plot_prediction
@@ -27,13 +33,13 @@ plot_prediction <- function(data, bs_colors) {
   print("plotting prediction")
   data %>%
     ggplot2::ggplot(mapping = ggplot2::aes(x = timestamp)) +
-    ggdist::stat_lineribbon(ggplot2::aes(ydist = gross_energy_kwh),
-                    .width = c(.8, .95),
-                    linewidth = 0.1) +
+    ggplot2::geom_ribbon(ggplot2::aes(ymin = lower95, ymax = upper95),
+                       fill = "#f0f0f0") +
+    ggplot2::geom_ribbon(ggplot2::aes(ymin = lower80, ymax = upper80),
+                       fill = "#bdbdbd") +
     ggplot2::geom_line(mapping = ggplot2::aes(y = .mean),
               color = bs_colors[["secondary"]],
               linewidth = 1) +
-    ggplot2::scale_fill_brewer(palette = "Greys") +
     ggplot2::scale_y_continuous(labels = scales::label_number(scale = 0.001)) +
     ggplot2::labs(x = "",
                   title = "Next two weeks - predicting the energy use for every 15min",
@@ -55,9 +61,10 @@ plot_prediction_and_actual <- function(data_predicted, data_actual, bs_colors) {
   print("plotting prediction and actual")
   data_predicted %>%
     ggplot2::ggplot(mapping = ggplot2::aes(x = timestamp)) +
-    ggdist::stat_lineribbon(ggplot2::aes(ydist = gross_energy_kwh),
-                    .width = c(.8, .95),
-                    linewidth = 0.1) +
+    ggplot2::geom_ribbon(ggplot2::aes(ymin = lower95, ymax = upper95),
+                         fill = "#f0f0f0") +
+    ggplot2::geom_ribbon(ggplot2::aes(ymin = lower80, ymax = upper80),
+                         fill = "#bdbdbd") +
     ggplot2::geom_line(mapping = ggplot2::aes(y = .mean),
                        color = bs_colors[["secondary"]],
                        linewidth = 1) +
@@ -65,7 +72,6 @@ plot_prediction_and_actual <- function(data_predicted, data_actual, bs_colors) {
                        mapping = ggplot2::aes(x = timestamp, y = gross_energy_kwh),
                        color = bs_colors[["success"]],
                        linewidth = 1) +
-    ggplot2::scale_fill_brewer(palette = "Greys") +
     ggplot2::scale_y_continuous(labels = scales::label_number(scale = 0.001)) +
     ggplot2::labs(x = "",
                   title = "Last two weeks predicted and actual energy use",
