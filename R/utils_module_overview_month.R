@@ -55,6 +55,7 @@ prepare_data_for_monthly_plot <- function(data, date_today, n_ref = 5) {
     dplyr::summarise(daily_use = sum(gross_energy_kwh),
                      date = lubridate::as_date(min(timestamp)),
                      n_entries_per_day = dplyr::n()) %>%
+    dplyr::filter(n_entries_per_day > 94) %>% # should have 96 for a complete day, otherwise rolling average skewed
     dplyr::summarise(daily_use = data.table::frollmean(x = daily_use,
                                                        n = 7,
                                                        align = "center"),
@@ -63,7 +64,6 @@ prepare_data_for_monthly_plot <- function(data, date_today, n_ref = 5) {
                      yday = yday) %>%
     tidyr::fill(daily_use, .direction = "updown") %>%
     dplyr::ungroup() %>%
-    dplyr::filter(n_entries_per_day > 94) %>% # should have 96 for a complete day
     dplyr::select(-n_entries_per_day) %>%
     dplyr::filter(as.numeric(lubridate::month(date)) == month_today) %>%
     dplyr::mutate(day = lubridate::day(date)) %>%
@@ -119,7 +119,7 @@ plot_month_reference <- function(data_ref, data_current, bs_colors) {
 
   # if there is only one day to plot, plot as a point, not as a line
   if (nrow(data_current) == 1) {
-    p <- p + geom_point(data = data_current, ggplot2::aes(y = daily_use),
+    p <- p + ggplot2::geom_point(data = data_current, ggplot2::aes(y = daily_use),
                         color = bs_colors[["success"]])
   }
 
