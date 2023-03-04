@@ -31,4 +31,6 @@ server <- function(input, output, session){
 
 	zh_details_server('zh_details', bs_colors)
 
+	city_info_server('cities')
+
 }
