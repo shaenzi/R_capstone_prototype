@@ -10,7 +10,7 @@ predict_2_weeks(data)
 \item{data}{tsibble with gross_energy_kwh and timestamp as index}
 }
 \value{
-a fabletools forecast for the next two weeks
+a fabletools forecast for the next two weeks with 80 and 95\% extracted separately
 }
 \description{
 function to predict the next two weeks' energy used based on
