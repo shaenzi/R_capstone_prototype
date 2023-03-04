@@ -50,9 +50,8 @@ prepare_data_for_monthly_plot <- function(data, date_today, n_ref = 5) {
                   cum_mean = cumsum(mean_ref))
 
   data_current <- data %>%
-    dplyr::filter(as.numeric(month) == month_today,
-                  year == lubridate::year(date_today)) %>%
-    dplyr::group_by(day) %>%
+    dplyr::filter(lubridate::as_date(timestamp) > date_today - 38) %>%
+    dplyr::group_by(yday) %>%
     dplyr::summarise(daily_use = sum(gross_energy_kwh),
                      date = lubridate::as_date(min(timestamp)),
                      n_entries_per_day = dplyr::n()) %>%
@@ -61,11 +60,13 @@ prepare_data_for_monthly_plot <- function(data, date_today, n_ref = 5) {
                                                        align = "center"),
                      date = date,
                      n_entries_per_day = n_entries_per_day,
-                     day = day) %>%
+                     yday = yday) %>%
     tidyr::fill(daily_use, .direction = "updown") %>%
     dplyr::ungroup() %>%
     dplyr::filter(n_entries_per_day > 94) %>% # should have 96 for a complete day
     dplyr::select(-n_entries_per_day) %>%
+    dplyr::filter(as.numeric(lubridate::month(date)) == month_today) %>%
+    dplyr::mutate(day = lubridate::day(date)) %>%
     dplyr::arrange(day) %>%
     dplyr::mutate(cum = cumsum(daily_use))
 
@@ -98,7 +99,7 @@ prepare_data_for_monthly_plot <- function(data, date_today, n_ref = 5) {
 #' @return ggplot
 #' @keywords internal
 plot_month_reference <- function(data_ref, data_current, bs_colors) {
-  data_ref %>%
+  p <- data_ref %>%
     ggplot2::ggplot(ggplot2::aes(x = day)) +
     ggplot2::geom_ribbon(ggplot2::aes(ymin = min_ref, ymax = max_ref, group = 1),
                          fill = bs_colors[["light"]], alpha = 0.8) +
@@ -114,6 +115,15 @@ plot_month_reference <- function(data_ref, data_current, bs_colors) {
                   subtitle = "<span style = 'color:#00bc8c;'>Current energy use</span> compared to the range of energy use in the same month in the previous 4 years") +
     ggplot2::theme(axis.title.y = ggplot2::element_text(angle = 0),
                    plot.subtitle = ggtext::element_markdown())
+
+  # if there is only one day to plot, plot as a point, not as a line
+  if (nrow(data_current) == 1) {
+    p <- p + geom_point(data = data_current, ggplot2::aes(y = daily_use),
+                        color = bs_colors[["success"]])
+  }
+
+  p
+
 }
 
 #' plot_month_cumulative
