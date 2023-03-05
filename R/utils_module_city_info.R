@@ -7,7 +7,6 @@
 #' @return a ggplot object
 #' @keywords interal
 plot_cities <- function(cantons, cities, bs_colors) {
-  print("plotting...")
   cantons %>%
     ggplot2::ggplot() +
     ggplot2::geom_sf(fill = NA,
