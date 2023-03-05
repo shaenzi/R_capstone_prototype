@@ -37,3 +37,13 @@ zh_old <- get_zh_data_to_2022() %>%
   add_date_components()
 
 usethis::use_data(wi_old, zh_old, overwrite = TRUE)
+
+#geographic data
+cantons <- sf::st_read(file.path("data-raw", "swissBOUNDARIES3D_1_4_TLM_KANTONSGEBIET.shp"))
+
+city <- c("Zurich", "Winterthur", "Basel")
+x <- c(2682217.000,  2696563.250, 2611414.500)
+y <- c(1247945.250, 1261709.875, 1267104.125)
+cities <- tibble::tibble(city, x, y)
+
+usethis::use_data(cantons, cities, overwrite = TRUE)

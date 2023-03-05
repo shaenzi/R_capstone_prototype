@@ -75,7 +75,9 @@ city_infoUI <- function(id){
       "very minimal impression and further links."
     )),
 
-    plotOutput("map"),
+    plotOutput(ns("map")) %>%
+      shinycssloaders::withSpinner(),
+
     bslib::layout_column_wrap(
       width = "200px", height = 300,
       card1, card2, card3
@@ -88,7 +90,7 @@ city_infoUI <- function(id){
 #' @param id Unique id for module instance.
 #'
 #' @keywords internal
-city_info_server <- function(id){
+city_info_server <- function(id, cantons, cities, bs_colors){
   moduleServer(
     id,
     function(
@@ -102,7 +104,7 @@ city_info_server <- function(id){
 
       # your code here
       output$map <- renderPlot({
-
+        plot_cities(cantons, cities, bs_colors)
       })
     }
   )
