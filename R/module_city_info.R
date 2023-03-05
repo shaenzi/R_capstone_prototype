@@ -42,7 +42,10 @@ city_infoUI <- function(id){
         link_zh_wiki,
         " and more data in ",
         link_zh_ogd
-      ))
+      )),
+      div(class = "p-3 text-center",
+          img(src='img/zurich1.png', align = "center", width = "70%", height = "70%")
+      )
     ))
 
   card_wi <- bslib::card(
@@ -52,14 +55,17 @@ city_infoUI <- function(id){
           img(src='img/winterthur.png', align = "center", width = "20%", height = "20%")
       ),
       HTML(paste0(
-        "Winterthr is the second large city in the canton of Zurich, and with ",
+        "Winterthur is the second large city in the canton of Zurich, and with ",
         tags$b("120'222 inhabitants "),
         "at the end of 2022, Switzerland's sixth-largest city overall. It has a strong industrial heritage (e.g. Sulzer and Rieter) . You can find some more general information about it in the ",
         link_winti_wiki,
         " and more data in ",
         link_winti_ogd,
         " (search for Winterthur)."
-      ))
+      )),
+      div(class = "p-3 text-center",
+          img(src='img/winti1.png', align = "center", width = "70%", height = "70%")
+      )
     ))
 
   card_bs <- bslib::card(
@@ -76,22 +82,25 @@ city_infoUI <- function(id){
         link_bs_wiki,
         " and more data in ",
         link_bs_ogd
-      ))
+      )),
+      div(class = "p-3 text-center",
+          img(src='img/basel1.png', align = "center", width = "70%", height = "70%")
+      )
     ))
 
   fluidPage(
     h3("Some information about the cities"),
     p(paste0(
       "If you are not local, you might not know the three cities presented here - which have only been chosen on the basis of their data being available. ",
-      "The map provides some orientation of where the cities are located within Switzerland, and the cards below give you a ",
-      "very minimal impression and further links."
+      "The map provides some orientation of where the cities are located within Switzerland, and the cards below give you a minimal impression, further links ",
+      "and a pseudocolored map."
     )),
 
     plotOutput(ns("map")) %>%
       shinycssloaders::withSpinner(),
 
     bslib::layout_column_wrap(
-      width = "200px", height = 500,
+      width = "200px", height = 680,
       card_bs, card_zh, card_wi
     )
   )

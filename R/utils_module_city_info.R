@@ -17,7 +17,7 @@ plot_cities <- function(cantons, cities, bs_colors) {
     ggplot2::scale_color_manual(values = c(bs_colors[["danger"]],
                                            bs_colors[["success"]],
                                            bs_colors[["info"]]),
-                                ) +
+    ) +
     ggplot2::annotate(geom = "label",
                       x = cities %>% dplyr::filter(city == "Basel") %>% dplyr::pull(x),
                       y = cities %>% dplyr::filter(city == "Basel") %>% dplyr::pull(y) + 15000,
