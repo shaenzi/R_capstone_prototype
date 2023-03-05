@@ -30,9 +30,11 @@ city_infoUI <- function(id){
                     target = "_blank")
 
   card_zh <- bslib::card(
-    bslib::card_header("Zurich"),
+    bslib::card_header(HTML("<div style='color:#3498db';>Zurich</div>")),
     bslib::card_body(
-      img(src='img/zh_hell.png', align = "center", width = "20%", height = "20%"),
+      div(class = "p-3 text-center",
+          img(src='img/zh_hell.png', align = "center", width = "20%", height = "20%")
+      ),
       HTML(paste0(
         "Zurich is Switzerland's largest city with ",
         tags$b("443'037 inhabitants "),
@@ -42,10 +44,13 @@ city_infoUI <- function(id){
         link_zh_ogd
       ))
     ))
+
   card_wi <- bslib::card(
-    bslib::card_header("Winterthur"),
+    bslib::card_header(HTML("<div style='color:#00bc8c';>Winterthur</div>")),
     bslib::card_body(
-      img(src='img/winterthur.png', align = "center", width = "20%", height = "20%"),
+      div(class = "p-3 text-center",
+          img(src='img/winterthur.png', align = "center", width = "20%", height = "20%")
+      ),
       HTML(paste0(
         "Winterthr is the second large city in the canton of Zurich, and with ",
         tags$b("120'222 inhabitants "),
@@ -56,10 +61,13 @@ city_infoUI <- function(id){
         " (search for Winterthur)."
       ))
     ))
+
   card_bs <- bslib::card(
-    bslib::card_header("Basel"),
+    bslib::card_header(HTML("<div style='color:#e74c3c';>Basel</div>")),
     bslib::card_body(
-      img(src='img/basel.png', align = "center", width = "20%", height = "20%"),
+      div(class = "p-3 text-center",
+          img(src='img/basel.png', align = "center", width = "20%", height = "20%")
+      ),
       HTML(paste0(
 
         "Basel is Switzerland's third-largest city, but as we're looking at the energy use from the canton of Basel-Stadt, which also includes Riehen and Bettingen, we look at their total number of inhabitants, which is ",
