@@ -5,7 +5,7 @@
 #' @param bs_colors named hex color vector with "info", "danger" and "success" colors
 #'
 #' @return a ggplot object
-#' @keywords interal
+#' @keywords internal
 plot_cities <- function(cantons, cities, bs_colors) {
   cantons %>%
     ggplot2::ggplot() +

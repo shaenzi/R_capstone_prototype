@@ -28,6 +28,7 @@ Imports:
     markdown,
     purrr,
     scales,
+    sf,
     shiny,
     shinycssloaders,
     shinyWidgets,
