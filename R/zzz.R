@@ -3,10 +3,11 @@
 #---------------------------------------------#
 
 .onLoad <- function(...){
-	# shiny::addResourcePath(
-	# 	"img",
-	# 	system.file("img", package = "capstonePrototype")
-	# )
+	shiny::addResourcePath(
+		"img",
+		system.file("app/www", package = "capstonePrototype")
+	)
+  #addResourcePath('datasets', system.file('data', package='datasets'))
 }
 
 #---------------------------------------------#

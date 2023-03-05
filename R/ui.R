@@ -133,6 +133,10 @@ ui <- function(req){
       )
     ),
     tabPanel(
+      "City info",
+      city_infoUI('cities')
+    ),
+    tabPanel(
       "About",
       includeMarkdown(system.file("app/www/about.md", package = "capstonePrototype"))
     )
