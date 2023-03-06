@@ -72,7 +72,7 @@ ui <- function(req){
 		    a trend, seasonal components for variations within each year, week, day and hour, and
 		    a remainder. This can then be used to forecast the energy usage in the future.
 		    However, note that this is a very simple model which does not take into account
-		    major factors known to affect energy usage such as the weather. For more sophisticated
+		    major factors known to heavily influence energy usage such as the weather. For more sophisticated
 		    predictions check out these links for "),
         a(
           "Zurich",
@@ -84,7 +84,19 @@ ui <- function(req){
           href = "https://www.statistik.bs.ch/aktuell/stromverbrauch.html",
           target = "_blank"
         ),
-        span(".")),
+        span(". For the latter, the "),
+        a(
+          "code",
+          href = "https://www.statistik.bs.ch/grundlagen/methodenberichte/stromverbrauchsprognose.html",
+          target = "_blank"
+        ),
+        span(" and the "),
+        a(
+          "predictions",
+          href = "https://data.bs.ch/explore/dataset/100245/table/?sort=time",
+          target = "_blank"
+        ),
+        span(" of the model are publicly available.")),
       br(),
       br(),
       shinyWidgets::radioGroupButtons(

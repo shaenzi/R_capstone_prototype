@@ -33,8 +33,17 @@ prepare_data_for_yearly_cumulative_plot <- function(data, date_today, n_ref = 5)
                   cum_max = cumsum(max_ref),
                   cum_mean = cumsum(mean_ref))
 
-  data_current <- data %>%
-    dplyr::filter(year == lubridate::year(date_today)) %>%
+  # only show months that are (almost) completed
+  if (lubridate::day(date_today) < 28) {
+    data_filt <- data %>%
+      dplyr::filter(year == lubridate::year(date_today)) %>%
+      dplyr::filter(as.numeric(month) < lubridate::month(date_today))
+  } else {
+    data_filt <- data %>%
+      dplyr::filter(year == lubridate::year(date_today))
+  }
+
+  data_current <- data_filt %>%
     dplyr::group_by(month) %>%
     dplyr::summarise(monthly_use = sum(gross_energy_kwh),
                      date = lubridate::as_date(min(timestamp)),
@@ -45,7 +54,6 @@ prepare_data_for_yearly_cumulative_plot <- function(data, date_today, n_ref = 5)
 
   results <- list("data_ref" = data_ref, "data_current" = data_current)
 
-  # take last month's data if this month is not yet available
   if (nrow(data_current) == 0) {
     print("going one month back")
     # recursively call the same function with a date from the previous year
@@ -146,9 +154,9 @@ plot_year_reference <- function(data_ref, data_current, bs_colors) {
     ggplot2::labs(title = glue::glue(
       "Daily energy consumption averaged per month in ",
       "{format(lubridate::year(min(data_current$date)), format = '%Y')}"),
-                  x = "",
-                  y = "GWh",
-                  subtitle = "<span style = 'color:#00bc8c;'>This year's energy use</span> compared to the range of energy use in the same month in the previous 4 years") +
+      x = "",
+      y = "GWh",
+      subtitle = "<span style = 'color:#00bc8c;'>This year's energy use</span> compared to the range of energy use in the same month in the previous 4 years") +
     ggplot2::theme(axis.title.y = ggplot2::element_text(angle = 0),
                    plot.subtitle = ggtext::element_markdown())
 }
@@ -178,9 +186,10 @@ plot_year_cumulative <- function(data_ref, data_current, bs_colors) {
     ggplot2::labs(title = glue::glue(
       "Cumulative energy consumption in ",
       "{format(lubridate::year(min(data_current$date)), format = '%Y')}"),
-                  x = "",
-                  y = "GWh",
-                  subtitle = "<span style = 'color:#00bc8c;'>This year's energy use</span> compared to the range of energy use in the same month in the previous 4 years") +
+      x = "",
+      y = "GWh",
+      caption = "Only months that are (almost) complete are shown.",
+      subtitle = "<span style = 'color:#00bc8c;'>This year's energy use</span> compared to the range of energy use in the same month in the previous 4 years") +
     ggplot2::theme(axis.title.y = ggplot2::element_text(angle = 0),
                    plot.subtitle = ggtext::element_markdown())
 }

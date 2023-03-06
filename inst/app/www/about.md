@@ -10,6 +10,10 @@ The split according to supply voltage comes from data from the <a href="https://
 
 Of these four datasets, the Basel one is updated weekly and the other three are updated daily. Some corrections of previous values might still occur at later times though.
 
+### Maps
+
+The boundaries of the Swiss canton shown in the "city info" tab come from <a href="https://www.swisstopo.admin.ch/de/geodata/landscape/boundaries3d.html#technische_details" target="_blank">swisstopo</a>. The pseudocolored maps in the same tab are based on features such as roads from open street map downloaded with the <a href="https://github.com/ropensci/osmdata" target="_blank">osmdata</a> package.
+
 ## Code and technologies used
 
 The code is available on <a href="https://github.com/shaenzi/capstonePrototype" target="_blank">github</a>. The app is programmed in <a href="https://www.r-project.org/about.html" target="_blank">R</a> / <a href="https://shiny.rstudio.com/" target="_blank">shiny</a>, and uses the <a href="https://leprechaun.opifex.org/" target="_blank">leprechaun</a> framework.
