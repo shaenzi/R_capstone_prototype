@@ -1,5 +1,6 @@
 FROM rocker/tidyverse:4.2.2
 # get latest gdal, otherwise cannot build sf package
+RUN apt-get install software-properties-common
 RUN add-apt-repository ppa:ubuntugis/ubuntugis-unstable
 RUN apt-get update
 RUN apt-get install libudunits2-dev libgdal-dev libgeos-dev libproj-dev libsqlite0-dev
