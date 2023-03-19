@@ -1,4 +1,4 @@
-FROM rocker/geospatial:4.2.2-ubuntugis
+FROM rocker/geospatial:4.2.2-dev-osgeo
 RUN /rocker_scripts/install_tidyverse.sh
 #RUN apt-get install libudunits2-dev libgdal-dev libgeos-dev libproj-dev libsqlite0-dev
 
