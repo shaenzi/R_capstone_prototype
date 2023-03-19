@@ -1,9 +1,6 @@
-FROM rocker/tidyverse:4.2.2
-# get latest gdal, otherwise cannot build sf package
-RUN apt-get install software-properties-common
-RUN add-apt-repository ppa:ubuntugis/ubuntugis-unstable
-RUN apt-get update
-RUN apt-get install libudunits2-dev libgdal-dev libgeos-dev libproj-dev libsqlite0-dev
+FROM rocker/geospatial:4.2.2-ubuntugis
+RUN /rocker_scripts/install_tidyverse.sh
+#RUN apt-get install libudunits2-dev libgdal-dev libgeos-dev libproj-dev libsqlite0-dev
 
 RUN install2.r rsconnect bslib data.table fable fabletools feasts ggdist ggtext glue
 RUN install2.r htmltools janitor lubridate magrittr markdown scales sf shiny
