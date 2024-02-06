@@ -6,12 +6,12 @@
 predictionsUI <- function(id){
 	ns <- NS(id)
 
-	bslib::navs_tab_card(
+	bslib::navset_card_tab(
 	  height = 550, full_screen = TRUE,
 	  #title = title,
-	  bslib::nav(
+	  bslib::nav_panel(
 	    "Next two weeks",
-	    bslib::card_body_fill(
+	    bslib::card_body(
 	      plotOutput(ns("prediction")) %>%
 	        shinycssloaders::withSpinner()
 	    ),
@@ -19,9 +19,9 @@ predictionsUI <- function(id){
 	    #   htmlOutput(ns("latest_data_week")),
 	    # )
 	  ),
-	  bslib::nav(
+	  bslib::nav_panel(
 	    "Previous two weeks",
-	    bslib::card_body_fill(
+	    bslib::card_body(
 	      plotOutput(ns("predicted_vs_actual")) %>%
 	        shinycssloaders::withSpinner()
 	    ),

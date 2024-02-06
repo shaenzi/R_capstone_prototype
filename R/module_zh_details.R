@@ -6,25 +6,25 @@
 zh_detailsUI <- function(id){
   ns <- NS(id)
 
-  bslib::navs_tab_card(
+  bslib::navset_card_tab(
     height = 550, full_screen = TRUE,
-    bslib::nav(
+    bslib::nav_panel(
       "Last week",
-      bslib::card_body_fill(
+      bslib::card_body(
         plotOutput(ns("week")) %>%
           shinycssloaders::withSpinner()
       ),
     ),
-    bslib::nav(
+    bslib::nav_panel(
       "Last year",
-      bslib::card_body_fill(
+      bslib::card_body(
         plotOutput(ns("last_year")) %>%
           shinycssloaders::withSpinner()
       ),
     ),
-    bslib::nav(
+    bslib::nav_panel(
       "Over the years",
-      bslib::card_body_fill(
+      bslib::card_body(
         plotOutput(ns("years")) %>%
           shinycssloaders::withSpinner()
       )

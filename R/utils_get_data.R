@@ -25,7 +25,7 @@ get_winti_data_up_to_date <- function() {
 get_zh_data_up_to_date <- function() {
 
   # read latest csv for Zurich
-  zh_current <- data.table::fread("https://data.stadt-zuerich.ch/dataset/ewz_bruttolastgang_stadt_zuerich/download/2023_ewz_bruttolastgang.csv") %>%
+  zh_current <- data.table::fread("https://data.stadt-zuerich.ch/dataset/ewz_bruttolastgang_stadt_zuerich/download/2024_ewz_bruttolastgang.csv") %>%
     janitor::clean_names() %>%
     dplyr::mutate(timestamp = zeitpunkt,
                   gross_energy_kwh = bruttolastgang) %>%

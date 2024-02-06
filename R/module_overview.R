@@ -12,11 +12,11 @@ overviewUI <- function(id){
   ns <- NS(id)
 
 
-  bslib::navs_tab_card(
+  bslib::navset_card_tab(
     height = 550, full_screen = TRUE,
-    bslib::nav(
+    bslib::nav_panel(
       "Week",
-      bslib::card_body_fill(
+      bslib::card_body(
         materialSwitch(
           inputId = ns("cumulative_week"),
           label = "Cumulative",
@@ -30,9 +30,9 @@ overviewUI <- function(id){
         htmlOutput(ns("latest_data_week")),
       )
     ),
-    bslib::nav(
+    bslib::nav_panel(
       "Month",
-      bslib::card_body_fill(
+      bslib::card_body(
         materialSwitch(
           inputId = ns("cumulative_month"),
           label = "Cumulative",
@@ -46,9 +46,9 @@ overviewUI <- function(id){
         htmlOutput(ns("latest_data_month")),
       )
     ),
-    bslib::nav(
+    bslib::nav_panel(
       "Year",
-      bslib::card_body_fill(
+      bslib::card_body(
         materialSwitch(
           inputId = ns("cumulative_year"),
           label = "Cumulative",
