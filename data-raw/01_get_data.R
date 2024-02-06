@@ -12,12 +12,13 @@ get_winti_data_to_2021 <- function() {
     dplyr::select(timestamp, gross_energy_kwh)
 }
 
-get_zh_data_to_2022 <- function() {
+get_complete_zh_data <- function() {
   zh_files <- c(
     "https://data.stadt-zuerich.ch/dataset/ewz_bruttolastgang_stadt_zuerich/download/2019_ewz_bruttolastgang.csv",
     "https://data.stadt-zuerich.ch/dataset/ewz_bruttolastgang_stadt_zuerich/download/2020_ewz_bruttolastgang.csv",
     "https://data.stadt-zuerich.ch/dataset/ewz_bruttolastgang_stadt_zuerich/download/2021_ewz_bruttolastgang.csv",
-    "https://data.stadt-zuerich.ch/dataset/ewz_bruttolastgang_stadt_zuerich/download/2022_ewz_bruttolastgang.csv"
+    "https://data.stadt-zuerich.ch/dataset/ewz_bruttolastgang_stadt_zuerich/download/2022_ewz_bruttolastgang.csv",
+    "https://data.stadt-zuerich.ch/dataset/ewz_bruttolastgang_stadt_zuerich/download/2023_ewz_bruttolastgang.csv"
   )
 
   purrr::map_df(zh_files, get_csv_from_link) %>%
@@ -31,7 +32,7 @@ wi_old <- get_winti_data_to_2021() %>%
   deal_with_ts_utc() %>%
   add_date_components()
 
-zh_old <- get_zh_data_to_2022() %>%
+zh_old <- get_complete_zh_data() %>%
   deal_with_ts_zh() %>%
   get_clean_data() %>%
   add_date_components()
