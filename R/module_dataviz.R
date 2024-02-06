@@ -9,11 +9,11 @@
 datavizUI <- function(id){
   ns <- NS(id)
 
-  bslib::navs_tab_card(
+  bslib::navset_card_tab(
     height = 550, full_screen = TRUE,
-    bslib::nav(
+    bslib::nav_panel(
       "Changes over the years",
-      bslib::card_body_fill(
+      bslib::card_body(
         shinyWidgets::radioGroupButtons(
           inputId = ns("time_select"),
           choices = c("Daily", "Weekly", "Monthly"),
@@ -27,13 +27,13 @@ datavizUI <- function(id){
       #   htmlOutput(ns("latest_data_week")),
       # )
     ),
-    bslib::nav(
+    bslib::nav_panel(
       "Detailed yearly heatmap",
-      bslib::card_body_fill(
+      bslib::card_body(
         shinyWidgets::radioGroupButtons(
           inputId = ns("year_select"),
-          choices = c(2019, 2020, 2021, 2022, 2023),
-          selected = 2022,
+          choices = c(2019, 2020, 2021, 2022, 2023, 2024),
+          selected = 2023,
           status = "primary",
           #justified = TRUE
         ),
