@@ -39,6 +39,7 @@ jobs:
           source("R/utils_module_zh_details.R")
           load("data/zh_old.rda")
           load("data/wi_old.rda")
+          load("data/bs_old.rda")
           source("data-raw/02_get_updated_data.R")
           source("data-raw/03_prepare_data_for_modules.R")
         shell: Rscript {0}
