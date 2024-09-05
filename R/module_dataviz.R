@@ -33,7 +33,7 @@ datavizUI <- function(id){
         shinyWidgets::radioGroupButtons(
           inputId = ns("year_select"),
           choices = c(2019, 2020, 2021, 2022, 2023, 2024),
-          selected = 2023,
+          selected = 2024,
           status = "primary",
           #justified = TRUE
         ),
