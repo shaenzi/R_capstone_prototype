@@ -26,7 +26,7 @@ city_infoUI <- function(id){
                    "its OGD portal",
                    target = "_blank")
   link_bs_wiki <- a(href = "https://en.wikipedia.org/wiki/Basel",
-                    "Wikipedia article on Zurich",
+                    "Wikipedia article on Basel",
                     target = "_blank")
 
   card_zh <- bslib::card(
