@@ -4,10 +4,12 @@
 \alias{datavizUI}
 \title{dataviz UI}
 \usage{
-datavizUI(id)
+datavizUI(id, choices_years)
 }
 \arguments{
 \item{id}{Unique id for module instance.}
+
+\item{choices_years}{vector of possible years to be chosen from the data}
 }
 \description{
 UI of the dataviz module,

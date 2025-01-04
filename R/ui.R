@@ -133,15 +133,15 @@ ui <- function(req){
       ),
       conditionalPanel(
         condition = "input.city_select_tab3 == 'Zurich'",
-        datavizUI('zh')
+        datavizUI('zh', unique(zh$year))
       ),
       conditionalPanel(
         condition = "input.city_select_tab3 == 'Winterthur'",
-        datavizUI('wi')
+        datavizUI('wi', unique(wi$year))
       ),
       conditionalPanel(
         condition = "input.city_select_tab3 == 'Basel'",
-        datavizUI('bs')
+        datavizUI('bs', unique(bs$year))
       )
     ),
     tabPanel(

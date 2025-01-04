@@ -4,9 +4,10 @@
 #' once for each city
 #'
 #' @param id Unique id for module instance.
+#' @param choices_years vector of possible years to be chosen from the data
 #'
 #' @keywords internal
-datavizUI <- function(id){
+datavizUI <- function(id, choices_years){
   ns <- NS(id)
 
   bslib::navset_card_tab(
@@ -32,8 +33,8 @@ datavizUI <- function(id){
       bslib::card_body(
         shinyWidgets::radioGroupButtons(
           inputId = ns("year_select"),
-          choices = c(2019, 2020, 2021, 2022, 2023, 2024),
-          selected = 2024,
+          choices = choices_years,
+          selected = max(choices_years),
           status = "primary",
           #justified = TRUE
         ),
