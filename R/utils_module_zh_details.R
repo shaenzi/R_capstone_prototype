@@ -53,11 +53,9 @@ plot_zh_details_years <- function(zh_details_yearly, bs_colors) {
 #' @keywords internal
 prepare_zh_details_last_week <- function(zh_details){
   latest_date <- max(lubridate::as_date(zh_details$timestamp))
-  isoweek  <- lubridate::isoweek(latest_date - 7)
   zh_details %>%
     dplyr::select(-timestamp_utc) %>%
-    dplyr::filter(lubridate::isoweek(timestamp) == isoweek,
-           lubridate::isoyear(timestamp) == lubridate::isoyear(lubridate::today())) %>%
+    dplyr::filter(timestamp >= lubridate::floor_date(latest_date, unit = "week")) %>%
     dplyr::group_by(lubridate::wday(timestamp),
                     lubridate::hour(timestamp),
                     lubridate::minute(timestamp)) %>%
