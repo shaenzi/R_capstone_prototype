@@ -8,6 +8,7 @@
 get_winti_data_up_to_date <- function() {
 
   # read latest csv for Winterthur
+  # need to update this link every couple of years with yearly update when new file is generated
   wi_current <- data.table::fread("https://www.web.statistik.zh.ch/ogd/daten/ressourcen/KTZH_00001863_00003562.csv") |>
     janitor::clean_names() |>
     dplyr::mutate(timestamp = zeitpunkt,
@@ -25,7 +26,9 @@ get_winti_data_up_to_date <- function() {
 get_zh_data_up_to_date <- function() {
 
   # read latest csv for Zurich
-  zh_current <- data.table::fread("https://data.stadt-zuerich.ch/dataset/ewz_bruttolastgang_stadt_zuerich/download/2024_ewz_bruttolastgang.csv") |>
+  zh_current <- data.table::fread(
+    glue::glue("https://data.stadt-zuerich.ch/dataset/ewz_bruttolastgang_stadt_zuerich/download/",
+               lubridate::year(lubridate::now()), "_ewz_bruttolastgang.csv")) |>
     janitor::clean_names() |>
     dplyr::mutate(timestamp = zeitpunkt,
                   gross_energy_kwh = bruttolastgang) |>
@@ -38,7 +41,7 @@ get_zh_data_up_to_date <- function() {
 #' @param year YYYY to get the data for
 #'
 #' @return tibble
-#' @export
+#' @keywords internal
 #'
 get_data_one_year_bs <- function(year) {
   httr2::request("https://data.bs.ch/explore/dataset/100233/download/") |>
