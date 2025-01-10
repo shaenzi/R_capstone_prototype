@@ -1,5 +1,8 @@
 name: Update data
 
+env:
+  RENV_PATHS_ROOT: ~/.cache/R/renv
+
 on:
   schedule:
     - cron: "0 4 * * *"
@@ -19,12 +22,15 @@ jobs:
         with:
           use-public-rspm: true
 
-      - name: Install dependencies
-        run: |
-          install.packages(c("curl", "data.table", "dplyr", "fable",
-          "fabletools", "feasts", "glue", "htmltools", "janitor", "lubridate",
-          "magrittr", "purrr", "tidyr", "tsibble", "usethis"))
-        shell: Rscript {0}
+      # set up renv
+      - uses: r-lib/actions/setup-renv@v2
+
+      - uses: actions/cache@v1
+        with:
+          path: ${{ env.RENV_PATHS_ROOT }}
+          key: ${{ runner.os }}-renv-${{ hashFiles('**/renv.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-renv-
 
       - name: Update data
         run: |

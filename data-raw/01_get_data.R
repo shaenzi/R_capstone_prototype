@@ -4,6 +4,7 @@ get_winti_data_to_2021 <- function() {
     "https://www.web.statistik.zh.ch/ogd/daten/ressourcen/KTZH_00001863_00003561.csv", #2013-2015
     "https://www.web.statistik.zh.ch/ogd/daten/ressourcen/KTZH_00001863_00003563.csv", # 2016-2018
     "https://www.web.statistik.zh.ch/ogd/daten/ressourcen/KTZH_00001863_00003564.csv" # 2019-2021
+    # need to add new file every couple of years with yearly update
   )
 
   purrr::map_df(winti_files, get_csv_from_link) |>
@@ -18,7 +19,9 @@ get_complete_zh_data <- function() {
     "https://data.stadt-zuerich.ch/dataset/ewz_bruttolastgang_stadt_zuerich/download/2020_ewz_bruttolastgang.csv",
     "https://data.stadt-zuerich.ch/dataset/ewz_bruttolastgang_stadt_zuerich/download/2021_ewz_bruttolastgang.csv",
     "https://data.stadt-zuerich.ch/dataset/ewz_bruttolastgang_stadt_zuerich/download/2022_ewz_bruttolastgang.csv",
-    "https://data.stadt-zuerich.ch/dataset/ewz_bruttolastgang_stadt_zuerich/download/2023_ewz_bruttolastgang.csv"
+    "https://data.stadt-zuerich.ch/dataset/ewz_bruttolastgang_stadt_zuerich/download/2023_ewz_bruttolastgang.csv",
+    "https://data.stadt-zuerich.ch/dataset/ewz_bruttolastgang_stadt_zuerich/download/2024_ewz_bruttolastgang.csv"
+    # need to add new yearly file for yearly update
   )
 
   purrr::map_df(zh_files, get_csv_from_link) |>
