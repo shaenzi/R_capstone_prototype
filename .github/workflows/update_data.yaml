@@ -1,8 +1,5 @@
 name: Update data
 
-env:
-  RENV_PATHS_ROOT: ~/.cache/R/renv
-
 on:
   schedule:
     - cron: "0 4 * * *"
@@ -15,6 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       GITHUB_PAT: ${{ secrets.PAT}}
+      RENV_PATHS_ROOT: ~/.cache/R/renv
     steps:
       - uses: actions/checkout@v2
       - run: ls
