@@ -21,9 +21,8 @@ jobs:
 
       - name: Install dependencies
         run: |
-          install.packages(c("curl", "data.table", "dplyr", "fable",
-          "fabletools", "feasts", "glue", "htmltools", "janitor", "lubridate",
-          "magrittr", "purrr", "tidyr", "tsibble", "usethis"))
+          install.packages("renv")
+          renv::restore()
         shell: Rscript {0}
 
       - name: Update data
