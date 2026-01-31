@@ -23,12 +23,11 @@ jobs:
         run: |
           install.packages(c("curl", "data.table", "dplyr", "fable",
           "fabletools", "feasts", "glue", "htmltools", "janitor", "lubridate",
-          "magrittr", "purrr", "tidyr", "tsibble", "usethis"))
+          "purrr", "tidyr", "tsibble", "usethis"))
         shell: Rscript {0}
 
       - name: Update data
         run: |
-          library(magrittr)
           source("R/utils_data_wrangle.R")
           source("R/utils_get_data.R")
           source("R/utils_module_dataviz.R")
