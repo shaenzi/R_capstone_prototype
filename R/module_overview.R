@@ -23,7 +23,7 @@ overviewUI <- function(id){
           right = TRUE
         ),
 
-        plotOutput(ns("week")) %>%
+        plotOutput(ns("week")) |>
           shinycssloaders::withSpinner()
       ),
       bslib::card_footer(
@@ -39,7 +39,7 @@ overviewUI <- function(id){
           right = TRUE
         ),
 
-        plotOutput(ns("month")) %>%
+        plotOutput(ns("month")) |>
           shinycssloaders::withSpinner()
       ),
       bslib::card_footer(
@@ -55,7 +55,7 @@ overviewUI <- function(id){
           right = TRUE
         ),
 
-        plotOutput(ns("year")) %>%
+        plotOutput(ns("year")) |>
           shinycssloaders::withSpinner()
       ),
       bslib::card_footer(
@@ -113,8 +113,8 @@ overview_server <- function(id,
         } else {
           plot_week_reference(data_ref_week, data_current_week, bs_colors)
         }
-      }) %>%
-        bindCache(input$cumulative_week, data_ref_week, data_current_week, Sys.Date()) %>%
+      }) |>
+        bindCache(input$cumulative_week, data_ref_week, data_current_week, Sys.Date()) |>
         bindEvent(input$cumulative_week)
 
       # monthly stuff -------------------------------------------
@@ -136,8 +136,8 @@ overview_server <- function(id,
         } else {
           plot_month_reference(data_ref_month, data_current_month, bs_colors)
         }
-      }) %>%
-        bindCache(input$cumulative_month, data_ref_month, data_current_month, Sys.Date()) %>%
+      }) |>
+        bindCache(input$cumulative_month, data_ref_month, data_current_month, Sys.Date()) |>
         bindEvent(input$cumulative_month)
 
       # yearly stuff -------------------------------------------------------
@@ -166,9 +166,9 @@ overview_server <- function(id,
         } else {
           plot_year_reference(data_ref_year, data_current_year, bs_colors)
         }
-      }) %>%
+      }) |>
         bindCache(input$cumulative_year, data_ref_year, data_current_year,
-                  Sys.Date(), data_ref_year_cumulative, data_current_year_cumulative) %>%
+                  Sys.Date(), data_ref_year_cumulative, data_current_year_cumulative) |>
         bindEvent(input$cumulative_year)
     }
   )

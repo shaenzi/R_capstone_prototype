@@ -21,17 +21,17 @@ prepare_data_for_monthly_plot <- function(data, date_today, n_ref = 5) {
   # as the reference period is smaller than a week, each day will have been unequal
   # times a weekday or a weekend. to avoid very ragged references, therefore calculate
   # a rolling 7 day average, with a central window, filling the first and last 3 values
-  data_ref <- data %>%
+  data_ref <- data |>
     dplyr::filter(as.numeric(month) == month_today,
                   year < lubridate::year(date_today),
-                  year > (lubridate::year(date_today) - n_ref)) %>%
-    dplyr::group_by(year, day) %>%
-    dplyr::summarise(daily_use = sum(gross_energy_kwh)) %>%
-    dplyr::ungroup() %>%
-    dplyr::group_by(day) %>%
+                  year > (lubridate::year(date_today) - n_ref)) |>
+    dplyr::group_by(year, day) |>
+    dplyr::summarise(daily_use = sum(gross_energy_kwh)) |>
+    dplyr::ungroup() |>
+    dplyr::group_by(day) |>
     dplyr::summarise(min_ref = min(daily_use),
                      max_ref = max(daily_use),
-                     mean_ref = mean(daily_use)) %>%
+                     mean_ref = mean(daily_use)) |>
     dplyr::summarise(min_ref = data.table::frollmean(x = min_ref,
                                                      n = 7,
                                                      align = "center"),
@@ -41,33 +41,33 @@ prepare_data_for_monthly_plot <- function(data, date_today, n_ref = 5) {
                      mean_ref = data.table::frollmean(x = mean_ref,
                                                       n = 7,
                                                       align = "center"),
-                     day = day) %>%
-    tidyr::fill(c(min_ref, max_ref, mean_ref), .direction = "updown") %>%
-    dplyr::ungroup() %>%
-    dplyr::arrange(day) %>%
+                     day = day) |>
+    tidyr::fill(c(min_ref, max_ref, mean_ref), .direction = "updown") |>
+    dplyr::ungroup() |>
+    dplyr::arrange(day) |>
     dplyr::mutate(cum_min = cumsum(min_ref),
                   cum_max = cumsum(max_ref),
                   cum_mean = cumsum(mean_ref))
 
-  data_current <- data %>%
-    dplyr::filter(lubridate::as_date(timestamp) > date_today - 38) %>%
-    dplyr::group_by(yday) %>%
+  data_current <- data |>
+    dplyr::filter(lubridate::as_date(timestamp) > date_today - 38) |>
+    dplyr::group_by(yday) |>
     dplyr::summarise(daily_use = sum(gross_energy_kwh),
                      date = lubridate::as_date(min(timestamp)),
-                     n_entries_per_day = dplyr::n()) %>%
-    dplyr::filter(n_entries_per_day > 94) %>% # should have 96 for a complete day, otherwise rolling average skewed
+                     n_entries_per_day = dplyr::n()) |>
+    dplyr::filter(n_entries_per_day > 94) |> # should have 96 for a complete day, otherwise rolling average skewed
     dplyr::summarise(daily_use = data.table::frollmean(x = daily_use,
                                                        n = 7,
                                                        align = "center"),
                      date = date,
                      n_entries_per_day = n_entries_per_day,
-                     yday = yday) %>%
-    tidyr::fill(daily_use, .direction = "updown") %>%
-    dplyr::ungroup() %>%
-    dplyr::select(-n_entries_per_day) %>%
-    dplyr::filter(as.numeric(lubridate::month(date)) == month_today) %>%
-    dplyr::mutate(day = lubridate::day(date)) %>%
-    dplyr::arrange(day) %>%
+                     yday = yday) |>
+    tidyr::fill(daily_use, .direction = "updown") |>
+    dplyr::ungroup() |>
+    dplyr::select(-n_entries_per_day) |>
+    dplyr::filter(as.numeric(lubridate::month(date)) == month_today) |>
+    dplyr::mutate(day = lubridate::day(date)) |>
+    dplyr::arrange(day) |>
     dplyr::mutate(cum = cumsum(daily_use))
 
   results <- list("data_ref" = data_ref, "data_current" = data_current)
@@ -99,7 +99,7 @@ prepare_data_for_monthly_plot <- function(data, date_today, n_ref = 5) {
 #' @return ggplot
 #' @keywords internal
 plot_month_reference <- function(data_ref, data_current, bs_colors) {
-  p <- data_ref %>%
+  p <- data_ref |>
     ggplot2::ggplot(ggplot2::aes(x = day)) +
     ggplot2::geom_ribbon(ggplot2::aes(ymin = min_ref, ymax = max_ref, group = 1),
                          fill = bs_colors[["light"]], alpha = 0.8) +
@@ -139,7 +139,7 @@ plot_month_reference <- function(data_ref, data_current, bs_colors) {
 #' @return ggplot
 #' @keywords internal
 plot_month_cumulative <- function(data_ref, data_current, bs_colors) {
-  data_ref %>%
+  data_ref |>
     ggplot2::ggplot(ggplot2::aes(x = day)) +
     ggplot2::geom_ribbon(ggplot2::aes(ymin = cum_min, ymax = cum_max, group = 1),
                          fill = bs_colors[["light"]], alpha = 0.8) +

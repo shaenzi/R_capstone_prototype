@@ -7,7 +7,7 @@
 #' @return a ggplot object
 #' @keywords internal
 plot_cities <- function(cantons, cities, bs_colors) {
-  cantons %>%
+  cantons |>
     ggplot2::ggplot() +
     ggplot2::geom_sf(fill = NA,
                      colour = "white", #this does not work?
@@ -19,24 +19,24 @@ plot_cities <- function(cantons, cities, bs_colors) {
                                            bs_colors[["info"]]),
     ) +
     ggplot2::annotate(geom = "label",
-                      x = cities %>% dplyr::filter(city == "Basel") %>% dplyr::pull(x),
-                      y = cities %>% dplyr::filter(city == "Basel") %>% dplyr::pull(y) + 15000,
+                      x = cities |> dplyr::filter(city == "Basel") |> dplyr::pull(x),
+                      y = cities |> dplyr::filter(city == "Basel") |> dplyr::pull(y) + 15000,
                       label = "Basel",
                       hjust = "center",
                       color = bs_colors[["danger"]],
                       fill = "#f0f0f0",
                       size = 10) +
     ggplot2::annotate(geom = "label",
-                      x = cities %>% dplyr::filter(city == "Zurich") %>% dplyr::pull(x),
-                      y = cities %>% dplyr::filter(city == "Zurich") %>% dplyr::pull(y) - 15000,
+                      x = cities |> dplyr::filter(city == "Zurich") |> dplyr::pull(x),
+                      y = cities |> dplyr::filter(city == "Zurich") |> dplyr::pull(y) - 15000,
                       label = "Zurich",
                       hjust = "center",
                       color = bs_colors[["info"]],
                       fill = "#f0f0f0",
                       size = 10) +
     ggplot2::annotate(geom = "label",
-                      x = cities %>% dplyr::filter(city == "Winterthur") %>% dplyr::pull(x),
-                      y = cities %>% dplyr::filter(city == "Winterthur") %>% dplyr::pull(y) + 15000,
+                      x = cities |> dplyr::filter(city == "Winterthur") |> dplyr::pull(x),
+                      y = cities |> dplyr::filter(city == "Winterthur") |> dplyr::pull(y) + 15000,
                       label = "Winterthur",
                       hjust = "center",
                       color = bs_colors[["success"]],

@@ -96,7 +96,7 @@ city_infoUI <- function(id){
       "and a pseudocolored map."
     )),
 
-    plotOutput(ns("map")) %>%
+    plotOutput(ns("map")) |> 
       shinycssloaders::withSpinner(),
 
     bslib::layout_column_wrap(

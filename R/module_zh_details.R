@@ -11,21 +11,21 @@ zh_detailsUI <- function(id){
     bslib::nav_panel(
       "Last week",
       bslib::card_body(
-        plotOutput(ns("week")) %>%
+        plotOutput(ns("week")) |>
           shinycssloaders::withSpinner()
       ),
     ),
     bslib::nav_panel(
       "Last year",
       bslib::card_body(
-        plotOutput(ns("last_year")) %>%
+        plotOutput(ns("last_year")) |>
           shinycssloaders::withSpinner()
       ),
     ),
     bslib::nav_panel(
       "Over the years",
       bslib::card_body(
-        plotOutput(ns("years")) %>%
+        plotOutput(ns("years")) |>
           shinycssloaders::withSpinner()
       )
     )

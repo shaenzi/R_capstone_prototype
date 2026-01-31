@@ -7,12 +7,12 @@
 #' @return tibble yearly values by ne (Netzebene)
 #' @keywords internal
 prepare_zh_details_years <- function(zh_details){
-  zh_details %>%
-    dplyr::mutate(year = lubridate::year(timestamp)) %>%
-    dplyr::filter(year < lubridate::year(lubridate::today())) %>%
-    dplyr::group_by(year) %>%
+  zh_details |>
+    dplyr::mutate(year = lubridate::year(timestamp)) |>
+    dplyr::filter(year < lubridate::year(lubridate::today())) |>
+    dplyr::group_by(year) |>
     dplyr::summarise(ne5 = sum(value_ne5),
-                     ne7 = sum(value_ne7)) %>%
+                     ne7 = sum(value_ne7)) |>
     tidyr::pivot_longer(cols = c("ne5", "ne7"),
                         names_to = "category",
                         values_to = "value")
@@ -29,7 +29,7 @@ prepare_zh_details_years <- function(zh_details){
 #' @return ggplot
 #' @keywords internal
 plot_zh_details_years <- function(zh_details_yearly, bs_colors) {
-  zh_details_yearly %>%
+  zh_details_yearly |>
     ggplot2::ggplot(ggplot2::aes(x = year, y = value, fill = category))+
     ggplot2::geom_area()+
     ggplot2::scale_y_continuous(labels = scales::label_number(scale = 0.000001)) +
@@ -53,17 +53,17 @@ plot_zh_details_years <- function(zh_details_yearly, bs_colors) {
 #' @keywords internal
 prepare_zh_details_last_week <- function(zh_details){
   latest_date <- max(lubridate::as_date(zh_details$timestamp))
-  zh_details %>%
-    dplyr::select(-timestamp_utc) %>%
-    dplyr::filter(timestamp >= lubridate::floor_date(latest_date, unit = "week")) %>%
+  zh_details |>
+    dplyr::select(-timestamp_utc) |>
+    dplyr::filter(timestamp >= lubridate::floor_date(latest_date, unit = "week")) |>
     dplyr::group_by(lubridate::wday(timestamp),
                     lubridate::hour(timestamp),
-                    lubridate::minute(timestamp)) %>%
-    dplyr::mutate(step_in_week = dplyr::cur_group_id()) %>%
-    dplyr::ungroup() %>%
-    dplyr::arrange(step_in_week) %>%
+                    lubridate::minute(timestamp)) |>
+    dplyr::mutate(step_in_week = dplyr::cur_group_id()) |>
+    dplyr::ungroup() |>
+    dplyr::arrange(step_in_week) |>
     dplyr::mutate(cum_ne5 = cumsum(value_ne5),
-                  cum_ne7 = cumsum(value_ne7)) %>%
+                  cum_ne7 = cumsum(value_ne7)) |>
     tidyr::pivot_longer(cols = c(value_ne5, value_ne7),
                         names_to = "category")
 }
@@ -79,8 +79,8 @@ prepare_zh_details_last_week <- function(zh_details){
 #' @return ggplot
 #' @keywords internal
 plot_zh_details_last_week <- function(zh_details_week, bs_colors){
-  zh_details_week %>%
-    dplyr::mutate(category = forcats::fct_rev(category)) %>%
+  zh_details_week |>
+    dplyr::mutate(category = forcats::fct_rev(category)) |>
     ggplot2::ggplot(ggplot2::aes(x = step_in_week, y = value, fill = category)) +
     ggplot2::geom_area() +
     ggplot2::scale_y_continuous(labels = scales::label_number(scale = 0.001)) +
@@ -109,19 +109,19 @@ plot_zh_details_last_week <- function(zh_details_week, bs_colors){
 prepare_zh_details_last_year <- function(zh_details){
   latest_date <- max(lubridate::as_date(zh_details$timestamp))
   last_year  <- lubridate::year(latest_date - 365)
-  zh_details %>%
-    dplyr::filter(lubridate::year(timestamp) == last_year) %>%
-    dplyr::select(-timestamp_utc) %>%
-    dplyr::mutate(date = lubridate::as_date(timestamp)) %>%
-    dplyr::group_by(date) %>%
+  zh_details |>
+    dplyr::filter(lubridate::year(timestamp) == last_year) |>
+    dplyr::select(-timestamp_utc) |>
+    dplyr::mutate(date = lubridate::as_date(timestamp)) |>
+    dplyr::group_by(date) |>
     dplyr::summarise(daily_ne5 = cumsum(value_ne5),
-                     daily_ne7 = cumsum(value_ne7))  %>%
-    dplyr::ungroup() %>%
+                     daily_ne7 = cumsum(value_ne7))  |>
+    dplyr::ungroup() |>
     dplyr::mutate(year = lubridate::year(date),
-                  month = lubridate::month(date)) %>%
-    dplyr::group_by(year, month) %>%
+                  month = lubridate::month(date)) |>
+    dplyr::group_by(year, month) |>
     dplyr::summarise(monthly_avg_ne5 = mean(daily_ne5),
-                     monthly_avg_ne7 = mean(daily_ne7))%>%
+                     monthly_avg_ne7 = mean(daily_ne7))|>
     tidyr::pivot_longer(cols = dplyr::starts_with("monthly"),
                         names_to = "category")
 }
@@ -138,7 +138,7 @@ prepare_zh_details_last_year <- function(zh_details){
 #' @keywords internal
 plot_zh_details_last_year <- function(zh_details_last_year, bs_colors) {
   year <- zh_details_last_year$year[[1]]
-  zh_details_last_year  %>%
+  zh_details_last_year  |>
     ggplot2::ggplot(ggplot2::aes(x = month, y = value, fill = category)) +
     ggplot2::geom_area()+
     ggplot2::scale_y_continuous(labels = scales::label_number(scale = 0.000001)) +

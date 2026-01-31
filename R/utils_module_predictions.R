@@ -9,13 +9,13 @@
 #' @keywords internal
 predict_2_weeks <- function(data) {
   print("forecasting")
-  data %>%
+  data |>
     fabletools::model(stl = fabletools::decomposition_model(
     feasts::STL(gross_energy_kwh ~ season(window = NULL)),
-    fable::SNAIVE(season_adjust))) %>%
-    fabletools::forecast(h = "2 weeks") %>%
+    fable::SNAIVE(season_adjust))) |>
+    fabletools::forecast(h = "2 weeks") |>
     dplyr::mutate(level80 = fabletools::hilo(gross_energy_kwh, 80),
-                  level95 = fabletools::hilo(gross_energy_kwh, 95)) %>%
+                  level95 = fabletools::hilo(gross_energy_kwh, 95)) |>
     dplyr::mutate(lower80 = level80$lower,
                   upper80 = level80$upper,
                   lower95 = level95$lower,
@@ -31,7 +31,7 @@ predict_2_weeks <- function(data) {
 #' @keywords internal
 plot_prediction <- function(data, bs_colors) {
   print("plotting prediction")
-  data %>%
+  data |>
     ggplot2::ggplot(mapping = ggplot2::aes(x = timestamp)) +
     ggplot2::geom_ribbon(ggplot2::aes(ymin = lower95, ymax = upper95),
                        fill = "#f0f0f0") +
@@ -59,7 +59,7 @@ plot_prediction <- function(data, bs_colors) {
 #' @keywords internal
 plot_prediction_and_actual <- function(data_predicted, data_actual, bs_colors) {
   print("plotting prediction and actual")
-  data_predicted %>%
+  data_predicted |>
     ggplot2::ggplot(mapping = ggplot2::aes(x = timestamp)) +
     ggplot2::geom_ribbon(ggplot2::aes(ymin = lower95, ymax = upper95),
                          fill = "#f0f0f0") +

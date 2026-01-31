@@ -17,39 +17,39 @@ options("lubridate.week.start" = 1)
 #' @keywords internal
 prepare_data_for_yearly_cumulative_plot <- function(data, date_today, n_ref = 5) {
   month_today <- lubridate::month(date_today)
-  data_ref <- data %>%
+  data_ref <- data |>
     dplyr::filter(year < lubridate::year(date_today),
-                  year > (lubridate::year(date_today) - n_ref)) %>%
-    dplyr::group_by(year, month) %>%
-    dplyr::summarise(monthly_use = sum(gross_energy_kwh)) %>%
-    dplyr::ungroup() %>%
-    dplyr::group_by(month) %>%
+                  year > (lubridate::year(date_today) - n_ref)) |>
+    dplyr::group_by(year, month) |>
+    dplyr::summarise(monthly_use = sum(gross_energy_kwh)) |>
+    dplyr::ungroup() |>
+    dplyr::group_by(month) |>
     dplyr::summarise(min_ref = min(monthly_use),
                      max_ref = max(monthly_use),
-                     mean_ref = mean(monthly_use)) %>%
-    dplyr::ungroup() %>%
-    dplyr::arrange(month) %>%
+                     mean_ref = mean(monthly_use)) |>
+    dplyr::ungroup() |>
+    dplyr::arrange(month) |>
     dplyr::mutate(cum_min = cumsum(min_ref),
                   cum_max = cumsum(max_ref),
                   cum_mean = cumsum(mean_ref))
 
   # only show months that are (almost) completed
   if (lubridate::day(date_today) < 28) {
-    data_filt <- data %>%
-      dplyr::filter(year == lubridate::year(date_today)) %>%
+    data_filt <- data |>
+      dplyr::filter(year == lubridate::year(date_today)) |>
       dplyr::filter(as.numeric(month) < lubridate::month(date_today))
   } else {
-    data_filt <- data %>%
+    data_filt <- data |>
       dplyr::filter(year == lubridate::year(date_today))
   }
 
-  data_current <- data_filt %>%
-    dplyr::group_by(month) %>%
+  data_current <- data_filt |>
+    dplyr::group_by(month) |>
     dplyr::summarise(monthly_use = sum(gross_energy_kwh),
                      date = lubridate::as_date(min(timestamp)),
-    ) %>%
-    dplyr::ungroup() %>%
-    dplyr::arrange(month) %>%
+    ) |>
+    dplyr::ungroup() |>
+    dplyr::arrange(month) |>
     dplyr::mutate(cum = cumsum(monthly_use))
 
   results <- list("data_ref" = data_ref, "data_current" = data_current)
@@ -85,30 +85,30 @@ prepare_data_for_yearly_cumulative_plot <- function(data, date_today, n_ref = 5)
 #' @keywords internal
 prepare_data_for_yearly_plot <- function(data, date_today, n_ref = 5) {
   month_today <- lubridate::month(date_today)
-  data_ref <- data %>%
+  data_ref <- data |>
     dplyr::filter(year < lubridate::year(date_today),
-                  year > (lubridate::year(date_today) - n_ref)) %>%
-    dplyr::group_by(year, yday) %>%
+                  year > (lubridate::year(date_today) - n_ref)) |>
+    dplyr::group_by(year, yday) |>
     dplyr::summarise(daily_use = sum(gross_energy_kwh),
-                     month = min(month)) %>%
-    dplyr::ungroup() %>%
-    dplyr::group_by(year, month) %>%
-    dplyr::summarise(daily_mean_per_month = mean(daily_use)) %>%
-    dplyr::ungroup() %>%
-    dplyr::group_by(month) %>%
+                     month = min(month)) |>
+    dplyr::ungroup() |>
+    dplyr::group_by(year, month) |>
+    dplyr::summarise(daily_mean_per_month = mean(daily_use)) |>
+    dplyr::ungroup() |>
+    dplyr::group_by(month) |>
     dplyr::summarise(min_ref = min(daily_mean_per_month),
                      max_ref = max(daily_mean_per_month),
-                     mean_ref = mean(daily_mean_per_month)) %>%
+                     mean_ref = mean(daily_mean_per_month)) |>
     dplyr::ungroup()
 
-  data_current <- data %>%
-    dplyr::filter(year == lubridate::year(date_today)) %>%
-    dplyr::group_by(yday) %>%
+  data_current <- data |>
+    dplyr::filter(year == lubridate::year(date_today)) |>
+    dplyr::group_by(yday) |>
     dplyr::summarise(daily_use = sum(gross_energy_kwh),
                      date = lubridate::as_date(min(timestamp)),
-                     month = min(month)) %>%
-    dplyr::ungroup() %>%
-    dplyr::group_by(month) %>%
+                     month = min(month)) |>
+    dplyr::ungroup() |>
+    dplyr::group_by(month) |>
     dplyr::summarise(daily_mean_per_month = mean(daily_use),
                      date = max(date))
 
@@ -141,7 +141,7 @@ prepare_data_for_yearly_plot <- function(data, date_today, n_ref = 5) {
 #' @return ggplot
 #' @keywords internal
 plot_year_reference <- function(data_ref, data_current, bs_colors) {
-  data_ref %>%
+  data_ref |>
     ggplot2::ggplot(ggplot2::aes(x = month)) +
     ggplot2::geom_ribbon(ggplot2::aes(ymin = min_ref, ymax = max_ref, group = 1),
                          fill = bs_colors[["light"]], alpha = 0.8) +
@@ -173,7 +173,7 @@ plot_year_reference <- function(data_ref, data_current, bs_colors) {
 #' @return ggplot
 #' @keywords internal
 plot_year_cumulative <- function(data_ref, data_current, bs_colors) {
-  data_ref %>%
+  data_ref |>
     ggplot2::ggplot(ggplot2::aes(x = month)) +
     ggplot2::geom_ribbon(ggplot2::aes(ymin = cum_min, ymax = cum_max, group = 1),
                          fill = bs_colors[["light"]], alpha = 0.8) +
