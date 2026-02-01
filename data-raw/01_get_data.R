@@ -14,7 +14,7 @@ get_winti_data_to_2021 <- function() {
 }
 
 get_complete_zh_data <- function() {
-  zh_files <- purrr::map(c(2019:lubridate::year(lubridate::now())),
+  zh_files <- purrr::map(c(2019:(lubridate::year(lubridate::now())-1)),
   \(x) glue::glue("https://data.stadt-zuerich.ch/dataset/ewz_bruttolastgang_stadt_zuerich/download/",
                x, "_ewz_bruttolastgang.csv"))
     
