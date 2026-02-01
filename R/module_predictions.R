@@ -12,7 +12,7 @@ predictionsUI <- function(id){
 	  bslib::nav_panel(
 	    "Next two weeks",
 	    bslib::card_body(
-	      plotOutput(ns("prediction")) %>%
+	      plotOutput(ns("prediction")) |>
 	        shinycssloaders::withSpinner()
 	    ),
 	    # bslib::card_footer(
@@ -22,7 +22,7 @@ predictionsUI <- function(id){
 	  bslib::nav_panel(
 	    "Previous two weeks",
 	    bslib::card_body(
-	      plotOutput(ns("predicted_vs_actual")) %>%
+	      plotOutput(ns("predicted_vs_actual")) |>
 	        shinycssloaders::withSpinner()
 	    ),
 	  ),
@@ -57,22 +57,22 @@ predictions_server <- function(id, data_next_2, data_prev_2, data, bs_colors){
 				output$prediction <- renderPlot({
 				  #data_forecast <- predict_2_weeks(data_ts)
 				  plot_prediction(data_next_2, bs_colors)
-				}) %>%
+				}) |>
 				  bindCache(data_ts, Sys.Date())
 
 				output$predicted_vs_actual <- renderPlot({
 				  max_date <- lubridate::as_date(max(data_ts$timestamp)) - 13
-				  # data_predicted <- data_ts %>%
-				  #   dplyr::filter(timestamp < max_date) %>%
+				  # data_predicted <- data_ts |>
+				  #   dplyr::filter(timestamp < max_date) |>
 				  #   predict_2_weeks()
 
 				  plot_prediction_and_actual(
 				    data_prev_2,
-				    data_ts %>%
+				    data_ts |>
 				      dplyr::filter(timestamp > max_date),
 				    bs_colors
 				    )
-				}) %>%
+				}) |>
 				  bindCache(data_ts, Sys.Date())
 		}
 	)

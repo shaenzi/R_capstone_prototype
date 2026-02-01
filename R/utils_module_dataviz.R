@@ -10,19 +10,19 @@
 #' @return ggplot
 #' @keywords internal
 plot_daily_per_year <- function(data) {
-  data %>%
-    dplyr::group_by(year, yday) %>%
+  data |>
+    dplyr::group_by(year, yday) |>
     dplyr::summarise(daily_sum = sum(gross_energy_kwh),
-                     n_entries_per_day = dplyr::n()) %>%
-    dplyr::ungroup() %>%
+                     n_entries_per_day = dplyr::n()) |>
+    dplyr::ungroup() |>
     #filter out incomplete days
-    dplyr::filter(n_entries_per_day > 95) %>%
+    dplyr::filter(n_entries_per_day > 95) |>
     # calculate 7 day average
     dplyr::mutate(daily_rolling_mean = data.table::frollmean(x = daily_sum,
                                                              n = 7,
-                                                             align = "center")) %>%
+                                                             align = "center")) |>
     # leave the 3 NAs at the beginning and end
-    tidyr::drop_na(daily_rolling_mean) %>%
+    tidyr::drop_na(daily_rolling_mean) |>
     ggplot2::ggplot(mapping = ggplot2::aes(x = yday,
                                            y = daily_rolling_mean,
                                            color = factor(year),
@@ -51,12 +51,12 @@ plot_daily_per_year <- function(data) {
 #' @return ggplot
 #' @keywords internal
 plot_weekly_per_year <- function(data) {
-  data %>%
-    dplyr::group_by(isoyear, week) %>%
+  data |>
+    dplyr::group_by(isoyear, week) |>
     dplyr::summarise(weekly_sum = sum(gross_energy_kwh),
-                     n_entries_per_week = dplyr::n()) %>%
-    dplyr::ungroup() %>%
-    dplyr::filter(n_entries_per_week > (94*7)) %>%
+                     n_entries_per_week = dplyr::n()) |>
+    dplyr::ungroup() |>
+    dplyr::filter(n_entries_per_week > (94*7)) |>
     ggplot2::ggplot(mapping = ggplot2::aes(x = week,
                                            y = weekly_sum,
                                            color = factor(isoyear),
@@ -83,12 +83,12 @@ plot_weekly_per_year <- function(data) {
 #' @return ggplot
 #' @keywords internal
 plot_monthly_per_year <- function(data) {
-  data %>%
-    dplyr::group_by(year, month) %>%
+  data |>
+    dplyr::group_by(year, month) |>
     dplyr::summarise(monthly_sum = sum(gross_energy_kwh),
-                     n_entries_per_month = dplyr::n()) %>%
-    dplyr::ungroup() %>%
-    dplyr::filter(n_entries_per_month >= (96*28)) %>%
+                     n_entries_per_month = dplyr::n()) |>
+    dplyr::ungroup() |>
+    dplyr::filter(n_entries_per_month >= (96*28)) |>
     ggplot2::ggplot(mapping = ggplot2::aes(x = month,
                                            y = monthly_sum,
                                            color = factor(year),
@@ -115,7 +115,7 @@ plot_monthly_per_year <- function(data) {
 #' @keywords internal
 heatmap_tod_date <- function(data) {
   year <- unique(data$year)
-  data %>%
+  data |>
     ggplot2::ggplot(ggplot2::aes(x = timestamp_hours_only, y = as.numeric(yday), fill = gross_energy_kwh)) +
     ggplot2::geom_tile() +
     ggplot2::scale_fill_distiller(labels = scales::label_number(scale = 0.001),

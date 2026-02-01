@@ -2,7 +2,7 @@ name: Update data
 
 on:
   schedule:
-    - cron: "0 4 * * *"
+    - cron: "0 5 * * *"
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
@@ -23,12 +23,11 @@ jobs:
         run: |
           install.packages(c("curl", "data.table", "dplyr", "fable",
           "fabletools", "feasts", "glue", "htmltools", "janitor", "lubridate",
-          "magrittr", "purrr", "tidyr", "tsibble", "usethis"))
+          "purrr", "tidyr", "tsibble", "usethis"))
         shell: Rscript {0}
 
       - name: Update data
         run: |
-          library(magrittr)
           source("R/utils_data_wrangle.R")
           source("R/utils_get_data.R")
           source("R/utils_module_dataviz.R")
@@ -44,10 +43,15 @@ jobs:
           source("data-raw/03_prepare_data_for_modules.R")
         shell: Rscript {0}
 
-      - name: Git Commit and Push Changes
-        run: |
-          git config --local user.email "actions@github.com"
-          git config --local user.name "GitHub Actions"
-          git add --all
-          git commit -am "add latest data"
-          git push
+      # build the docker image and give it the name main
+      - name: Build image
+        run: docker build -t main .
+      # run the docker image supply the secrets from the github secrets store.
+      - name: execute
+        run: >
+          docker run
+          -e SHINY_ACC_NAME=${{ secrets.SHINY_ACC_NAME }}
+          -e TOKEN=${{secrets.TOKEN}}
+          -e SECRET=${{secrets.SECRET}}
+          -e APP_NAME=${{secrets.APP_NAME}}
+          main

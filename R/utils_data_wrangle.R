@@ -10,7 +10,7 @@ options("lubridate.week.start" = 1)
 #' @return zh tibble with timestamp converted to CET
 #' @keywords internal
 deal_with_ts_zh <- function(zh) {
-  zh %>%
+  zh |>
     dplyr::mutate(timestamp = lubridate::ymd_hm(timestamp, tz = "Europe/Zurich"))
 }
 
@@ -21,7 +21,7 @@ deal_with_ts_zh <- function(zh) {
 #' @return tibble with timestamp column in local time, timestamp_utc has utc time
 #' @keywords internal
 deal_with_ts_utc <- function(df) {
-  df %>%
+  df |>
     dplyr::mutate(timestamp_utc = timestamp,
            timestamp = lubridate::with_tz(timestamp, tz = "Europe/Zurich"))
 }
@@ -33,7 +33,7 @@ deal_with_ts_utc <- function(df) {
 #' @return tibble with year, month, week, day, hour, Minute added
 #' @keywords internal
 add_date_components <- function(df) {
-  df <- df %>%
+  df <- df |>
     dplyr::mutate(date = lubridate::as_date(timestamp),
                   year = lubridate::year(timestamp),
            isoyear = lubridate::isoyear(timestamp),
@@ -50,7 +50,7 @@ add_date_components <- function(df) {
            {lubridate::month(timestamp)}-
            {lubridate::day(timestamp)}T
            {lubridate::hour(timestamp)}:
-           {lubridate::minute(timestamp)}"))) %>%
+           {lubridate::minute(timestamp)}"))) |>
     dplyr::mutate(timestamp_hours_only = stats::update(timestamp_hours_only,
                                          year = 2000,
                                          month = 1,
@@ -76,16 +76,16 @@ get_clean_data <- function(df) {
   print(df[tsibble::are_duplicated(df, index = timestamp),])
 
   # fill gaps (as of 9/2/2023: 16)
-  df_ts <- df %>%
+  df_ts <- df |>
     tsibble::tsibble(index = timestamp)
-  n_gaps <- df_ts %>%
-    tsibble::count_gaps() %>%
+  n_gaps <- df_ts |>
+    tsibble::count_gaps() |>
     dplyr::summarise(sum = sum(.n))
   print(glue::glue("filled {n_gaps$sum} gaps in df data"))
 
-  df <- df_ts %>%
-    tsibble::fill_gaps() %>%
-    tidyr::fill(gross_energy_kwh, .direction = "down") %>%
+  df <- df_ts |>
+    tsibble::fill_gaps() |>
+    tidyr::fill(gross_energy_kwh, .direction = "down") |>
     dplyr::tibble()
 
   return(df)

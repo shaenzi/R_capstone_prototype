@@ -14,17 +14,10 @@ get_winti_data_to_2021 <- function() {
 }
 
 get_complete_zh_data <- function() {
-  zh_files <- c(
-    "https://data.stadt-zuerich.ch/dataset/ewz_bruttolastgang_stadt_zuerich/download/2019_ewz_bruttolastgang.csv",
-    "https://data.stadt-zuerich.ch/dataset/ewz_bruttolastgang_stadt_zuerich/download/2020_ewz_bruttolastgang.csv",
-    "https://data.stadt-zuerich.ch/dataset/ewz_bruttolastgang_stadt_zuerich/download/2021_ewz_bruttolastgang.csv",
-    "https://data.stadt-zuerich.ch/dataset/ewz_bruttolastgang_stadt_zuerich/download/2022_ewz_bruttolastgang.csv",
-    "https://data.stadt-zuerich.ch/dataset/ewz_bruttolastgang_stadt_zuerich/download/2023_ewz_bruttolastgang.csv",
-    "https://data.stadt-zuerich.ch/dataset/ewz_bruttolastgang_stadt_zuerich/download/2024_ewz_bruttolastgang.csv",
-    "https://data.stadt-zuerich.ch/dataset/ewz_bruttolastgang_stadt_zuerich/download/2025_ewz_bruttolastgang.csv"
-    # need to add new yearly file for yearly update
-  )
-
+  zh_files <- purrr::map(c(2019:(lubridate::year(lubridate::now())-1)),
+  \(x) glue::glue("https://data.stadt-zuerich.ch/dataset/ewz_bruttolastgang_stadt_zuerich/download/",
+               x, "_ewz_bruttolastgang.csv"))
+    
   purrr::map_df(zh_files, get_csv_from_link) |>
     dplyr::mutate(timestamp = zeitpunkt,
            gross_energy_kwh = bruttolastgang) |>

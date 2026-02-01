@@ -17,28 +17,28 @@ options("lubridate.week.start" = 1)
 #' @return list of data_ref and data_current
 #' @keywords internal
 prepare_data_for_weekly_plot <- function(data, date_today, n_ref = 5) {
-  data_ref <- data %>%
+  data_ref <- data |>
     dplyr::filter(week == lubridate::isoweek(date_today),
                   isoyear < lubridate::isoyear(date_today),
-                  isoyear > (lubridate::isoyear(date_today) - n_ref)) %>%
-    dplyr::group_by(wday, hour, minute) %>%
+                  isoyear > (lubridate::isoyear(date_today) - n_ref)) |>
+    dplyr::group_by(wday, hour, minute) |>
     dplyr::summarise(step_in_week = dplyr::cur_group_id(),
                      min_ref = min(gross_energy_kwh),
                      max_ref = max(gross_energy_kwh),
-                     mean_ref = mean(gross_energy_kwh)) %>%
-    dplyr::ungroup() %>%
-    dplyr::arrange(step_in_week) %>%
+                     mean_ref = mean(gross_energy_kwh)) |>
+    dplyr::ungroup() |>
+    dplyr::arrange(step_in_week) |>
     dplyr::mutate(cum_min = cumsum(min_ref),
                   cum_max = cumsum(max_ref),
                   cum_mean = cumsum(mean_ref))
 
-  data_current <- data %>%
+  data_current <- data |>
     dplyr::filter(week == lubridate::isoweek(date_today),
-                  isoyear == lubridate::isoyear(date_today)) %>%
-    dplyr::group_by(wday, hour, minute) %>%
-    dplyr::mutate(step_in_week = dplyr::cur_group_id()) %>%
-    dplyr::ungroup() %>%
-    dplyr::arrange(step_in_week) %>%
+                  isoyear == lubridate::isoyear(date_today)) |>
+    dplyr::group_by(wday, hour, minute) |>
+    dplyr::mutate(step_in_week = dplyr::cur_group_id()) |>
+    dplyr::ungroup() |>
+    dplyr::arrange(step_in_week) |>
     dplyr::mutate(cum = cumsum(gross_energy_kwh))
 
   results <- list("data_ref" = data_ref, "data_current" = data_current)
@@ -64,7 +64,7 @@ prepare_data_for_weekly_plot <- function(data, date_today, n_ref = 5) {
 #' @return ggplot
 #' @keywords internal
 plot_week_reference <- function(data_ref, data_current, bs_colors) {
-  data_ref %>%
+  data_ref |>
     ggplot2::ggplot(ggplot2::aes(x = step_in_week)) +
     ggplot2::geom_ribbon(ggplot2::aes(ymin = min_ref, ymax = max_ref, group = 1),
                          fill = bs_colors[["light"]], alpha = 0.8) +
@@ -97,7 +97,7 @@ plot_week_reference <- function(data_ref, data_current, bs_colors) {
 #' @return ggplot
 #' @keywords internal
 plot_week_cumulative <- function(data_ref, data_current, bs_colors) {
-  data_ref %>%
+  data_ref |>
     ggplot2::ggplot(ggplot2::aes(x = step_in_week)) +
     ggplot2::geom_ribbon(ggplot2::aes(ymin = cum_min, ymax = cum_max, group = 1),
                          fill = bs_colors[["light"]], alpha = 0.8) +

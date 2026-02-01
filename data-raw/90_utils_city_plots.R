@@ -1,5 +1,5 @@
 get_osm_data <- function(bb){
-  small_streets <- osmdata::opq(bb) %>%
+  small_streets <- osmdata::opq(bb) |>
     osmdata::add_osm_feature(
       key = "highway",
       value = c(
@@ -7,56 +7,56 @@ get_osm_data <- function(bb){
         "unclassified",
         "service", "footway"
       )
-    ) %>%
-    osmdata::osmdata_sf() %>%
+    ) |> 
+    osmdata::osmdata_sf() |>
     purrr::pluck("osm_lines")
 
   # take some breaks as otherwise I don't get data back
   Sys.sleep(1.1)
 
-  streets <-  osmdata::opq(bb) %>%
+  streets <-  osmdata::opq(bb) |>
     osmdata::add_osm_feature(
       key = "highway",
       value = c(
         "motorway", "primary",
         "secondary", "tertiary"
       )
-    ) %>%
-    osmdata::osmdata_sf() %>%
+    ) |>
+    osmdata::osmdata_sf() |>
     purrr::pluck("osm_lines")
 
   Sys.sleep(1.1)
 
-  railway <- osmdata::opq(bb) %>%
+  railway <- osmdata::opq(bb) |>
     osmdata::add_osm_feature(
       key = "railway",
       value = c(
         "rail"
       )
-    ) %>%
-    osmdata::osmdata_sf() %>%
+    ) |>
+    osmdata::osmdata_sf() |>
     purrr::pluck("osm_lines")
 
   Sys.sleep(1.1)
 
-  metro <- osmdata::opq(bb) %>%
+  metro <- osmdata::opq(bb) |>
     osmdata::add_osm_feature(
       key = "railway",
       value = c(
         "subway"
       )
-    ) %>%
-    osmdata::osmdata_sf() %>%
+    ) |>
+    osmdata::osmdata_sf() |>
     purrr::pluck("osm_lines")
 
   Sys.sleep(1.1)
 
-  water <- osmdata::opq(bb) %>%
+  water <- osmdata::opq(bb) |>
     osmdata::add_osm_feature(
       key = "natural",
       value = c("bay", "water", "strait")
-    )%>%
-    osmdata::osmdata_sf() %>%
+    )|>
+    osmdata::osmdata_sf() |>
     purrr::pluck("osm_multipolygons")
 
   output <- list("small_streets"=small_streets,

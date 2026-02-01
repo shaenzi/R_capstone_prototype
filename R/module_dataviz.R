@@ -21,7 +21,7 @@ datavizUI <- function(id, choices_years){
           status = "primary",
           #justified = TRUE
         ),
-        plotOutput(ns("lineplot")) %>%
+        plotOutput(ns("lineplot")) |>
           shinycssloaders::withSpinner()
       ),
       # bslib::card_footer(
@@ -38,7 +38,7 @@ datavizUI <- function(id, choices_years){
           status = "primary",
           #justified = TRUE
         ),
-        plotOutput(ns("heatmap")) %>%
+        plotOutput(ns("heatmap")) |>
           shinycssloaders::withSpinner(),
         p("How to read this chart: One line represents a day, with the darkness of the
           colour indicating how much power was used at that time of day. The days are
@@ -81,17 +81,17 @@ dataviz_server <- function(id, data){
 
       }
 
-      }) %>%
-        bindCache(data, input$time_select, Sys.Date()) %>%
+      }) |>
+        bindCache(data, input$time_select, Sys.Date()) |>
         bindEvent(input$time_select)
 
 
       output$heatmap <- renderPlot({
-        data %>%
-          dplyr::filter(year == input$year_select) %>%
+        data |>
+          dplyr::filter(year == input$year_select) |>
           heatmap_tod_date()
-      }) %>%
-        bindCache(data, input$year_select, Sys.Date()) %>%
+      }) |>
+        bindCache(data, input$year_select, Sys.Date()) |>
         bindEvent(input$year_select)
     }
   )
