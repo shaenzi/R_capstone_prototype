@@ -25,8 +25,8 @@ usethis::use_data(bs_weekly, bs_monthly, bs_yearly, bs_yearly_cum, overwrite = T
 wi_ts <- tsibble::as_tsibble(wi, index = "timestamp")
 wi_next_2 <- predict_2_weeks(wi_ts)
 max_date <- lubridate::as_date(max(wi_ts$timestamp)) - 13
-wi_prev_2 <- wi_ts %>%
-  dplyr::filter(timestamp < max_date) %>%
+wi_prev_2 <- wi_ts |> 
+  dplyr::filter(timestamp < max_date) |> 
   predict_2_weeks()
 usethis::use_data(wi_next_2, wi_prev_2, overwrite = TRUE)
 
@@ -34,8 +34,8 @@ usethis::use_data(wi_next_2, wi_prev_2, overwrite = TRUE)
 zh_ts <- tsibble::as_tsibble(zh, index = "timestamp")
 zh_next_2 <- predict_2_weeks(zh_ts)
 max_date <- lubridate::as_date(max(zh_ts$timestamp)) - 13
-zh_prev_2 <- zh_ts %>%
-  dplyr::filter(timestamp < max_date) %>%
+zh_prev_2 <- zh_ts |> 
+  dplyr::filter(timestamp < max_date) |> 
   predict_2_weeks()
 usethis::use_data(zh_next_2, zh_prev_2, overwrite = TRUE)
 
@@ -43,8 +43,8 @@ usethis::use_data(zh_next_2, zh_prev_2, overwrite = TRUE)
 bs_ts <- tsibble::as_tsibble(bs, index = "timestamp")
 bs_next_2 <- predict_2_weeks(zh_ts)
 max_date <- lubridate::as_date(max(bs_ts$timestamp)) - 13
-bs_prev_2 <- bs_ts %>%
-  dplyr::filter(timestamp < max_date) %>%
+bs_prev_2 <- bs_ts |> 
+  dplyr::filter(timestamp < max_date) |> 
   predict_2_weeks()
 usethis::use_data(bs_next_2, bs_prev_2, overwrite = TRUE)
 
