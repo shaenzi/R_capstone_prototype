@@ -81,7 +81,9 @@ jobs:
           source("data-raw/03_prepare_data_for_modules.R")
         shell: Rscript {0}
 
-      - name: Update data
+      - uses: quarto-dev/quarto-actions/setup@v2
+
+      - name: Deploy
         env:
           SHINY_ACC_NAME: ${{ secrets.SHINY_ACC_NAME }}
           TOKEN: ${{secrets.TOKEN}}
