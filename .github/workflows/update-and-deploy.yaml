@@ -46,7 +46,7 @@ jobs:
         run: |
           apt-get update
           apt-get install -y --no-install-recommends \
-            curl build-essential cmake libudunits2-dev
+            curl build-essential cmake libudunits2-dev jq
 
       - name: Restore Renv package cache
         uses: actions/cache@v6
