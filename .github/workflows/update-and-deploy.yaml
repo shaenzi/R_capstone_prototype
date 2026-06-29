@@ -18,6 +18,7 @@ jobs:
 
     env:
       GITHUB_PAT: ${{ secrets.PAT}}
+
     steps:
       - uses: actions/checkout@v5
 
@@ -80,7 +81,7 @@ jobs:
           source("data-raw/03_prepare_data_for_modules.R")
         shell: Rscript {0}
 
-       name: Update data
+      - name: Update data
         run: |
           # Authenticate
           rsconnect::setAccountInfo(name = Sys.getenv("SHINY_ACC_NAME"),
