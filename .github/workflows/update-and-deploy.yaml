@@ -12,7 +12,7 @@ env:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   update:
-    runs-on: ubuntu-latest
+    runs-on: rocker/tidyverse:4.6.1
     env:
       GITHUB_PAT: ${{ secrets.PAT}}
     steps:
