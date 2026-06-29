@@ -6,25 +6,52 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
+env:
+  RENV_PATHS_ROOT: ~/.cache/R/renv
+
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   update:
     runs-on: ubuntu-latest
+    container:
+      image: rocker/geospatial:4.6.1
+
     env:
       GITHUB_PAT: ${{ secrets.PAT}}
+
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v5
 
-      - uses: r-lib/actions/setup-r@v2
-        with:
-          use-public-rspm: true
-
-      - name: Install dependencies
+      - name: Set RENV_PATHS_ROOT
+        shell: bash
         run: |
-          renv::restore(packages = c("curl", "data.table", "dplyr", "fable",
-          "fabletools", "feasts", "glue", "htmltools", "janitor", "lubridate",
-          "purrr", "tidyr", "tsibble", "usethis"))
+          echo "RENV_PATHS_ROOT=${{ runner.temp }}/renv" >> $GITHUB_ENV
+      - name: Install and activate renv
+        run: |
+          install.packages("renv")
+          renv::activate()
         shell: Rscript {0}
+      - name: Get R and OS version
+        id: get-version
+        run: |
+          cat("##[set-output name=os-version;]", sessionInfo()$running, "\n", sep = "")
+          cat("##[set-output name=r-version;]", R.Version()$version.string, sep = "")
+        shell: Rscript {0}
+
+      - name: install additional C dependencies
+        run: |
+          apt-get update
+          apt-get install -y --no-install-recommends \
+            curl build-essential cmake libudunits2-dev jq
+
+      - name: Restore Renv package cache
+        uses: actions/cache@v6
+        with:
+          path: ${{ env.RENV_PATHS_ROOT }}
+          key: ${{ steps.get-version.outputs.os-version }}-${{ steps.get-version.outputs.r-version }}-${{ inputs.cache-version }}-${{ hashFiles('renv.lock') }}
+          restore-keys: ${{ steps.get-version.outputs.os-version }}-${{ steps.get-version.outputs.r-version }}-${{inputs.cache-version }}-
+
+      - uses: r-lib/actions/setup-renv@v2
 
       - name: Update data
         run: |
@@ -43,15 +70,30 @@ jobs:
           source("data-raw/03_prepare_data_for_modules.R")
         shell: Rscript {0}
 
-      # build the docker image and give it the name main
-      - name: Build image
-        run: docker build -t main .
-      # run the docker image supply the secrets from the github secrets store.
-      - name: execute
-        run: >
-          docker run
-          -e SHINY_ACC_NAME=${{ secrets.SHINY_ACC_NAME }}
-          -e TOKEN=${{secrets.TOKEN}}
-          -e SECRET=${{secrets.SECRET}}
-          -e APP_NAME=${{secrets.APP_NAME}}
-          main
+      # for some reason, the deployment needs quarto
+      - uses: quarto-dev/quarto-actions/setup@v2
+
+      - name: Deploy
+        env:
+          SHINY_ACC_NAME: ${{ secrets.SHINY_ACC_NAME }}
+          TOKEN: ${{secrets.TOKEN}}
+          SECRET: ${{secrets.SECRET}}
+          APP_NAME: ${{secrets.APP_NAME}}
+        run: |
+          # Authenticate
+          rsconnect::setAccountInfo(name = Sys.getenv("SHINY_ACC_NAME"),
+                          token = Sys.getenv("TOKEN"),
+                          secret = Sys.getenv("SECRET"))
+          # Deploy
+          rsconnect::deployApp(forceUpdate = TRUE,
+                     appName = Sys.getenv("APP_NAME"),
+                     appFiles = c(
+            # Add any additional files unique to your app here.
+            "R/",
+            "inst/",
+            "NAMESPACE",
+            "DESCRIPTION",
+            "app.R",
+            ".Rbuildignore"
+          ))
+        shell: Rscript {0}

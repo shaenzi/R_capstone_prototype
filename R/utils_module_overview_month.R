@@ -25,14 +25,12 @@ prepare_data_for_monthly_plot <- function(data, date_today, n_ref = 5) {
     dplyr::filter(as.numeric(month) == month_today,
                   year < lubridate::year(date_today),
                   year > (lubridate::year(date_today) - n_ref)) |>
-    dplyr::group_by(year, day) |>
-    dplyr::summarise(daily_use = sum(gross_energy_kwh)) |>
-    dplyr::ungroup() |>
-    dplyr::group_by(day) |>
-    dplyr::summarise(min_ref = min(daily_use),
+    dplyr::summarise(daily_use = sum(gross_energy_kwh), .by = c(year, day)) |>
+    dplyr::summarise(.by = day,
+                     min_ref = min(daily_use),
                      max_ref = max(daily_use),
                      mean_ref = mean(daily_use)) |>
-    dplyr::summarise(min_ref = data.table::frollmean(x = min_ref,
+    dplyr::mutate(min_ref = data.table::frollmean(x = min_ref,
                                                      n = 7,
                                                      align = "center"),
                      max_ref = data.table::frollmean(x = max_ref,
@@ -41,9 +39,8 @@ prepare_data_for_monthly_plot <- function(data, date_today, n_ref = 5) {
                      mean_ref = data.table::frollmean(x = mean_ref,
                                                       n = 7,
                                                       align = "center"),
-                     day = day) |>
+                ) |>
     tidyr::fill(c(min_ref, max_ref, mean_ref), .direction = "updown") |>
-    dplyr::ungroup() |>
     dplyr::arrange(day) |>
     dplyr::mutate(cum_min = cumsum(min_ref),
                   cum_max = cumsum(max_ref),
@@ -51,19 +48,15 @@ prepare_data_for_monthly_plot <- function(data, date_today, n_ref = 5) {
 
   data_current <- data |>
     dplyr::filter(lubridate::as_date(timestamp) > date_today - 38) |>
-    dplyr::group_by(yday) |>
-    dplyr::summarise(daily_use = sum(gross_energy_kwh),
+    dplyr::summarise(.by = yday,
+                     daily_use = sum(gross_energy_kwh),
                      date = lubridate::as_date(min(timestamp)),
                      n_entries_per_day = dplyr::n()) |>
     dplyr::filter(n_entries_per_day > 94) |> # should have 96 for a complete day, otherwise rolling average skewed
-    dplyr::summarise(daily_use = data.table::frollmean(x = daily_use,
+    dplyr::mutate(daily_use = data.table::frollmean(x = daily_use,
                                                        n = 7,
-                                                       align = "center"),
-                     date = date,
-                     n_entries_per_day = n_entries_per_day,
-                     yday = yday) |>
+                                                       align = "center")) |>
     tidyr::fill(daily_use, .direction = "updown") |>
-    dplyr::ungroup() |>
     dplyr::select(-n_entries_per_day) |>
     dplyr::filter(as.numeric(lubridate::month(date)) == month_today) |>
     dplyr::mutate(day = lubridate::day(date)) |>
