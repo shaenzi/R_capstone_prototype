@@ -113,15 +113,14 @@ prepare_zh_details_last_year <- function(zh_details){
     dplyr::filter(lubridate::year(timestamp) == last_year) |>
     dplyr::select(-timestamp_utc) |>
     dplyr::mutate(date = lubridate::as_date(timestamp)) |>
-    dplyr::group_by(date) |>
-    dplyr::summarise(daily_ne5 = cumsum(value_ne5),
+    dplyr::reframe(.by = date,
+                     daily_ne5 = cumsum(value_ne5),
                      daily_ne7 = cumsum(value_ne7))  |>
-    dplyr::ungroup() |>
     dplyr::mutate(year = lubridate::year(date),
                   month = lubridate::month(date)) |>
-    dplyr::group_by(year, month) |>
-    dplyr::summarise(monthly_avg_ne5 = mean(daily_ne5),
-                     monthly_avg_ne7 = mean(daily_ne7))|>
+    dplyr::summarise(.by = c(year, month),
+                     monthly_avg_ne5 = mean(daily_ne5),
+                     monthly_avg_ne7 = mean(daily_ne7)) |>
     tidyr::pivot_longer(cols = dplyr::starts_with("monthly"),
                         names_to = "category")
 }
