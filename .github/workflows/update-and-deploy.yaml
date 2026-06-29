@@ -20,7 +20,7 @@ jobs:
           use-public-rspm: true
 
       - name: install C dependencies
-        run: apt install libcurl4-openssl-dev
+        run: sudo apt install libcurl4-openssl-dev
 
       - name: Install R dependencies
         run: |
