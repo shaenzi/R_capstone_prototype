@@ -9,7 +9,14 @@
 #' @keywords internal
 predict_2_weeks <- function(data) {
   print("forecasting")
+  n_gaps <- nrow(tsibble::count_gaps(data))
+  if (n_gaps > 0) {
+    print(glue::glue("data has {n_gaps} gaps!"))
+  }
+
   data |>
+    tsibble::fill_gaps() |>
+    tidyr::fill(gross_energy_kwh, .direction = "up") |>
     fabletools::model(stl = fabletools::decomposition_model(
     feasts::STL(gross_energy_kwh ~ season(window = NULL)),
     fable::SNAIVE(season_adjust))) |>
