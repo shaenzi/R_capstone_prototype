@@ -19,7 +19,10 @@ jobs:
         with:
           use-public-rspm: true
 
-      - name: Install dependencies
+      - name: install C dependencies
+        run: apt install libcurl4-openssl-dev
+
+      - name: Install R dependencies
         run: |
           renv::restore(packages = c("curl", "data.table", "dplyr", "fable",
           "fabletools", "feasts", "glue", "htmltools", "janitor", "lubridate",
