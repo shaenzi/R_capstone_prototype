@@ -42,8 +42,10 @@ jobs:
         shell: Rscript {0}
 
       - name: install C dependencies
-        run: sudo apt-get install -y cmake build-essential
-
+        run: |
+          apt-get update
+          apt-get install -y --no-install-recommends \
+            curl build-essential cmake
 
       - name: Restore Renv package cache
         uses: actions/cache@v6
