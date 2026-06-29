@@ -44,6 +44,8 @@ jobs:
           key: ${{ steps.get-version.outputs.os-version }}-${{ steps.get-version.outputs.r-version }}-${{ inputs.cache-version }}-${{ hashFiles('renv.lock') }}
           restore-keys: ${{ steps.get-version.outputs.os-version }}-${{ steps.get-version.outputs.r-version }}-${{inputs.cache-version }}-
 
+      - uses: r-lib/actions/setup-renv@v2
+
       #- name: install C dependencies
        # run: sudo apt install libcurl4-openssl-dev
 
