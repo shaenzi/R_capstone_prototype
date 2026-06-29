@@ -82,6 +82,11 @@ jobs:
         shell: Rscript {0}
 
       - name: Update data
+        env:
+          SHINY_ACC_NAME: ${{ secrets.SHINY_ACC_NAME }}
+          TOKEN: ${{secrets.TOKEN}}
+          SECRET: ${{secrets.SECRET}}
+          APP_NAME: ${{secrets.APP_NAME}}
         run: |
           # Authenticate
           rsconnect::setAccountInfo(name = Sys.getenv("SHINY_ACC_NAME"),
